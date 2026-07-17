@@ -40,7 +40,7 @@
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&family=Frank+Ruhl+Libre:wght@500;700;900&family=Heebo:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;300;400;500;600;700;800&family=Heebo:wght@300;400;500;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
 
   <!-- ============ Structured Data (JSON-LD) ============ -->
@@ -168,30 +168,38 @@
     <!-- ============ HERO ============ -->
     <section class="hero" id="home">
       <div class="hero-content">
-        <p class="eyebrow hero-eyebrow">מכון לטיפולי אסתטיקה · חיפה</p>
-        <h1 class="hero-title">טיפוח עור מקצועי<br />ב<span>סטנדרט של זהב</span></h1>
+        <p class="eyebrow hero-eyebrow">קוסמטיקה מקצועית · ד״ר קליין</p>
+        <h1 class="hero-title">היופי שמתחיל<br />בעור בריא</h1>
         <p class="hero-lead">
-          יהודית גולד מביאה אליכם את מוצרי <strong>ד״ר קליין</strong> – קו דרמו-קוסמטי
-          מקצועי המבוסס על מחקר קליני ורכיבים פעילים. סדרות טיפוליות לתוצאות אמיתיות,
-          עם ליווי אישי ומשלוח מהיר לכל הארץ.
+          יהודית גולד מביאה אליכם את הסדרות המקצועיות של <strong>ד״ר קליין</strong> –
+          דרמו-קוסמטיקה מבוססת מחקר קליני ורכיבים פעילים, לתוצאות אמיתיות שנראות
+          ומורגשות. ליווי אישי ומשלוח מהיר לכל הארץ.
         </p>
         <div class="hero-cta">
-          <a href="#products" class="btn btn-primary">לחנות המוצרים</a>
-          <a href="#lines" class="btn btn-ghost">הסדרות שלנו</a>
+          <a href="#products" class="btn btn-primary">לתכשירים שלנו</a>
+          <a href="#lines" class="btn btn-ghost">הסדרות</a>
         </div>
         <ul class="hero-badges">
-          <li>🚚 משלוח מהיר לכל הארץ</li>
-          <li>🔬 קוסמטיקה מקצועית</li>
-          <li>💬 ייעוץ אישי</li>
+          <li>משלוח מהיר לכל הארץ</li>
+          <li>מוצרים מקוריים 100%</li>
+          <li>ייעוץ אישי בוואטסאפ</li>
         </ul>
       </div>
       <div class="hero-visual" aria-hidden="true">
-        <img class="hero-flower" src="assets/flower.svg" alt="" />
         <div class="hero-frame">
-          <span class="hero-frame-emoji">🍷</span>
+          <img class="hero-flower" src="assets/flower.svg" alt="" />
+          <svg class="hero-bottle" viewBox="0 0 100 120" role="img" aria-label="">
+            <rect x="42" y="8" width="16" height="12" rx="2" fill="#4f2350"/>
+            <rect x="44" y="19" width="12" height="11" fill="#8a5a8c"/>
+            <rect x="30" y="29" width="40" height="83" rx="15" fill="#7c3d80"/>
+            <rect x="37" y="53" width="26" height="46" rx="4" fill="#fdfbfe" opacity="0.9"/>
+            <line x1="37" y1="64" x2="63" y2="64" stroke="#c19a49" stroke-width="2"/>
+            <line x1="41" y1="72" x2="59" y2="72" stroke="#caa9cc" stroke-width="1.5"/>
+            <line x1="41" y1="78" x2="59" y2="78" stroke="#caa9cc" stroke-width="1.5"/>
+          </svg>
           <div class="hero-chip">
-            <strong>Hyaluronic Wine</strong>
-            <span>Bestseller</span>
+            <strong>Hyaluronic&nbsp;Wine</strong>
+            <span>הנמכר ביותר</span>
           </div>
         </div>
       </div>
@@ -213,10 +221,12 @@
         <p>קווי טיפוח מקצועיים, כל אחד עם התמחות ורכיבים פעילים משלו</p>
       </div>
       <div class="lines-grid">
-        <div class="line-card"><div class="line-emoji">🍷</div><h3>Hyaluronic Wine</h3><p>חומצה היאלורונית ותמצית ענבים ללחות עומק ומיצוק העור הבוגר.</p></div>
-        <div class="line-card"><div class="line-emoji">🍇</div><h3>Resveratrol</h3><p>נוגד חמצון עוצמתי מענבים – הגנה מפני נזקי סביבה ואיזון גוון.</p></div>
-        <div class="line-card"><div class="line-emoji">🥑</div><h3>Super Food</h3><p>ויטמינים ומינרלים שממריצים תהליכים ביולוגיים ומעניקים זוהר.</p></div>
-        <div class="line-card"><div class="line-emoji">💧</div><h3>Deep</h3><p>שילוב טיפול מכון וטיפול בית לחדירה עמוקה ותוצאות נראות.</p></div>
+        <div class="line-card"><span class="line-kicker">01</span><h3>Hyaluronic Wine</h3><p>חומצה היאלורונית ותמצית ענבים ללחות עומק ומיצוק העור הבוגר.</p></div>
+        <div class="line-card"><span class="line-kicker">02</span><h3>Segreto del Vino</h3><p>סוד היין – פוליפנולים מזן ענבים אציל לחידוש עוצמתי ומראה קורן.</p></div>
+        <div class="line-card"><span class="line-kicker">03</span><h3>Super Food</h3><p>ויטמינים ומינרלים שממריצים תהליכים ביולוגיים ומעניקים זוהר.</p></div>
+        <div class="line-card"><span class="line-kicker">04</span><h3>DEEP</h3><p>שילוב טיפול מכון וטיפול בית לחדירה עמוקה ותוצאות נראות.</p></div>
+        <div class="line-card"><span class="line-kicker">05</span><h3>Resveratrol</h3><p>נוגד חמצון עוצמתי מענבים – הגנה מפני נזקי סביבה ואיזון גוון.</p></div>
+        <div class="line-card"><span class="line-kicker">06</span><h3>PERFECTION</h3><p>סדרת אנטי-אייג'ינג והבהרה למראה עור אחיד, חלק וזוהר.</p></div>
       </div>
     </section>
 
@@ -228,13 +238,13 @@
         <p>מצאו את הטיפוח המתאים בדיוק לעור שלכם</p>
       </div>
       <div class="cat-grid">
-        <button class="cat-card active" data-filter="all"><span class="cat-emoji">🛍️</span><span>הכל</span></button>
-        <button class="cat-card" data-filter="serum"><span class="cat-emoji">💧</span><span>סרומים</span></button>
-        <button class="cat-card" data-filter="moisture"><span class="cat-emoji">🌿</span><span>לחות והזנה</span></button>
-        <button class="cat-card" data-filter="brighten"><span class="cat-emoji">✨</span><span>הבהרה</span></button>
-        <button class="cat-card" data-filter="eye"><span class="cat-emoji">👁️</span><span>עיניים וצוואר</span></button>
-        <button class="cat-card" data-filter="cleanse"><span class="cat-emoji">🫧</span><span>ניקוי</span></button>
-        <button class="cat-card" data-filter="protect"><span class="cat-emoji">☀️</span><span>הגנה</span></button>
+        <button class="cat-card active" data-filter="all"><span>הכל</span></button>
+        <button class="cat-card" data-filter="serum"><span>סרומים</span></button>
+        <button class="cat-card" data-filter="moisture"><span>לחות והזנה</span></button>
+        <button class="cat-card" data-filter="brighten"><span>הבהרה</span></button>
+        <button class="cat-card" data-filter="eye"><span>עיניים וצוואר</span></button>
+        <button class="cat-card" data-filter="cleanse"><span>ניקוי טיפולי</span></button>
+        <button class="cat-card" data-filter="protect"><span>הגנה מהשמש</span></button>
       </div>
     </section>
 
