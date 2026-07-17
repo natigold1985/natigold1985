@@ -1,0 +1,14 @@
+{
+  "name": "יהודית גולד — מכון לטיפולי אסתטיקה",
+  "short_name": "Judith Gold",
+  "description": "מכון לטיפולי אסתטיקה בחיפה ומשווקת מורשית של מוצרי ד״ר קליין. קוסמטיקה מקצועית לטיפוח העור, קנייה אונליין בישראל.",
+  "lang": "he",
+  "dir": "rtl",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#faf5f2",
+  "theme_color": "#67306a",
+  "icons": [
+    { "src": "assets/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
