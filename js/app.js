@@ -45,6 +45,44 @@
     toastTimer = setTimeout(function () { toastEl.classList.remove("show"); }, 2600);
   }
 
+  /* ---------- product artwork (elegant bottle SVGs) ---------- */
+  var SHAPES = {
+    dropper:
+      '<rect x="42" y="8" width="16" height="12" rx="2" fill="#4f2350"/>' +
+      '<rect x="44" y="19" width="12" height="11" fill="#8a5a8c"/>' +
+      '<rect x="30" y="29" width="40" height="83" rx="15" fill="#7c3d80"/>' +
+      '<rect x="37" y="55" width="26" height="42" rx="4" fill="#fdfbfe" opacity="0.85"/>' +
+      '<line x1="37" y1="65" x2="63" y2="65" stroke="#c19a49" stroke-width="2"/>',
+    jar:
+      '<rect x="26" y="30" width="48" height="17" rx="7" fill="#4f2350"/>' +
+      '<rect x="28" y="45" width="44" height="63" rx="17" fill="#7c3d80"/>' +
+      '<rect x="36" y="62" width="28" height="32" rx="4" fill="#fdfbfe" opacity="0.85"/>' +
+      '<line x1="36" y1="72" x2="64" y2="72" stroke="#c19a49" stroke-width="2"/>',
+    tube:
+      '<rect x="40" y="9" width="20" height="13" rx="3" fill="#4f2350"/>' +
+      '<rect x="32" y="22" width="36" height="86" rx="11" fill="#7c3d80"/>' +
+      '<rect x="32" y="103" width="36" height="5" rx="2" fill="#4f2350"/>' +
+      '<rect x="38" y="46" width="24" height="36" rx="4" fill="#fdfbfe" opacity="0.85"/>' +
+      '<line x1="38" y1="56" x2="62" y2="56" stroke="#c19a49" stroke-width="2"/>',
+    pump:
+      '<rect x="46" y="6" width="8" height="15" fill="#4f2350"/>' +
+      '<path d="M40 21h20v6h-9v4h-11z" fill="#8a5a8c"/>' +
+      '<rect x="45" y="31" width="10" height="8" fill="#8a5a8c"/>' +
+      '<rect x="30" y="38" width="40" height="74" rx="11" fill="#7c3d80"/>' +
+      '<rect x="37" y="60" width="26" height="38" rx="4" fill="#fdfbfe" opacity="0.85"/>' +
+      '<line x1="37" y1="70" x2="63" y2="70" stroke="#c19a49" stroke-width="2"/>'
+  };
+  function productSVG(shape, cls) {
+    return '<svg class="' + (cls || 'prod-svg') + '" viewBox="0 0 100 120" role="img" aria-label="מוצר">' +
+           (SHAPES[shape] || SHAPES.dropper) + '</svg>';
+  }
+  var WA_NUM = "972547444478";
+  function waProductLink(p) {
+    var msg = 'היי יהודית 😊 אני מעוניין/ת במוצר: "' + p.name + '" (' + money(p.price) + ')' +
+              (p.line ? ' מסדרת ' + p.line : '') + '. אפשר פרטים והזמנה?';
+    return "https://wa.me/" + WA_NUM + "?text=" + encodeURIComponent(msg);
+  }
+
   /* ---------- render products ---------- */
   function productCard(p) {
     var stars = "★★★★★";
@@ -53,7 +91,7 @@
     var line = p.line ? '<span class="product-line-badge">' + p.line + '</span>' : '';
     return '' +
       '<article class="product-card" role="listitem" data-cat="' + p.cat + '">' +
-        '<div class="product-media">' + tag + line + '<span>' + p.emoji + '</span></div>' +
+        '<div class="product-media">' + tag + line + productSVG(p.shape) + '</div>' +
         '<div class="product-body">' +
           '<span class="product-cat">' + p.catLabel + '</span>' +
           '<h3 class="product-name">' + p.name + '</h3>' +
@@ -63,6 +101,9 @@
             '<span class="product-price">' + money(p.price) + old + '</span>' +
             '<button class="add-btn" data-add="' + p.id + '">הוסף לעגלה</button>' +
           '</div>' +
+          '<a class="wa-product" href="' + waProductLink(p) + '" target="_blank" rel="noopener">' +
+            '<svg viewBox="0 0 32 32" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M16 .5C7.4.5.5 7.4.5 16c0 2.8.7 5.4 2 7.7L.4 31.6l8.1-2.1c2.2 1.2 4.7 1.9 7.5 1.9 8.6 0 15.5-6.9 15.5-15.5S24.6.5 16 .5zm0 28.3c-2.5 0-4.8-.7-6.8-1.8l-.5-.3-4.8 1.3 1.3-4.7-.3-.5a12.7 12.7 0 0 1-2-6.8C3.1 8.9 8.9 3.1 16 3.1S28.9 8.9 28.9 16 23.1 28.8 16 28.8z"/></svg>' +
+            ' שאלו על המוצר בוואטסאפ</a>' +
         '</div>' +
       '</article>';
   }
@@ -144,7 +185,7 @@
       var q = cart[id];
       return '' +
         '<div class="cart-item">' +
-          '<div class="cart-item-media">' + p.emoji + '</div>' +
+          '<div class="cart-item-media">' + productSVG(p.shape, 'cart-svg') + '</div>' +
           '<div class="cart-item-info">' +
             '<span class="cart-item-name">' + p.name + '</span>' +
             '<span class="cart-item-price">' + money(p.price) + '</span>' +
@@ -232,7 +273,7 @@
     var ids = Object.keys(cart);
     var html = ids.slice(0, 4).map(function (id) {
       var p = byId[id]; if (!p) return "";
-      return '<div class="exit-cart-line"><span class="em">' + p.emoji + '</span>' +
+      return '<div class="exit-cart-line"><span class="em">' + productSVG(p.shape, 'exit-svg') + '</span>' +
              '<span class="nm">' + p.name + '</span>' +
              '<span class="pr">×' + cart[id] + '</span></div>';
     }).join("");
