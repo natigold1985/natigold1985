@@ -1,0 +1,14 @@
+{
+  "name": "ג'ולייט גולד — קוסמטיקה מקצועית",
+  "short_name": "Juliet Gold",
+  "description": "מותג קוסמטיקה מקצועי — איפור, טיפוח עור ובשמים. קנייה אונליין בישראל.",
+  "lang": "he",
+  "dir": "rtl",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#6b21a8",
+  "icons": [
+    { "src": "assets/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
