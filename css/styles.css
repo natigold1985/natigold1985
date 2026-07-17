@@ -35,7 +35,7 @@
 html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 16px); }
 
 body {
-  font-family: "Assistant", "Heebo", system-ui, -apple-system, sans-serif;
+  font-family: "Assistant", system-ui, -apple-system, sans-serif;
   color: var(--ink);
   background: var(--bg);
   line-height: 1.7;
@@ -46,7 +46,7 @@ body {
 img { max-width: 100%; display: block; }
 a { color: inherit; text-decoration: none; }
 button { font-family: inherit; cursor: pointer; border: none; background: none; }
-h1, h2, h3 { font-family: "Heebo", "Assistant", sans-serif; line-height: 1.18; font-weight: 800; letter-spacing: -0.01em; }
+h1, h2, h3 { font-family: "Assistant", sans-serif; line-height: 1.18; font-weight: 800; letter-spacing: -0.01em; }
 
 .skip-link { position: absolute; right: -999px; top: 0; z-index: 200; background: var(--purple); color: #fff; padding: 10px 18px; border-radius: 0 0 10px 0; }
 .skip-link:focus { right: 0; }
@@ -73,9 +73,9 @@ h1, h2, h3 { font-family: "Heebo", "Assistant", sans-serif; line-height: 1.18; f
 .site-header { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,.96); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
 .header-inner { max-width: var(--wrap); margin: 0 auto; height: var(--header-h); display: flex; align-items: center; gap: 20px; padding: 0 26px; }
 .brand { display: flex; align-items: center; gap: 12px; margin-inline-end: auto; }
-.brand-mark { width: 50px; height: 50px; border-radius: 50%; flex: none; display: grid; place-items: center; font-family: "Heebo", sans-serif; font-weight: 800; font-size: 1.55rem; color: #fff; background: radial-gradient(circle at 33% 28%, var(--purple-600), var(--purple-800) 78%); box-shadow: inset 0 0 0 1.5px rgba(216,189,134,.65); }
+.brand-mark { width: 50px; height: 50px; border-radius: 50%; flex: none; display: grid; place-items: center; font-family: "Assistant", sans-serif; font-weight: 800; font-size: 1.55rem; color: #fff; background: radial-gradient(circle at 33% 28%, var(--purple-600), var(--purple-800) 78%); box-shadow: inset 0 0 0 1.5px rgba(216,189,134,.65); }
 .brand-text { display: flex; flex-direction: column; line-height: 1.12; }
-.brand-name { font-family: "Heebo", sans-serif; font-weight: 800; font-size: 1.34rem; color: var(--purple-800); letter-spacing: -0.01em; }
+.brand-name { font-family: "Assistant", sans-serif; font-weight: 800; font-size: 1.34rem; color: var(--purple-800); letter-spacing: -0.01em; }
 .brand-sub { font-size: .68rem; color: var(--gold); font-weight: 700; letter-spacing: 2px; }
 
 .main-nav { display: flex; gap: 30px; }
@@ -113,12 +113,12 @@ h1, h2, h3 { font-family: "Heebo", "Assistant", sans-serif; line-height: 1.18; f
 .hero-bottle { width: 46%; height: auto; filter: drop-shadow(0 24px 30px rgba(74,31,72,.28)); position: relative; z-index: 1; }
 .hero-flower { position: absolute; top: 20px; inset-inline-end: 20px; width: 62px; opacity: .9; z-index: 2; }
 .hero-chip { position: absolute; bottom: -18px; inset-inline-start: 24px; background: #fff; border: 1px solid var(--line-2); padding: 12px 20px; box-shadow: var(--shadow-sm); text-align: center; }
-.hero-chip strong { display: block; font-family: "Heebo"; color: var(--purple); font-size: 1rem; letter-spacing: .3px; }
+.hero-chip strong { display: block; font-family: "Assistant"; color: var(--purple); font-size: 1rem; letter-spacing: .3px; }
 .hero-chip span { font-size: .72rem; color: var(--gold); font-weight: 700; letter-spacing: 1px; }
 
 /* ---------- Trust strip ---------- */
 .trust-strip { background: var(--ink); color: #fff; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; text-align: center; padding: 34px 26px; margin-top: 26px; }
-.trust-strip strong { display: block; font-family: "Heebo"; font-size: 1.8rem; font-weight: 800; color: var(--gold-soft); letter-spacing: 0; }
+.trust-strip strong { display: block; font-family: "Assistant"; font-size: 1.8rem; font-weight: 800; color: var(--gold-soft); letter-spacing: 0; }
 .trust-strip span { font-size: .88rem; opacity: .82; letter-spacing: .3px; }
 
 /* ---------- Sections ---------- */
@@ -134,7 +134,7 @@ h1, h2, h3 { font-family: "Heebo", "Assistant", sans-serif; line-height: 1.18; f
 .lines-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1px; max-width: var(--wrap); margin: 0 auto; background: var(--line); border: 1px solid var(--line); }
 .line-card { background: var(--bg); padding: 34px 24px; text-align: center; transition: background .2s; }
 .line-card:hover { background: var(--purple-050); }
-.line-kicker { display: block; font-family: "Heebo"; font-weight: 800; font-size: 1rem; color: var(--gold); letter-spacing: 2px; margin-bottom: 12px; }
+.line-kicker { display: block; font-family: "Assistant"; font-weight: 800; font-size: 1rem; color: var(--gold); letter-spacing: 2px; margin-bottom: 12px; }
 .line-card h3 { color: var(--purple); font-size: 1.16rem; margin-bottom: 8px; letter-spacing: .3px; }
 .line-card p { font-size: .88rem; color: var(--muted); line-height: 1.6; }
 
@@ -154,12 +154,12 @@ h1, h2, h3 { font-family: "Heebo", "Assistant", sans-serif; line-height: 1.18; f
 .product-tag { position: absolute; top: 14px; inset-inline-start: 14px; background: var(--gold); color: #fff; font-size: .68rem; font-weight: 700; letter-spacing: .5px; padding: 5px 10px; }
 .product-body { padding: 20px 20px 22px; display: flex; flex-direction: column; gap: 7px; flex: 1; }
 .product-cat { font-size: .72rem; color: var(--gold); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
-.product-name { font-family: "Heebo"; font-weight: 700; font-size: 1.08rem; color: var(--ink); line-height: 1.35; }
+.product-name { font-family: "Assistant"; font-weight: 700; font-size: 1.08rem; color: var(--ink); line-height: 1.35; }
 .product-desc { font-size: .85rem; color: var(--muted); flex: 1; line-height: 1.6; }
 .product-rating { font-size: .8rem; color: var(--gold); letter-spacing: 1px; }
 .product-rating span { color: var(--muted); letter-spacing: 0; }
 .product-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; gap: 10px; }
-.product-price { font-family: "Heebo"; font-weight: 800; font-size: 1.24rem; color: var(--ink); }
+.product-price { font-family: "Assistant"; font-weight: 800; font-size: 1.24rem; color: var(--ink); }
 .product-price small { font-size: .78rem; color: var(--muted); font-weight: 400; text-decoration: line-through; margin-inline-start: 6px; }
 .add-btn { background: var(--purple); color: #fff; padding: 10px 18px; border-radius: 2px; font-weight: 700; font-size: .86rem; transition: background .15s; }
 .add-btn:hover { background: var(--purple-800); }
@@ -169,7 +169,7 @@ h1, h2, h3 { font-family: "Heebo", "Assistant", sans-serif; line-height: 1.18; f
 /* ---------- About ---------- */
 .about { display: grid; grid-template-columns: .8fr 1.2fr; gap: 54px; align-items: center; }
 .about-visual { display: grid; place-items: center; }
-.about-badge { width: 220px; height: 220px; border-radius: 50%; display: grid; place-items: center; font-family: "Heebo"; font-weight: 800; font-size: 4.4rem; color: #fff; background: radial-gradient(circle at 32% 28%, var(--purple-600), var(--purple-800) 78%); position: relative; }
+.about-badge { width: 220px; height: 220px; border-radius: 50%; display: grid; place-items: center; font-family: "Assistant"; font-weight: 800; font-size: 4.4rem; color: #fff; background: radial-gradient(circle at 32% 28%, var(--purple-600), var(--purple-800) 78%); position: relative; }
 .about-badge::after { content: ""; position: absolute; inset: -14px; border: 1px solid var(--line-2); border-radius: 50%; }
 .about-text .eyebrow { display: inline-block; margin-bottom: 12px; }
 .about-text h2 { font-size: clamp(1.9rem, 4vw, 2.6rem); color: var(--ink); margin-bottom: 18px; }
@@ -193,7 +193,7 @@ h1, h2, h3 { font-family: "Heebo", "Assistant", sans-serif; line-height: 1.18; f
 /* ---------- FAQ ---------- */
 .faq { max-width: 780px; margin: 0 auto; display: flex; flex-direction: column; gap: 0; border-top: 1px solid var(--line); }
 .faq details { border-bottom: 1px solid var(--line); }
-.faq summary { font-family: "Heebo"; font-weight: 700; color: var(--ink); padding: 20px 4px; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; font-size: 1.04rem; }
+.faq summary { font-family: "Assistant"; font-weight: 700; color: var(--ink); padding: 20px 4px; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; font-size: 1.04rem; }
 .faq summary::-webkit-details-marker { display: none; }
 .faq summary::after { content: "+"; font-size: 1.4rem; color: var(--gold); font-weight: 300; }
 .faq details[open] summary::after { content: "−"; }
@@ -202,9 +202,9 @@ h1, h2, h3 { font-family: "Heebo", "Assistant", sans-serif; line-height: 1.18; f
 /* ---------- Footer ---------- */
 .site-footer { background: var(--ink); color: #cabfce; margin-top: 50px; }
 .footer-grid { max-width: var(--wrap); margin: 0 auto; padding: 58px 26px 34px; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.1fr; gap: 34px; }
-.footer-brand .brand-mark { display: inline-grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; font-family: "Heebo"; font-weight: 800; font-size: 1.4rem; color: #fff; background: radial-gradient(circle at 32% 28%, var(--purple-600), var(--purple-800) 78%); margin-bottom: 14px; }
+.footer-brand .brand-mark { display: inline-grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; font-family: "Assistant"; font-weight: 800; font-size: 1.4rem; color: #fff; background: radial-gradient(circle at 32% 28%, var(--purple-600), var(--purple-800) 78%); margin-bottom: 14px; }
 .footer-brand p { max-width: 32ch; font-size: .9rem; line-height: 1.7; }
-.footer-grid h3 { font-family: "Heebo"; color: #fff; font-size: 1rem; margin-bottom: 15px; font-weight: 700; }
+.footer-grid h3 { font-family: "Assistant"; color: #fff; font-size: 1rem; margin-bottom: 15px; font-weight: 700; }
 .footer-grid a { display: block; padding: 5px 0; font-size: .9rem; color: #b9adbd; transition: color .15s; }
 .footer-grid a:hover { color: var(--gold-soft); }
 .footer-contact span { display: block; padding: 5px 0; font-size: .9rem; color: #b9adbd; }
@@ -239,7 +239,7 @@ h1, h2, h3 { font-family: "Heebo", "Assistant", sans-serif; line-height: 1.18; f
 .cart-drawer.empty .cart-empty { display: flex; }
 .cart-foot { padding: 20px 22px; border-top: 1px solid var(--line); }
 .cart-total { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-.cart-total strong { font-family: "Heebo"; font-size: 1.5rem; color: var(--ink); }
+.cart-total strong { font-family: "Assistant"; font-size: 1.5rem; color: var(--ink); }
 .cart-shipfree { font-size: .82rem; color: var(--gold); font-weight: 600; margin-bottom: 14px; min-height: 1em; }
 
 /* ---------- Exit-intent modal ---------- */
