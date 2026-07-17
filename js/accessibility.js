@@ -1,5 +1,5 @@
 /* ============================================================
-   Juliet Gold — Accessibility toolbar (נגישות)
+   Yehudit Gold — Accessibility toolbar (נגישות)
    Toggles applied to <html> and persisted in localStorage.
    Compatible with Israeli accessibility guidance (IS 5568 / WCAG 2.0 AA).
    ============================================================ */

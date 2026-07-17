@@ -1,5 +1,5 @@
 /* ============================================================
-   Juliet Gold — Store logic
+   Yehudit Gold — Store logic
    - Product rendering + category filter
    - Cart (localStorage) shown in top-bar drawer
    - Newsletter / contact capture (email + phone)
@@ -83,7 +83,7 @@
           "@type": "Product",
           "name": p.name,
           "category": p.catLabel,
-          "brand": { "@type": "Brand", "name": "Juliet Gold" },
+          "brand": { "@type": "Brand", "name": "Yehudit Gold" },
           "aggregateRating": { "@type": "AggregateRating", "ratingValue": p.rating, "reviewCount": p.reviews },
           "offers": {
             "@type": "Offer",
@@ -99,7 +99,7 @@
     el.textContent = JSON.stringify({
       "@context": "https://schema.org",
       "@type": "ItemList",
-      "name": "מוצרי ג'ולייט גולד",
+      "name": "מוצרי יהודית גולד",
       "itemListElement": items
     });
     document.head.appendChild(el);

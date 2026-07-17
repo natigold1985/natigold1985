@@ -1,5 +1,5 @@
 /* ============================================================
-   Juliet Gold — משווקת מורשית של מוצרי ד״ר קליין
+   Yehudit Gold — משווקת מורשית של מוצרי ד״ר קליין
    Product catalog — Dr. Klein professional cosmetics
    Categories: face | serum | cleanse | protect | tools
    Prices in ILS (₪)
@@ -100,5 +100,53 @@ window.JG_PRODUCTS = [
     emoji: "🪀", price: 119, oldPrice: 149, rating: 4.7, reviews: 132,
     tag: null,
     desc: "רולר לעיסוי פנים לשיפור זרימת הדם, ניקוז לימפתי ומראה רענן."
+  },
+  {
+    id: "dk-peptide-serum",
+    name: "ד״ר קליין | סרום פפטידים אנטי-אייג'ינג",
+    cat: "serum", catLabel: "סרומים",
+    emoji: "⏳", price: 279, oldPrice: 329, rating: 4.9, reviews: 164,
+    tag: "פרימיום",
+    desc: "מתחם פפטידים מתקדם למיצוק, החלקת קמטים ומראה עור צעיר יותר."
+  },
+  {
+    id: "dk-toner",
+    name: "ד״ר קליין | טונר מאזן לפנים",
+    cat: "cleanse", catLabel: "ניקוי",
+    emoji: "🌊", price: 109, oldPrice: null, rating: 4.7, reviews: 141,
+    tag: null,
+    desc: "טונר מרענן שמאזן את רמת ה-pH של העור ומכין אותו לספיגת הטיפוח."
+  },
+  {
+    id: "dk-lip-balm",
+    name: "ד״ר קליין | טיפוח שפתיים מזין",
+    cat: "face", catLabel: "טיפוח פנים",
+    emoji: "💋", price: 59, oldPrice: 75, rating: 4.8, reviews: 187,
+    tag: null,
+    desc: "בלסם עשיר להזנה ולריכוך השפתיים, עם הגנה מפני יובש וסדקים."
+  },
+  {
+    id: "dk-body-lotion",
+    name: "ד״ר קליין | קרם גוף עשיר",
+    cat: "body", catLabel: "טיפוח גוף",
+    emoji: "🧴", price: 129, oldPrice: 159, rating: 4.8, reviews: 158,
+    tag: null,
+    desc: "קרם גוף עשיר ומזין לעור רך וקטיפתי לאורך כל היום, נספג במהירות."
+  },
+  {
+    id: "dk-hand-cream",
+    name: "ד״ר קליין | קרם ידיים מרפא",
+    cat: "body", catLabel: "טיפוח גוף",
+    emoji: "🤲", price: 65, oldPrice: null, rating: 4.9, reviews: 209,
+    tag: "רב מכר",
+    desc: "קרם ידיים עשיר שמזין, מרכך ומגן על עור יבש וסדוק גם בחורף."
+  },
+  {
+    id: "dk-body-scrub",
+    name: "ד״ר קליין | פילינג גוף מרענן",
+    cat: "body", catLabel: "טיפוח גוף",
+    emoji: "🧂", price: 99, oldPrice: 119, rating: 4.7, reviews: 124,
+    tag: null,
+    desc: "פילינג גוף עדין שמסיר תאי עור מתים ומשאיר עור חלק, נקי וזוהר."
   }
 ];
