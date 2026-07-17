@@ -1,5 +1,5 @@
-# robots.txt — Yehudit Gold (יהודית גולד)
-# https://www.yehuditgold.co.il
+# robots.txt — Judith Gold (יהודית גולד)
+# https://www.judithgold.co.il
 
 User-agent: *
 Allow: /
@@ -41,4 +41,4 @@ Allow: /
 User-agent: meta-externalagent
 Allow: /
 
-Sitemap: https://www.yehuditgold.co.il/sitemap.xml
+Sitemap: https://www.judithgold.co.il/sitemap.xml

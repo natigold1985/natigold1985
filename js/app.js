@@ -1,5 +1,5 @@
 /* ============================================================
-   Yehudit Gold — Store logic
+   Judith Gold — Store logic
    - Product rendering + category filter
    - Cart (localStorage) shown in top-bar drawer
    - Newsletter / contact capture (email + phone)
@@ -50,9 +50,10 @@
     var stars = "★★★★★";
     var old = p.oldPrice ? '<small>' + money(p.oldPrice) + '</small>' : '';
     var tag = p.tag ? '<span class="product-tag">' + p.tag + '</span>' : '';
+    var line = p.line ? '<span class="product-line-badge">' + p.line + '</span>' : '';
     return '' +
       '<article class="product-card" role="listitem" data-cat="' + p.cat + '">' +
-        '<div class="product-media">' + tag + '<span>' + p.emoji + '</span></div>' +
+        '<div class="product-media">' + tag + line + '<span>' + p.emoji + '</span></div>' +
         '<div class="product-body">' +
           '<span class="product-cat">' + p.catLabel + '</span>' +
           '<h3 class="product-name">' + p.name + '</h3>' +
@@ -83,7 +84,7 @@
           "@type": "Product",
           "name": p.name,
           "category": p.catLabel,
-          "brand": { "@type": "Brand", "name": "Yehudit Gold" },
+          "brand": { "@type": "Brand", "name": "Dr. Klein" },
           "aggregateRating": { "@type": "AggregateRating", "ratingValue": p.rating, "reviewCount": p.reviews },
           "offers": {
             "@type": "Offer",

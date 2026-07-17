@@ -1,16 +1,22 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 96" role="img" aria-label="Yehudit Gold logo">
-  <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#4c1d95"/>
-      <stop offset="1" stop-color="#7c3aed"/>
-    </linearGradient>
-  </defs>
-  <rect width="320" height="96" fill="url(#bg)"/>
-  <text x="30" y="58" font-family="Heebo, Arial, sans-serif" font-size="34" font-weight="900"
-        fill="#ffffff" letter-spacing="3">JULIET</text>
-  <text x="30" y="84" font-family="Heebo, Arial, sans-serif" font-size="20" font-weight="700"
-        fill="#e8cf82" letter-spacing="8">GOLD</text>
-  <circle cx="270" cy="48" r="26" fill="none" stroke="#e8cf82" stroke-width="2"/>
-  <text x="270" y="58" font-family="Heebo, Arial, sans-serif" font-size="26" font-weight="900"
-        text-anchor="middle" fill="#ffffff">YG</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 120" role="img" aria-label="יהודית גולד – מכון לטיפולי אסתטיקה / Judith Gold">
+  <rect width="360" height="120" fill="#fffdfb"/>
+  <!-- G monogram -->
+  <g transform="translate(300,60)">
+    <circle cx="0" cy="0" r="42" fill="none" stroke="#dcc084" stroke-width="1.5"/>
+    <text x="2" y="20" font-family="'Frank Ruhl Libre', Georgia, serif" font-size="62" font-weight="700" text-anchor="middle" fill="#67306a">G</text>
+  </g>
+  <!-- flower accent -->
+  <g transform="translate(255,30) scale(0.42)">
+    <g fill="#965a99">
+      <ellipse cx="0" cy="-20" rx="9" ry="17"/>
+      <ellipse cx="19" cy="-6.2" rx="9" ry="17" transform="rotate(72 19 -6.2)"/>
+      <ellipse cx="11.8" cy="16.2" rx="9" ry="17" transform="rotate(144 11.8 16.2)"/>
+      <ellipse cx="-11.8" cy="16.2" rx="9" ry="17" transform="rotate(216 -11.8 16.2)"/>
+      <ellipse cx="-19" cy="-6.2" rx="9" ry="17" transform="rotate(288 -19 -6.2)"/>
+    </g>
+    <circle cx="0" cy="0" r="8.5" fill="#f0c93a"/>
+  </g>
+  <!-- wordmark (RTL) -->
+  <text x="235" y="58" font-family="'Frank Ruhl Libre', Georgia, serif" font-size="38" font-weight="700" text-anchor="end" fill="#67306a" direction="rtl">יהודית גולד</text>
+  <text x="235" y="84" font-family="Arial, sans-serif" font-size="15" font-weight="600" letter-spacing="2" text-anchor="end" fill="#a37f34" direction="rtl">מכון לטיפולי אסתטיקה</text>
 </svg>
