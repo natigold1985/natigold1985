@@ -34,6 +34,8 @@
   function isPhone(v) { return /^0\d{1,2}[-\s]?\d{7}$|^\+?\d{9,15}$/.test(String(v || "").replace(/\s/g, "")); }
 
   var cart = load(CART_KEY, {}); // { id: qty }
+  var WISH_KEY = "jg_wish_v1";
+  var wishlist = load(WISH_KEY, []); // [id, ...]
 
   /* ---------- toast ---------- */
   var toastEl = $("#toast");
@@ -89,9 +91,12 @@
     var old = p.oldPrice ? '<small>' + money(p.oldPrice) + '</small>' : '';
     var tag = p.tag ? '<span class="product-tag">' + p.tag + '</span>' : '';
     var line = p.line ? '<span class="product-line-badge">' + p.line + '</span>' : '';
+    var wished = wishlist.indexOf(p.id) > -1 ? ' on' : '';
+    var heart = '<button class="wish-heart' + wished + '" data-wish="' + p.id + '" aria-label="הוספה למועדפים" aria-pressed="' + (wished ? 'true' : 'false') + '">' +
+      '<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 21l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.18z"/></svg></button>';
     return '' +
       '<article class="product-card" role="listitem" data-cat="' + p.cat + '">' +
-        '<div class="product-media">' + tag + line + productSVG(p.shape) + '</div>' +
+        '<div class="product-media">' + heart + tag + line + productSVG(p.shape) + '</div>' +
         '<div class="product-body">' +
           '<span class="product-cat">' + p.catLabel + '</span>' +
           '<h3 class="product-name">' + p.name + '</h3>' +
@@ -222,6 +227,8 @@
 
   document.addEventListener("click", function (e) {
     var t = e.target;
+    var wishBtn = t.closest && t.closest("[data-wish]");
+    if (wishBtn) { toggleWish(wishBtn.getAttribute("data-wish"), wishBtn); return; }
     var add = t.getAttribute && t.getAttribute("data-add");
     var inc = t.getAttribute && t.getAttribute("data-inc");
     var dec = t.getAttribute && t.getAttribute("data-dec");
@@ -230,6 +237,22 @@
     else if (inc) { cart[inc]++; renderCart(); }
     else if (dec) { cart[dec]--; if (cart[dec] <= 0) delete cart[dec]; renderCart(); }
     else if (rm) { delete cart[rm]; renderCart(); }
+  });
+
+  /* ---------- wishlist ---------- */
+  var wishCountEl = $("#wishCount");
+  function updateWishCount() { if (wishCountEl) wishCountEl.textContent = wishlist.length; }
+  function toggleWish(id, btn) {
+    var i = wishlist.indexOf(id);
+    if (i > -1) { wishlist.splice(i, 1); if (btn) { btn.classList.remove("on"); btn.setAttribute("aria-pressed", "false"); } }
+    else { wishlist.push(id); if (btn) { btn.classList.add("on"); btn.setAttribute("aria-pressed", "true"); } toast((byId[id] ? byId[id].line || "המוצר" : "המוצר") + " נוסף למועדפים ❤"); }
+    save(WISH_KEY, wishlist);
+    updateWishCount();
+  }
+  var wishlistBtn = $("#wishlistBtn");
+  if (wishlistBtn) wishlistBtn.addEventListener("click", function () {
+    if (!wishlist.length) { toast("עדיין לא הוספת מוצרים למועדפים ❤"); return; }
+    toast("יש לך " + wishlist.length + " מוצרים במועדפים");
   });
 
   /* ---------- drawer open/close ---------- */
@@ -369,4 +392,5 @@
 
   /* ---------- init ---------- */
   renderCart();
+  updateWishCount();
 })();

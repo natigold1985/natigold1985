@@ -323,6 +323,50 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
 .legal-note { background: var(--bg-2); border: 1px solid var(--line-2); padding: 16px 18px; margin: 20px 0; }
 .legal-page .site-header .brand-logo { height: 52px; }
 
+/* ---------- Real logo + header actions ---------- */
+.brand-logo { height: 62px; width: auto; display: block; }
+.footer-logo { height: 74px; width: auto; margin-bottom: 14px; background: #fff; padding: 8px 12px; border-radius: 4px; }
+.header-actions { display: flex; align-items: center; gap: 6px; }
+.icon-btn { position: relative; color: var(--purple); padding: 9px; border-radius: 10px; transition: background .18s, color .18s; display: grid; place-items: center; }
+.icon-btn:hover { background: var(--purple-050); }
+.icon-count { position: absolute; top: 0; inset-inline-start: 0; min-width: 18px; height: 18px; padding: 0 4px; background: var(--gold); color: #fff; font-size: .66rem; font-weight: 800; border-radius: 999px; display: grid; place-items: center; border: 2px solid #fff; }
+.wishlist-btn .icon-count { background: #d84a72; }
+.nav-chat { color: var(--wa) !important; font-weight: 700 !important; }
+.nav-chat::after { background: var(--wa) !important; }
+
+/* ---------- Hero photo ---------- */
+.hero-photo { width: 100%; height: 100%; object-fit: cover; border-radius: 240px 240px 6px 6px; display: block; }
+.hero-frame { overflow: visible; }
+.hero-frame:has(.hero-photo) { background: none; border: none; padding: 10px; }
+.hero-frame:has(.hero-photo)::after { inset: 0; border: 1px solid rgba(183,141,63,.5); border-radius: 240px 240px 6px 6px; }
+
+/* ---------- Product wishlist heart ---------- */
+.wish-heart { position: absolute; top: 12px; inset-inline-start: 12px; width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,.92); border: 1px solid var(--line-2); display: grid; place-items: center; color: #b9a7bd; z-index: 2; transition: .16s; }
+.wish-heart:hover { color: #d84a72; }
+.wish-heart.on { color: #fff; background: #d84a72; border-color: #d84a72; }
+.product-media .product-tag { inset-inline-start: 54px; }
+
+/* ---------- Live-chat CTA section ---------- */
+.chat-cta { text-align: center; }
+.chat-box { max-width: 720px; margin: 0 auto; background: var(--bg-2); border: 1px solid var(--line-2); padding: 46px 30px; }
+.chat-box .eyebrow { color: var(--purple); }
+.chat-box h2 { font-size: clamp(1.6rem, 3.4vw, 2.2rem); color: var(--ink); margin: 12px 0; }
+.chat-box p { color: var(--muted); max-width: 52ch; margin: 0 auto 24px; }
+.btn-chat { background: var(--wa); color: #fff; }
+.btn-chat:hover { background: #1eb257; transform: translateY(-1px); }
+
+/* ---------- Treatments (clinic) ---------- */
+.treatments { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
+.treatments-media img { width: 100%; height: 100%; max-height: 460px; object-fit: cover; border-radius: 4px; box-shadow: var(--shadow); }
+.treatments-text h2 { font-size: clamp(1.7rem, 3.6vw, 2.4rem); color: var(--ink); margin: 12px 0 14px; }
+.treatments-text p { color: var(--muted); margin-bottom: 16px; }
+.treat-list { list-style: none; display: grid; gap: 8px; margin-bottom: 24px; }
+.treat-list li { padding-inline-start: 26px; position: relative; color: var(--ink-soft); font-weight: 500; }
+.treat-list li::before { content: "✓"; position: absolute; inset-inline-start: 0; color: var(--gold); font-weight: 800; }
+
+/* ---------- About photo ---------- */
+.about-photo { width: 100%; max-width: 360px; aspect-ratio: 1/1; object-fit: cover; border-radius: 4px; box-shadow: var(--shadow); }
+
 /* ---------- Responsive ---------- */
 @media (max-width: 920px) {
   .hero { grid-template-columns: 1fr; text-align: center; padding-top: 50px; }
@@ -331,17 +375,23 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
   .hero-visual { order: -1; margin-bottom: 20px; }
   .about { grid-template-columns: 1fr; text-align: center; }
   .about-visual { order: -1; }
+  .about-photo { margin: 0 auto; }
   .about-text .eyebrow { display: inline-block; }
+  .treatments { grid-template-columns: 1fr; text-align: center; }
+  .treatments-media { order: -1; }
+  .treat-list { justify-items: center; }
+  .treat-list li { display: inline-block; text-align: start; }
   .trust-strip { grid-template-columns: repeat(2, 1fr); gap: 24px; }
   .footer-grid { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 720px) {
   .nav-toggle { display: flex; order: -1; }
   .main-nav { position: absolute; top: var(--header-h); inset-inline: 0; flex-direction: column; gap: 0; background: #fff; border-bottom: 1px solid var(--line); box-shadow: var(--shadow-sm); max-height: 0; overflow: hidden; transition: max-height .3s ease; }
-  .main-nav.open { max-height: 400px; }
-  .main-nav a { padding: 15px 26px; border-bottom: 1px solid var(--line); }
-  .header-inner { gap: 12px; padding: 0 18px; }
-  .brand-logo { height: 46px; }
+  .main-nav.open { max-height: 520px; }
+  .main-nav a { padding: 14px 26px; border-bottom: 1px solid var(--line); }
+  .header-inner { gap: 8px; padding: 0 14px; }
+  .brand-logo { height: 42px; }
+  .icon-btn { padding: 7px; }
   .lines-grid { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 460px) {

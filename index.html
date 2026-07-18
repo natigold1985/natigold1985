@@ -26,14 +26,14 @@
   <meta property="og:title" content="יהודית גולד | מכון לטיפולי אסתטיקה ומוצרי ד״ר קליין" />
   <meta property="og:description" content="קוסמטיקה מקצועית של ד״ר קליין מבית יהודית גולד – מכון אסתטיקה בחיפה. קנייה אונליין, משלוח מהיר לכל הארץ." />
   <meta property="og:url" content="https://www.judithgold.co.il/" />
-  <meta property="og:image" content="https://www.judithgold.co.il/assets/logo.svg" />
-  <meta property="og:image:alt" content="יהודית גולד – מכון לטיפולי אסתטיקה" />
+  <meta property="og:image" content="https://www.judithgold.co.il/assets/img/judith.jpg" />
+  <meta property="og:image:alt" content="יהודית גולד – קוסמטיקאית ובעלת המכון" />
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="יהודית גולד | מכון לטיפולי אסתטיקה ומוצרי ד״ר קליין" />
   <meta name="twitter:description" content="קוסמטיקה מקצועית של ד״ר קליין מבית יהודית גולד – מכון אסתטיקה בחיפה. קנייה אונליין, משלוח מהיר לכל הארץ." />
-  <meta name="twitter:image" content="https://www.judithgold.co.il/assets/logo.svg" />
+  <meta name="twitter:image" content="https://www.judithgold.co.il/assets/img/judith.jpg" />
 
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
   <link rel="apple-touch-icon" href="assets/favicon.svg" />
@@ -53,16 +53,26 @@
     "alternateName": "Judith Gold Esthetics Institute",
     "description": "מכון לטיפולי אסתטיקה בחיפה ומשווקת מורשית של מוצרי ד״ר קליין (Dr. Klein) – קוסמטיקה מקצועית לטיפוח העור.",
     "url": "https://www.judithgold.co.il/",
-    "logo": "https://www.judithgold.co.il/assets/logo.svg",
-    "image": "https://www.judithgold.co.il/assets/logo.svg",
+    "logo": "https://www.judithgold.co.il/assets/img/logo.png",
+    "image": "https://www.judithgold.co.il/assets/img/judith.jpg",
     "telephone": "+972-54-744-4478",
     "email": "judithgold10@gmail.com",
     "priceRange": "₪₪",
     "currenciesAccepted": "ILS",
     "paymentAccepted": "Credit Card, PayPal, Bit",
     "founder": { "@type": "Person", "name": "Judith Gold" },
-    "makesOffer": { "@type": "Offer", "itemOffered": { "@type": "Brand", "name": "Dr. Klein" } },
-    "areaServed": { "@type": "Country", "name": "Israel" },
+    "brand": { "@type": "Brand", "name": "Dr. Klein" },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "טיפולי פנים ואסתטיקה במכון",
+      "itemListElement": [
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "ניקוי עור עמוק וטיפולי פנים" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "פילינגים וטיפולי חידוש" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "טיפולי אנטי-אייג'ינג ומיצוק" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "טיפולי הבהרה ואקנה" } }
+      ]
+    },
+    "areaServed": [ { "@type": "City", "name": "חיפה" }, { "@type": "Country", "name": "Israel" } ],
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "ורדיה סנטר",
@@ -137,30 +147,33 @@
       </button>
 
       <a class="brand" href="#" aria-label="יהודית גולד – דף הבית">
-        <span class="brand-mark" aria-hidden="true">G</span>
-        <span class="brand-text">
-          <span class="brand-name">יהודית גולד</span>
-          <span class="brand-sub">מכון לטיפולי אסתטיקה</span>
-        </span>
+        <img class="brand-logo" src="assets/img/logo.png" alt="יהודית גולד – מכון לטיפולי אסתטיקה" width="180" height="90" />
       </a>
 
       <nav class="main-nav" id="mainNav" aria-label="ניווט ראשי">
-        <a href="#products">חנות</a>
+        <a href="#products">החנות</a>
         <a href="#lines">הסדרות</a>
         <a href="#categories">קטגוריות</a>
+        <a href="#treatments">טיפולים במכון</a>
         <a href="#about">אודות</a>
         <a href="#faq">שאלות נפוצות</a>
-        <a href="#contact">צור קשר</a>
+        <a class="nav-chat" href="https://wa.me/972547444478?text=%D7%94%D7%99%D7%99%20%D7%99%D7%94%D7%95%D7%93%D7%99%D7%AA%2C%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%99%D7%99%D7%A2%D7%95%D7%A5" target="_blank" rel="noopener">💬 דברו עם יהודית</a>
       </nav>
 
-      <button class="cart-btn" id="cartBtn" aria-label="עגלת קניות">
-        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <circle cx="9" cy="21" r="1"></circle>
-          <circle cx="20" cy="21" r="1"></circle>
-          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-        </svg>
-        <span class="cart-count" id="cartCount">0</span>
-      </button>
+      <div class="header-actions">
+        <button class="icon-btn wishlist-btn" id="wishlistBtn" aria-label="מועדפים">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+          <span class="icon-count" id="wishCount">0</span>
+        </button>
+        <button class="icon-btn cart-btn" id="cartBtn" aria-label="עגלת קניות">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+          <span class="icon-count cart-count" id="cartCount">0</span>
+        </button>
+      </div>
     </div>
   </header>
 
@@ -177,7 +190,7 @@
         </p>
         <div class="hero-cta">
           <a href="#products" class="btn btn-primary">לתכשירים שלנו</a>
-          <a href="#lines" class="btn btn-ghost">הסדרות</a>
+          <a class="btn btn-ghost" href="https://wa.me/972547444478?text=%D7%94%D7%99%D7%99%20%D7%99%D7%94%D7%95%D7%93%D7%99%D7%AA%2C%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%99%D7%99%D7%A2%D7%95%D7%A5%20%D7%9C%D7%A4%D7%A0%D7%99%20%D7%A8%D7%9B%D7%99%D7%A9%D7%94" target="_blank" rel="noopener">💬 לדבר עם יהודית</a>
         </div>
         <ul class="hero-badges">
           <li>משלוח מהיר לכל הארץ</li>
@@ -185,21 +198,12 @@
           <li>ייעוץ אישי בוואטסאפ</li>
         </ul>
       </div>
-      <div class="hero-visual" aria-hidden="true">
+      <div class="hero-visual">
         <div class="hero-frame">
-          <img class="hero-flower" src="assets/flower.svg" alt="" />
-          <svg class="hero-bottle" viewBox="0 0 100 120" role="img" aria-label="">
-            <rect x="42" y="8" width="16" height="12" rx="2" fill="#4f2350"/>
-            <rect x="44" y="19" width="12" height="11" fill="#8a5a8c"/>
-            <rect x="30" y="29" width="40" height="83" rx="15" fill="#7c3d80"/>
-            <rect x="37" y="53" width="26" height="46" rx="4" fill="#fdfbfe" opacity="0.9"/>
-            <line x1="37" y1="64" x2="63" y2="64" stroke="#c19a49" stroke-width="2"/>
-            <line x1="41" y1="72" x2="59" y2="72" stroke="#caa9cc" stroke-width="1.5"/>
-            <line x1="41" y1="78" x2="59" y2="78" stroke="#caa9cc" stroke-width="1.5"/>
-          </svg>
+          <img class="hero-photo" src="assets/img/judith.jpg" alt="יהודית גולד – קוסמטיקאית ובעלת המכון" width="440" height="550" loading="eager" />
           <div class="hero-chip">
-            <strong>Hyaluronic&nbsp;Wine</strong>
-            <span>הנמכר ביותר</span>
+            <strong>יהודית גולד</strong>
+            <span>קוסמטיקאית · 20+ שנות ניסיון</span>
           </div>
         </div>
       </div>
@@ -260,23 +264,52 @@
       </div>
     </section>
 
-    <!-- ============ ABOUT ============ -->
+    <!-- ============ TRUST / LIVE CHAT ============ -->
+    <section class="section chat-cta" id="chat" aria-label="ייעוץ אישי">
+      <div class="chat-box">
+        <span class="eyebrow">לא בטוחות מה מתאים לכן?</span>
+        <h2>כאן קונים ממי שבאמת מבינה בעור</h2>
+        <p>יהודית, קוסמטיקאית עם מעל 20 שנות ניסיון, כאן כדי להתאים לכן בדיוק את המוצרים הנכונים לסוג העור והצרכים שלכן – בלי לנחש. שלחו הודעה וקבלו ייעוץ אישי, ללא התחייבות.</p>
+        <a class="btn btn-chat" href="https://wa.me/972547444478?text=%D7%94%D7%99%D7%99%20%D7%99%D7%94%D7%95%D7%93%D7%99%D7%AA%2C%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A7%D7%91%D7%9C%20%D7%99%D7%99%D7%A2%D7%95%D7%A5%20%D7%90%D7%99%D7%A9%D7%99" target="_blank" rel="noopener">💬 פתחו צ'אט עם יהודית</a>
+      </div>
+    </section>
+
+    <!-- ============ TREATMENTS IN CLINIC ============ -->
+    <section class="section treatments" id="treatments">
+      <div class="treatments-media">
+        <img src="assets/img/treatment.jpg" alt="טיפולי פנים ואסתטיקה במכון של יהודית גולד בחיפה" width="1100" height="700" loading="lazy" />
+      </div>
+      <div class="treatments-text">
+        <span class="eyebrow">המכון בחיפה</span>
+        <h2>טיפולי פנים ואסתטיקה במכון בחיפה</h2>
+        <p>מעבר לחנות האונליין, יהודית מקבלת במכון בוורדיה סנטר לטיפולי פנים מקצועיים: ניקוי עור עמוק, פילינגים, טיפולי אנטי-אייג'ינג, הבהרה, טיפולי אקנה וטיפולים ממוקדים בסדרות ד״ר קליין.</p>
+        <ul class="treat-list">
+          <li>ניקוי עור עמוק וטיפולי פנים</li>
+          <li>פילינגים וטיפולי חידוש</li>
+          <li>אנטי-אייג'ינג ומיצוק</li>
+          <li>טיפולי הבהרה ואקנה</li>
+        </ul>
+        <a class="btn btn-primary" href="https://wa.me/972547444478?text=%D7%94%D7%99%D7%99%20%D7%99%D7%94%D7%95%D7%93%D7%99%D7%AA%2C%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%AA%D7%90%D7%9D%20%D7%98%D7%99%D7%A4%D7%95%D7%9C%20%D7%91%D7%9E%D7%9B%D7%95%D7%9F" target="_blank" rel="noopener">לתיאום טיפול במכון</a>
+      </div>
+    </section>
+
+    <!-- ============ ABOUT / VALUES ============ -->
     <section class="section about" id="about">
-      <div class="about-visual" aria-hidden="true">
-        <div class="about-badge">G</div>
+      <div class="about-visual">
+        <img class="about-photo" src="assets/img/judith-square.jpg" alt="יהודית גולד – קוסמטיקאית ובעלת המכון" width="420" height="420" loading="lazy" />
       </div>
       <div class="about-text">
         <span class="eyebrow">אודות</span>
-        <h2>מי אנחנו</h2>
+        <h2>טיפוח בסטנדרט של זהב</h2>
         <p>
           <strong>יהודית גולד</strong> היא קוסמטיקאית מקצועית ובעלת מכון לטיפולי אסתטיקה
-          בחיפה, עם ניסיון רב וידע מעמיק בטיפוח העור. במכון ובחנות האונליין אנחנו מאמינים
-          שטיפוח נכון מתחיל במוצרים מקצועיים ואיכותיים.
+          בחיפה, עם מעל 20 שנות ניסיון וידע מעמיק בטיפוח העור. אנו מאמינים שטיפוח נכון
+          מתחיל במוצרים מקצועיים, בהתאמה אישית ובליווי אמיתי.
         </p>
         <p>
           לכן בחרנו לשווק את מוצרי <strong>ד״ר קליין (Dr. Klein)</strong> – קו דרמו-קוסמטי
-          המבוסס על למעלה מ-35 שנות מחקר ופיתוח קליני. אנחנו כאן כדי לעזור לכם לבחור את
-          הטיפוח המדויק לעור שלכם, עם ליווי אישי לאורך כל הדרך.
+          המבוסס על למעלה מ-35 שנות מחקר ופיתוח קליני. אנחנו כאן כדי לעזור לכן לבחור את
+          הטיפוח המדויק לעור שלכן, אונליין ובמכון.
         </p>
         <a href="#products" class="btn btn-primary">למוצרים שלנו</a>
       </div>
@@ -326,14 +359,14 @@
   <footer class="site-footer">
     <div class="footer-grid">
       <div class="footer-brand">
-        <span class="brand-mark" aria-hidden="true">G</span>
+        <img class="footer-logo" src="assets/img/logo.png" alt="יהודית גולד" width="170" height="85" />
         <p>יהודית גולד – מכון לטיפולי אסתטיקה בחיפה. משווקת מורשית של מוצרי ד״ר קליין. טיפוח עור מקצועי בסטנדרט של זהב.</p>
       </div>
       <div>
         <h3>חנות</h3>
         <a href="#products">כל המוצרים</a>
         <a href="#lines">הסדרות</a>
-        <a href="#categories">קטגוריות</a>
+        <a href="#treatments">טיפולים במכון</a>
         <a href="#about">אודות</a>
       </div>
       <div>
