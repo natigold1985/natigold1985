@@ -294,27 +294,27 @@
 
   function buildExitPreview() {
     var ids = Object.keys(cart);
-    var html = ids.slice(0, 4).map(function (id) {
-      var p = byId[id]; if (!p) return "";
-      return '<div class="exit-cart-line"><span class="em">' + productSVG(p.shape, 'exit-svg') + '</span>' +
-             '<span class="nm">' + p.name + '</span>' +
-             '<span class="pr">×' + cart[id] + '</span></div>';
-    }).join("");
-    if (ids.length > 4) html += '<div class="exit-cart-line"><span class="nm">ועוד ' + (ids.length - 4) + ' פריטים…</span></div>';
-    $("#exitCartPreview").innerHTML = html;
-
-    // Pre-fill contact if we already captured it
+    var wrap = $("#exitCartPreview");
+    if (!ids.length) { wrap.innerHTML = ""; wrap.style.display = "none"; }
+    else {
+      wrap.style.display = "";
+      var html = ids.slice(0, 3).map(function (id) {
+        var p = byId[id]; if (!p) return "";
+        return '<div class="exit-cart-line"><span class="em">' + productSVG(p.shape, 'exit-svg') + '</span>' +
+               '<span class="nm">' + p.name + '</span>' +
+               '<span class="pr">×' + cart[id] + '</span></div>';
+      }).join("");
+      if (ids.length > 3) html += '<div class="exit-cart-line"><span class="nm">ועוד ' + (ids.length - 3) + ' פריטים בעגלה…</span></div>';
+      wrap.innerHTML = html;
+    }
+    // Pre-fill from any previously captured lead
+    if (savedLead.name) $("#exitName").value = savedLead.name;
     if (savedLead.email) $("#exitEmail").value = savedLead.email;
     if (savedLead.phone) $("#exitPhone").value = savedLead.phone;
-
-    var n = cartCount();
-    $("#exitSub").textContent = "שמנו לב שהשארת " + n + " פריט" + (n > 1 ? "ים" : "") +
-      " בעגלה בשווי " + money(cartTotal()) + ". הם ממש מחכים לך 😍";
   }
 
   function showExitPopup() {
     if (exitShown) return;
-    if (cartCount() === 0) return;          // only when there's something to lose
     if (load(EXIT_KEY, false)) return;      // once per session
     exitShown = true;
     save(EXIT_KEY, true);
@@ -322,8 +322,20 @@
     closeCart();
     exitOverlay.classList.add("open");
     exitOverlay.setAttribute("aria-hidden", "false");
-    $("#exitEmail").focus();
+    setTimeout(function () { var n = $("#exitName"); if (n) n.focus(); }, 350);
   }
+
+  // Trigger after 60s of inactivity (spec)
+  var idleTimer;
+  function resetIdle() {
+    clearTimeout(idleTimer);
+    if (exitShown || load(EXIT_KEY, false)) return;
+    idleTimer = setTimeout(showExitPopup, 60000);
+  }
+  ["mousemove", "keydown", "scroll", "touchstart", "click"].forEach(function (ev) {
+    window.addEventListener(ev, resetIdle, { passive: true });
+  });
+  resetIdle();
   function hideExitPopup() {
     exitOverlay.classList.remove("open");
     exitOverlay.setAttribute("aria-hidden", "true");
@@ -366,17 +378,73 @@
     if (e.key === "Escape") { hideExitPopup(); closeCart(); }
   });
 
+  /* ---------- lead delivery (static-site friendly) ----------
+     Leads are (1) saved locally, (2) POSTed to a form backend if a key
+     is configured (Web3Forms → emails judithgold10@gmail.com), and
+     (3) always available as a WhatsApp handoff so Judith gets them even
+     with zero backend. Paste a free access key below to enable email. */
+  var WEB3FORMS_KEY = ""; // ← put your Web3Forms access key here to auto-email leads
+  var COUPON = "JG10";
+
+  function cartSummaryText() {
+    var ids = Object.keys(cart);
+    if (!ids.length) return "העגלה ריקה";
+    return ids.map(function (id) { var p = byId[id]; return p ? (p.name + " ×" + cart[id]) : ""; }).filter(Boolean).join(" | ") +
+           " · סה\"כ " + money(cartTotal());
+  }
+  function saveLeadLocal(lead) {
+    var arr = load("jg_leads_v1", []);
+    arr.push(lead); save("jg_leads_v1", arr);
+    savedLead = lead; save(LEAD_KEY, lead);
+  }
+  function postLeadToBackend(lead) {
+    if (!WEB3FORMS_KEY) return; // not configured — WhatsApp handoff covers delivery
+    try {
+      fetch("https://api.web3forms.com/submit", {
+        method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_KEY,
+          subject: "ליד עגלה נטושה – יהודית גולד",
+          from_name: "אתר יהודית גולד",
+          "שם": lead.name, "אימייל": lead.email, "טלפון": lead.phone,
+          "עגלה": cartSummaryText(), "הסכמה": "אושרה", "קופון": COUPON
+        })
+      }).catch(function () {});
+    } catch (e) {}
+  }
+  function leadWhatsappUrl(lead) {
+    var msg = "היי יהודית! מילאתי פרטים באתר לקבלת קופון " + COUPON + " (10% הנחה).\n" +
+              "שם: " + lead.name + "\nטלפון: " + lead.phone + "\nאימייל: " + lead.email +
+              "\nעגלה: " + cartSummaryText();
+    return "https://wa.me/972547444478?text=" + encodeURIComponent(msg);
+  }
+
   $("#exitForm").addEventListener("submit", function (e) {
     e.preventDefault();
+    var name = $("#exitName").value.trim();
     var email = $("#exitEmail").value.trim();
     var phone = $("#exitPhone").value.trim();
+    var c1 = $("#exitConsent1").checked;
+    var c2 = $("#exitConsent2").checked;
     var note = $("#exitNote");
-    if (!isEmail(email)) { note.textContent = "אנא הזיני אימייל תקין כדי שנשמור לך את העגלה"; return; }
-    if (phone && !isPhone(phone)) { note.textContent = "מספר הטלפון אינו תקין"; return; }
-    savedLead = { email: email, phone: phone, at: Date.now(), cart: Object.assign({}, cart) };
-    save(LEAD_KEY, savedLead);
-    note.textContent = "מעולה! שמרנו לך את העגלה 💜 קוד 10% הנחה בדרך אלייך";
-    setTimeout(function () { hideExitPopup(); openCart(); }, 1600);
+    note.textContent = "";
+    if (name.length < 2) { note.textContent = "אנא מלאו שם מלא"; return; }
+    if (!isEmail(email)) { note.textContent = "אנא הזינו כתובת אימייל תקינה"; return; }
+    if (!isPhone(phone)) { note.textContent = "אנא הזינו מספר טלפון תקין (חובה)"; return; }
+    if (!c1 || !c2) { note.textContent = "יש לאשר את שתי התיבות כדי להמשיך"; return; }
+
+    var lead = { name: name, email: email, phone: phone, consentGiven: true,
+                 cart: Object.assign({}, cart), cartText: cartSummaryText(), at: Date.now() };
+    saveLeadLocal(lead);
+    postLeadToBackend(lead);
+
+    var waBtn = $("#exitWaBtn");
+    if (waBtn) waBtn.href = leadWhatsappUrl(lead);
+    $("#couponCode").textContent = COUPON;
+    $("#exitForm").style.display = "none";
+    var prev = $("#exitCartPreview"); if (prev) prev.style.display = "none";
+    var dismiss = $("#exitDismiss"); if (dismiss) dismiss.style.display = "none";
+    $("#exitSuccess").hidden = false;
   });
 
   /* ---------- mobile nav ---------- */
