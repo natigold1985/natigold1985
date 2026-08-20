@@ -86,6 +86,11 @@
   }
 
   /* ---------- render products ---------- */
+  function productMedia(p) {
+    return (p.images && p.images.length) ?
+      '<img src="' + p.images[0] + '" alt="' + p.name + '" loading="lazy" width="300" height="300" />' :
+      productSVG(p.shape);
+  }
   function productCard(p) {
     var stars = "★★★★★";
     var old = p.oldPrice ? '<small>' + money(p.oldPrice) + '</small>' : '';
@@ -96,10 +101,10 @@
       '<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 21l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.18z"/></svg></button>';
     return '' +
       '<article class="product-card" role="listitem" data-cat="' + p.cat + '">' +
-        '<div class="product-media">' + heart + tag + line + productSVG(p.shape) + '</div>' +
+        '<div class="product-media" data-open="' + p.id + '">' + heart + tag + line + productMedia(p) + '</div>' +
         '<div class="product-body">' +
           '<span class="product-cat">' + p.catLabel + '</span>' +
-          '<h3 class="product-name">' + p.name + '</h3>' +
+          '<h3 class="product-name" data-open="' + p.id + '">' + p.name + '</h3>' +
           '<p class="product-desc">' + p.desc + '</p>' +
           '<p class="product-rating">' + stars + ' <span>(' + p.rating + ' · ' + p.reviews + ' ביקורות)</span></p>' +
           '<div class="product-foot">' +
@@ -229,6 +234,8 @@
     var t = e.target;
     var wishBtn = t.closest && t.closest("[data-wish]");
     if (wishBtn) { toggleWish(wishBtn.getAttribute("data-wish"), wishBtn); return; }
+    var openBtn = t.closest && t.closest("[data-open]");
+    if (openBtn && !t.closest("[data-wish]")) { openProductModal(openBtn.getAttribute("data-open")); return; }
     var add = t.getAttribute && t.getAttribute("data-add");
     var inc = t.getAttribute && t.getAttribute("data-inc");
     var dec = t.getAttribute && t.getAttribute("data-dec");
@@ -238,6 +245,94 @@
     else if (dec) { cart[dec]--; if (cart[dec] <= 0) delete cart[dec]; renderCart(); }
     else if (rm) { delete cart[rm]; renderCart(); }
   });
+
+  /* ---------- product image zoom (click/tap to zoom, drag or hover to pan) ---------- */
+  function initZoom(img) {
+    if (!img) return;
+    var zoomed = false;
+    function setPos(e, rect) {
+      var clientX = (e.touches ? e.touches[0].clientX : e.clientX);
+      var clientY = (e.touches ? e.touches[0].clientY : e.clientY);
+      var x = ((clientX - rect.left) / rect.width) * 100;
+      var y = ((clientY - rect.top) / rect.height) * 100;
+      img.style.transformOrigin = x + "% " + y + "%";
+    }
+    img.classList.add("pd-zoomable");
+    img.addEventListener("click", function (e) {
+      var rect = img.getBoundingClientRect();
+      setPos(e, rect);
+      zoomed = !zoomed;
+      img.classList.toggle("pd-zoomed", zoomed);
+    });
+    img.addEventListener("mousemove", function (e) {
+      if (!zoomed) return;
+      setPos(e, img.getBoundingClientRect());
+    });
+    img.addEventListener("touchmove", function (e) {
+      if (!zoomed) return;
+      e.preventDefault();
+      setPos(e, img.getBoundingClientRect());
+    }, { passive: false });
+    img.addEventListener("mouseleave", function () {
+      zoomed = false;
+      img.classList.remove("pd-zoomed");
+    });
+  }
+
+  /* ---------- product detail modal ---------- */
+  var pdOverlay = $("#pdOverlay");
+  var pdCurrentId = null;
+  function renderPdGallery(p) {
+    var imgs = (p.images && p.images.length) ? p.images : null;
+    var main = $("#pdMain");
+    var thumbs = $("#pdThumbs");
+    if (!imgs) {
+      main.innerHTML = productSVG(p.shape, "pd-svg");
+      thumbs.innerHTML = "";
+      thumbs.hidden = true;
+      return;
+    }
+    thumbs.hidden = imgs.length < 2;
+    function show(i) {
+      main.innerHTML = '<img src="' + imgs[i] + '" alt="' + p.name + '" />';
+      Array.prototype.forEach.call(thumbs.children, function (el, idx) {
+        el.classList.toggle("active", idx === i);
+      });
+      initZoom(main.querySelector("img"));
+    }
+    thumbs.innerHTML = imgs.map(function (src, i) {
+      return '<button class="pd-thumb' + (i === 0 ? ' active' : '') + '" data-i="' + i + '"><img src="' + src + '" alt="" /></button>';
+    }).join("");
+    Array.prototype.forEach.call(thumbs.children, function (el, idx) {
+      el.addEventListener("click", function () { show(idx); });
+    });
+    show(0);
+  }
+  function openProductModal(id) {
+    var p = byId[id];
+    if (!p) return;
+    pdCurrentId = id;
+    renderPdGallery(p);
+    $("#pdLine").textContent = p.line || "";
+    $("#pdName").textContent = p.name;
+    $("#pdRating").innerHTML = "★★★★★ <span>(" + p.rating + " · " + p.reviews + " ביקורות)</span>";
+    var old = p.oldPrice ? '<small>' + money(p.oldPrice) + '</small>' : '';
+    $("#pdPrice").innerHTML = money(p.price) + old;
+    $("#pdDesc").textContent = p.desc;
+    $("#pdForWhom").innerHTML = (p.forWhom || []).map(function (s) { return "<li>" + s + "</li>"; }).join("");
+    $("#pdHowTo").textContent = p.howToUse || "";
+    $("#pdWaLink").href = waProductLink(p);
+    pdOverlay.classList.add("open");
+    pdOverlay.setAttribute("aria-hidden", "false");
+  }
+  function closePdModal() {
+    pdOverlay.classList.remove("open");
+    pdOverlay.setAttribute("aria-hidden", "true");
+  }
+  $("#pdClose").addEventListener("click", closePdModal);
+  pdOverlay.addEventListener("click", function (e) { if (e.target === pdOverlay) closePdModal(); });
+  $("#pdAddBtn").addEventListener("click", function () { if (pdCurrentId) addToCart(pdCurrentId); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") closePdModal(); });
 
   /* ---------- wishlist ---------- */
   var wishCountEl = $("#wishCount");

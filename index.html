@@ -391,6 +391,40 @@
     </div>
   </footer>
 
+  <!-- ============ PRODUCT DETAIL MODAL ============ -->
+  <div class="pd-overlay" id="pdOverlay" aria-hidden="true">
+    <div class="pd-modal" role="dialog" aria-modal="true" aria-labelledby="pdName">
+      <button class="pd-close" id="pdClose" aria-label="סגירה">✕</button>
+      <div class="pd-body">
+        <div class="pd-gallery">
+          <div class="pd-main" id="pdMain"></div>
+          <div class="pd-thumbs" id="pdThumbs"></div>
+        </div>
+        <div class="pd-info">
+          <span class="product-line-badge" id="pdLine"></span>
+          <h2 id="pdName"></h2>
+          <p class="product-rating" id="pdRating"></p>
+          <p class="pd-price" id="pdPrice"></p>
+          <p class="pd-desc" id="pdDesc"></p>
+          <div class="pd-section">
+            <h3>למי זה מתאים</h3>
+            <ul id="pdForWhom"></ul>
+          </div>
+          <div class="pd-section">
+            <h3>אופן השימוש</h3>
+            <p id="pdHowTo"></p>
+          </div>
+          <div class="pd-actions">
+            <button class="btn btn-primary btn-block" id="pdAddBtn">הוסף לעגלה</button>
+            <a class="wa-product pd-wa" id="pdWaLink" target="_blank" rel="noopener">
+              <svg viewBox="0 0 32 32" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M16 .5C7.4.5.5 7.4.5 16c0 2.8.7 5.4 2 7.7L.4 31.6l8.1-2.1c2.2 1.2 4.7 1.9 7.5 1.9 8.6 0 15.5-6.9 15.5-15.5S24.6.5 16 .5zm0 28.3c-2.5 0-4.8-.7-6.8-1.8l-.5-.3-4.8 1.3 1.3-4.7-.3-.5a12.7 12.7 0 0 1-2-6.8C3.1 8.9 8.9 3.1 16 3.1S28.9 8.9 28.9 16 23.1 28.8 16 28.8z"/></svg>
+              שאלו על המוצר בוואטסאפ</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- ============ CART DRAWER ============ -->
   <div class="drawer-overlay" id="drawerOverlay"></div>
   <aside class="cart-drawer" id="cartDrawer" aria-label="עגלת קניות" aria-hidden="true">
