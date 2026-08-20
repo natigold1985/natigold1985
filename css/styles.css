@@ -440,8 +440,12 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
 .pd-body { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
 .pd-gallery { background: var(--bg-2); padding: 24px; display: flex; flex-direction: column; gap: 12px; }
 .pd-main { aspect-ratio: 1/1; display: grid; place-items: center; background: #fff; border-radius: 12px; overflow: hidden; }
-.pd-main img { width: 100%; height: 100%; object-fit: contain; }
+.pd-main img { width: 100%; height: 100%; object-fit: contain; transition: transform .15s ease-out; }
 .pd-main .pd-svg { width: 65%; height: 65%; }
+.pd-main img.pd-zoomable { cursor: zoom-in; }
+.pd-main img.pd-zoomed { cursor: zoom-out; transform: scale(2.4); transition: none; }
+.pd-gallery { position: relative; }
+.pd-gallery::after { content: "🔍 לחיצה להגדלה"; position: absolute; bottom: 10px; inset-inline-end: 10px; font-size: .72rem; color: var(--muted); background: rgba(255,255,255,.85); padding: 3px 9px; border-radius: 999px; pointer-events: none; }
 .pd-thumbs { display: flex; gap: 8px; flex-wrap: wrap; }
 .pd-thumb { width: 56px; height: 56px; border-radius: 8px; overflow: hidden; border: 2px solid transparent; padding: 0; background: #fff; }
 .pd-thumb img { width: 100%; height: 100%; object-fit: contain; }

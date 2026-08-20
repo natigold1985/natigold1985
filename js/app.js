@@ -246,6 +246,39 @@
     else if (rm) { delete cart[rm]; renderCart(); }
   });
 
+  /* ---------- product image zoom (click/tap to zoom, drag or hover to pan) ---------- */
+  function initZoom(img) {
+    if (!img) return;
+    var zoomed = false;
+    function setPos(e, rect) {
+      var clientX = (e.touches ? e.touches[0].clientX : e.clientX);
+      var clientY = (e.touches ? e.touches[0].clientY : e.clientY);
+      var x = ((clientX - rect.left) / rect.width) * 100;
+      var y = ((clientY - rect.top) / rect.height) * 100;
+      img.style.transformOrigin = x + "% " + y + "%";
+    }
+    img.classList.add("pd-zoomable");
+    img.addEventListener("click", function (e) {
+      var rect = img.getBoundingClientRect();
+      setPos(e, rect);
+      zoomed = !zoomed;
+      img.classList.toggle("pd-zoomed", zoomed);
+    });
+    img.addEventListener("mousemove", function (e) {
+      if (!zoomed) return;
+      setPos(e, img.getBoundingClientRect());
+    });
+    img.addEventListener("touchmove", function (e) {
+      if (!zoomed) return;
+      e.preventDefault();
+      setPos(e, img.getBoundingClientRect());
+    }, { passive: false });
+    img.addEventListener("mouseleave", function () {
+      zoomed = false;
+      img.classList.remove("pd-zoomed");
+    });
+  }
+
   /* ---------- product detail modal ---------- */
   var pdOverlay = $("#pdOverlay");
   var pdCurrentId = null;
@@ -265,6 +298,7 @@
       Array.prototype.forEach.call(thumbs.children, function (el, idx) {
         el.classList.toggle("active", idx === i);
       });
+      initZoom(main.querySelector("img"));
     }
     thumbs.innerHTML = imgs.map(function (src, i) {
       return '<button class="pd-thumb' + (i === 0 ? ' active' : '') + '" data-i="' + i + '"><img src="' + src + '" alt="" /></button>';
