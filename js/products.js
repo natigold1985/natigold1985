@@ -58,12 +58,12 @@ window.JG_PRODUCTS = [
   },
   {
     id: "dk-res-serum",
-    name: "סרום ריג'נרה ביואקטיב",
-    line: "Regenera Bioactive",
+    name: "סרום רסברטרול פרואקטיב 30ml",
+    line: "Segreto del Vino",
     cat: "serum", catLabel: "סרומים",
     shape: "dropper", price: 365, oldPrice: 420, rating: 4.9, reviews: 236,
     tag: null,
-    desc: "סרום ביואקטיבי לחידוש העור – נוגד חמצון עוצמתי שמגן מפני נזקי סביבה ומאזן את גוון העור.",
+    desc: "סרום רסברטרול מתמצית ענבים – נוגד חמצון עוצמתי שמגן מפני נזקי סביבה ומאזן את גוון העור.",
     forWhom: ["עור החשוף מדי יום לזיהום, שמש ולחות אוויר משתנה", "מי שרוצה למנוע היווצרות קמטים מוקדמת", "גוון עור לא אחיד המצריך איזון"],
     howToUse: "למרוח על פנים וצוואר נקיים בבוקר, לפני קרם יום עם הגנה מהשמש.",
     images: ["assets/img/products/dk-res-serum/1.webp", "assets/img/products/dk-res-serum/2.webp", "assets/img/products/dk-res-serum/3.webp", "assets/img/products/dk-res-serum/4.webp"]
@@ -82,8 +82,8 @@ window.JG_PRODUCTS = [
   },
   {
     id: "dk-sf-cream",
-    name: "קרם אנטי-אייג'ינג טוטאלי AC-XL",
-    line: "Total Anti-Aging AC-XL",
+    name: "קרם אנטי-אייג'ינג טוטאלי AC+AL",
+    line: "Total Anti-Aging AC+AL",
     cat: "moisture", catLabel: "לחות והזנה",
     shape: "jar", price: 289, oldPrice: null, rating: 4.8, reviews: 149,
     tag: null,

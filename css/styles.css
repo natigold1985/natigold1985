@@ -150,7 +150,7 @@ h1, h2, h3 { font-family: "Assistant", sans-serif; line-height: 1.18; font-weigh
 .product-card:hover { box-shadow: var(--shadow); transform: translateY(-4px); border-color: var(--line-2); }
 .product-media { position: relative; aspect-ratio: 1/1; display: grid; place-items: center; background: linear-gradient(165deg, var(--bg-2), var(--bg-3)); border-bottom: 1px solid var(--line); }
 .prod-svg { width: 44%; height: auto; filter: drop-shadow(0 16px 20px rgba(74,31,72,.22)); }
-.product-line-badge { position: absolute; top: 14px; inset-inline-end: 14px; background: rgba(255,255,255,.9); color: var(--purple); font-size: .66rem; font-weight: 700; letter-spacing: .8px; padding: 5px 10px; border: 1px solid var(--line-2); }
+.product-line-badge { position: absolute; top: 14px; inset-inline-end: 14px; max-width: calc(100% - 66px); background: rgba(255,255,255,.9); color: var(--purple); font-size: .66rem; font-weight: 700; letter-spacing: .5px; padding: 5px 10px; border: 1px solid var(--line-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .product-tag { position: absolute; top: 14px; inset-inline-start: 14px; background: var(--gold); color: #fff; font-size: .68rem; font-weight: 700; letter-spacing: .5px; padding: 5px 10px; }
 .product-body { padding: 20px 20px 22px; display: flex; flex-direction: column; gap: 7px; flex: 1; }
 .product-cat { font-size: .72rem; color: var(--gold); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
