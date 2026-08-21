@@ -135,10 +135,10 @@
   <a class="skip-link" href="#main">דלג לתוכן הראשי</a>
 
   <!-- ============ TOP BAR ============ -->
-  <div class="promo-ribbon">
+  <div class="promo-ribbon" role="region" aria-label="מבצע השבוע">
     <span><strong>מבצע השבוע:</strong> עד 20% הנחה על מוצרי ד״ר קליין נבחרים · קוד <strong>JG20</strong> בקופה · לזמן מוגבל</span>
   </div>
-  <div class="topbar">
+  <div class="topbar" role="region" aria-label="פרטי משלוח ושירות">
     <span>✦ משלוח חינם בהזמנות מעל 199 ₪ • מכון אסתטיקה בחיפה • ייעוץ אישי בוואטסאפ ✦</span>
   </div>
 
@@ -262,7 +262,7 @@
         <h2>המוצרים שלנו</h2>
         <p>מבחר תכשירי ד״ר קליין המקצועיים, ישירות אליכם</p>
       </div>
-      <div class="product-grid" id="productGrid" role="list">
+      <div class="product-grid" id="productGrid">
         <!-- Products injected by JS -->
       </div>
     </section>
@@ -529,15 +529,18 @@
     <div class="chat-previews" id="chatPreviews"></div>
     <form class="chat-input" id="chatForm">
       <div class="chat-attach">
-        <label class="chat-icon" title="שליחת תמונה" aria-label="שליחת תמונה">
+        <label class="chat-icon" title="שליחת תמונה">
+          <span class="sr-only">שליחת תמונה</span>
           <input type="file" accept="image/*" hidden id="chatImg" />
           <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
         </label>
-        <label class="chat-icon" title="שליחת סרטון" aria-label="שליחת סרטון">
+        <label class="chat-icon" title="שליחת סרטון">
+          <span class="sr-only">שליחת סרטון</span>
           <input type="file" accept="video/*" hidden id="chatVid" />
           <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2" y="5" width="14" height="14" rx="2"/><path d="M22 8l-6 4 6 4V8z"/></svg>
         </label>
-        <label class="chat-icon" title="שליחת קובץ" aria-label="שליחת מסמך">
+        <label class="chat-icon" title="שליחת קובץ">
+          <span class="sr-only">שליחת מסמך</span>
           <input type="file" accept=".pdf,.doc,.docx,.txt" hidden id="chatDoc" />
           <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
         </label>

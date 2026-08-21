@@ -103,7 +103,7 @@
     var heart = '<button class="wish-heart' + wished + '" data-wish="' + p.id + '" aria-label="הוספה למועדפים" aria-pressed="' + (wished ? 'true' : 'false') + '">' +
       '<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 21l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.18z"/></svg></button>';
     return '' +
-      '<article class="product-card" role="listitem" data-cat="' + p.cat + '">' +
+      '<article class="product-card" data-cat="' + p.cat + '">' +
         '<div class="product-media" data-open="' + p.id + '">' + heart + tag + endStack + productMedia(p) + '</div>' +
         '<div class="product-body">' +
           kicker +
@@ -306,7 +306,7 @@
       img.addEventListener("click", function () { openLightbox(imgs, i, p.name); });
     }
     thumbs.innerHTML = imgs.map(function (src, i) {
-      return '<button class="pd-thumb' + (i === 0 ? ' active' : '') + '" data-i="' + i + '"><img src="' + src + '" alt="" /></button>';
+      return '<button class="pd-thumb' + (i === 0 ? ' active' : '') + '" data-i="' + i + '" aria-label="תמונה ' + (i + 1) + ' מתוך ' + imgs.length + '"><img src="' + src + '" alt="" /></button>';
     }).join("");
     Array.prototype.forEach.call(thumbs.children, function (el, idx) {
       el.addEventListener("click", function () { show(idx); });
@@ -335,7 +335,7 @@
     lbImgs = imgs; lbAlt = altText || "";
     lbThumbs.hidden = imgs.length < 2;
     lbThumbs.innerHTML = imgs.map(function (src, i) {
-      return '<button class="lb-thumb" data-i="' + i + '"><img src="' + src + '" alt="" /></button>';
+      return '<button class="lb-thumb" data-i="' + i + '" aria-label="תמונה ' + (i + 1) + ' מתוך ' + imgs.length + '"><img src="' + src + '" alt="" /></button>';
     }).join("");
     Array.prototype.forEach.call(lbThumbs.children, function (el, idx) {
       el.addEventListener("click", function () { lbShow(idx); });
