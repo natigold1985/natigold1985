@@ -97,8 +97,8 @@
     var tag = p.tag ? '<span class="product-tag">' + p.tag + '</span>' : '';
     var discountPct = p.oldPrice ? Math.round((1 - p.price / p.oldPrice) * 100) : 0;
     var discount = discountPct > 0 ? '<span class="discount-badge">-' + discountPct + '%</span>' : '';
-    var line = p.line ? '<span class="product-line-badge">' + p.line + '</span>' : '';
-    var endStack = (discount || line) ? '<div class="media-end-stack">' + discount + line + '</div>' : '';
+    var endStack = discount ? '<div class="media-end-stack">' + discount + '</div>' : '';
+    var kicker = p.line ? '<span class="product-line-kicker">' + p.line + '</span>' : '<span class="product-line-kicker">' + p.catLabel + '</span>';
     var wished = wishlist.indexOf(p.id) > -1 ? ' on' : '';
     var heart = '<button class="wish-heart' + wished + '" data-wish="' + p.id + '" aria-label="הוספה למועדפים" aria-pressed="' + (wished ? 'true' : 'false') + '">' +
       '<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 21l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.18z"/></svg></button>';
@@ -106,7 +106,7 @@
       '<article class="product-card" role="listitem" data-cat="' + p.cat + '">' +
         '<div class="product-media" data-open="' + p.id + '">' + heart + tag + endStack + productMedia(p) + '</div>' +
         '<div class="product-body">' +
-          '<span class="product-cat">' + p.catLabel + '</span>' +
+          kicker +
           '<h3 class="product-name" data-open="' + p.id + '">' + p.name + '</h3>' +
           '<p class="product-desc">' + p.desc + '</p>' +
           '<p class="product-rating">' + stars + ' <span>(' + p.rating + ' · ' + p.reviews + ' ביקורות)</span></p>' +
