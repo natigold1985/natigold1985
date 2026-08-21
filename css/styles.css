@@ -220,6 +220,8 @@ h1, h2, h3 { font-family: "Assistant", sans-serif; line-height: 1.18; font-weigh
 /* ---------- Cart Drawer ---------- */
 .drawer-overlay { position: fixed; inset: 0; background: rgba(28,18,30,.5); backdrop-filter: blur(3px); opacity: 0; visibility: hidden; transition: .28s; z-index: 150; }
 .drawer-overlay.open { opacity: 1; visibility: visible; }
+.nav-overlay { position: fixed; inset: 0; background: rgba(28,18,30,.45); backdrop-filter: blur(2px); opacity: 0; visibility: hidden; transition: .25s; z-index: 90; }
+.nav-overlay.open { opacity: 1; visibility: visible; }
 .cart-drawer { position: fixed; top: 0; inset-inline-start: 0; height: 100%; width: min(420px, 92vw); background: #fff; z-index: 160; box-shadow: var(--shadow); display: flex; flex-direction: column; transform: translateX(100%); visibility: hidden; pointer-events: none; transition: transform .32s cubic-bezier(.4,0,.2,1), visibility .32s; }
 .cart-drawer.open { transform: translateX(0); visibility: visible; pointer-events: auto; }
 .cart-drawer-head { display: flex; align-items: center; justify-content: space-between; padding: 22px; border-bottom: 1px solid var(--line); }

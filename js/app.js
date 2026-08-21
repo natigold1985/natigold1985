@@ -545,7 +545,7 @@
   $("#exitDismiss").addEventListener("click", hideExitPopup);
   exitOverlay.addEventListener("click", function (e) { if (e.target === exitOverlay) hideExitPopup(); });
   document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape") { hideExitPopup(); closeCart(); closeWish(); }
+    if (e.key === "Escape") { hideExitPopup(); closeCart(); closeWish(); closeMobileNav(); }
   });
 
   /* ---------- lead delivery (static-site friendly) ----------
@@ -620,12 +620,20 @@
   /* ---------- mobile nav ---------- */
   var navToggle = $("#navToggle");
   var mainNav = $("#mainNav");
+  var navOverlay = $("#navOverlay");
+  function closeMobileNav() {
+    mainNav.classList.remove("open");
+    navOverlay.classList.remove("open");
+    navToggle.setAttribute("aria-expanded", "false");
+  }
   navToggle.addEventListener("click", function () {
     var open = mainNav.classList.toggle("open");
+    navOverlay.classList.toggle("open", open);
     navToggle.setAttribute("aria-expanded", open ? "true" : "false");
   });
+  navOverlay.addEventListener("click", closeMobileNav);
   mainNav.querySelectorAll("a").forEach(function (a) {
-    a.addEventListener("click", function () { mainNav.classList.remove("open"); navToggle.setAttribute("aria-expanded", "false"); });
+    a.addEventListener("click", closeMobileNav);
   });
 
   /* ---------- init ---------- */
