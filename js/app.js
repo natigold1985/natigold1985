@@ -198,7 +198,7 @@
       var q = cart[id];
       return '' +
         '<div class="cart-item">' +
-          '<div class="cart-item-media">' + productSVG(p.shape, 'cart-svg') + '</div>' +
+          '<div class="cart-item-media">' + productMedia(p) + '</div>' +
           '<div class="cart-item-info">' +
             '<span class="cart-item-name">' + p.name + '</span>' +
             '<span class="cart-item-price">' + money(p.price) + '</span>' +
@@ -388,26 +388,49 @@
 
   /* ---------- wishlist ---------- */
   var wishCountEl = $("#wishCount");
+  var wishDrawer = $("#wishDrawer");
+  var wishItemsEl = $("#wishItems");
   function updateWishCount() { if (wishCountEl) wishCountEl.textContent = wishlist.length; }
+  function renderWishlist() {
+    if (!wishItemsEl) return;
+    wishDrawer.classList.toggle("empty", wishlist.length === 0);
+    wishItemsEl.innerHTML = wishlist.map(function (id) {
+      var p = byId[id]; if (!p) return "";
+      return '' +
+        '<div class="cart-item">' +
+          '<div class="cart-item-media">' + productMedia(p) + '</div>' +
+          '<div class="cart-item-info">' +
+            '<span class="cart-item-name">' + p.name + '</span>' +
+            '<span class="cart-item-price">' + money(p.price) + '</span>' +
+            '<div class="cart-item-controls">' +
+              '<button class="qty-btn wish-add-btn" data-add="' + id + '">הוסף לעגלה</button>' +
+              '<button class="cart-item-remove" data-wish="' + id + '">הסר</button>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+    }).join("");
+  }
   function toggleWish(id, btn) {
     var i = wishlist.indexOf(id);
     if (i > -1) { wishlist.splice(i, 1); if (btn) { btn.classList.remove("on"); btn.setAttribute("aria-pressed", "false"); } }
     else { wishlist.push(id); if (btn) { btn.classList.add("on"); btn.setAttribute("aria-pressed", "true"); } toast((byId[id] ? byId[id].line || "המוצר" : "המוצר") + " נוסף למועדפים ❤"); }
     save(WISH_KEY, wishlist);
     updateWishCount();
+    renderWishlist();
   }
   var wishlistBtn = $("#wishlistBtn");
-  if (wishlistBtn) wishlistBtn.addEventListener("click", function () {
-    if (!wishlist.length) { toast("עדיין לא הוספת מוצרים למועדפים ❤"); return; }
-    toast("יש לך " + wishlist.length + " מוצרים במועדפים");
-  });
+  if (wishlistBtn) wishlistBtn.addEventListener("click", function () { renderWishlist(); openWish(); });
 
   /* ---------- drawer open/close ---------- */
-  function openCart() { cartDrawer.classList.add("open"); drawerOverlay.classList.add("open"); cartDrawer.setAttribute("aria-hidden", "false"); }
+  function openCart() { closeWish(); cartDrawer.classList.add("open"); drawerOverlay.classList.add("open"); cartDrawer.setAttribute("aria-hidden", "false"); }
   function closeCart() { cartDrawer.classList.remove("open"); drawerOverlay.classList.remove("open"); cartDrawer.setAttribute("aria-hidden", "true"); }
+  function openWish() { closeCart(); wishDrawer.classList.add("open"); drawerOverlay.classList.add("open"); wishDrawer.setAttribute("aria-hidden", "false"); }
+  function closeWish() { wishDrawer.classList.remove("open"); if (!cartDrawer.classList.contains("open")) drawerOverlay.classList.remove("open"); wishDrawer.setAttribute("aria-hidden", "true"); }
   $("#cartBtn").addEventListener("click", openCart);
   $("#cartClose").addEventListener("click", closeCart);
-  drawerOverlay.addEventListener("click", closeCart);
+  $("#wishClose").addEventListener("click", closeWish);
+  $("#wishEmptyShop").addEventListener("click", function () { closeWish(); location.hash = "#products"; });
+  drawerOverlay.addEventListener("click", function () { closeCart(); closeWish(); });
   $("#cartEmptyShop").addEventListener("click", function () { closeCart(); location.hash = "#products"; });
 
   $("#checkoutBtn").addEventListener("click", function () {
@@ -447,7 +470,7 @@
       wrap.style.display = "";
       var html = ids.slice(0, 3).map(function (id) {
         var p = byId[id]; if (!p) return "";
-        return '<div class="exit-cart-line"><span class="em">' + productSVG(p.shape, 'exit-svg') + '</span>' +
+        return '<div class="exit-cart-line"><span class="em">' + productMedia(p) + '</span>' +
                '<span class="nm">' + p.name + '</span>' +
                '<span class="pr">×' + cart[id] + '</span></div>';
       }).join("");
@@ -522,7 +545,7 @@
   $("#exitDismiss").addEventListener("click", hideExitPopup);
   exitOverlay.addEventListener("click", function (e) { if (e.target === exitOverlay) hideExitPopup(); });
   document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape") { hideExitPopup(); closeCart(); }
+    if (e.key === "Escape") { hideExitPopup(); closeCart(); closeWish(); }
   });
 
   /* ---------- lead delivery (static-site friendly) ----------
