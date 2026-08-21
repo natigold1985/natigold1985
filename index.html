@@ -179,6 +179,7 @@
       </div>
     </div>
   </header>
+  <div class="nav-overlay" id="navOverlay"></div>
 
   <main id="main">
     <!-- ============ HERO ============ -->
@@ -472,6 +473,20 @@
       <div class="cart-total"><span>סה"כ לתשלום</span><strong id="cartTotal">₪0</strong></div>
       <p class="cart-shipfree" id="cartShipFree"></p>
       <button class="btn btn-primary btn-block" id="checkoutBtn">מעבר לתשלום מאובטח 🔒</button>
+    </div>
+  </aside>
+
+  <!-- ============ WISHLIST DRAWER ============ -->
+  <aside class="cart-drawer" id="wishDrawer" aria-label="מוצרים מועדפים" aria-hidden="true">
+    <div class="cart-drawer-head">
+      <h2>המועדפים שלך</h2>
+      <button class="cart-close" id="wishClose" aria-label="סגור מועדפים">✕</button>
+    </div>
+    <div class="cart-items" id="wishItems"></div>
+    <div class="cart-empty" id="wishEmpty">
+      <span>🤍</span>
+      <p>עדיין לא הוספת מוצרים למועדפים</p>
+      <button class="btn btn-primary" id="wishEmptyShop">לחנות</button>
     </div>
   </aside>
 
