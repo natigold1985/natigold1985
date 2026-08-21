@@ -22,7 +22,7 @@
   --gold-soft: #d8bd86;
   --line: #ece4ee;
   --line-2: #e2d7e5;
-  --wa: #25d366;
+  --wa: #0e7a3a;
   --shadow: 0 26px 60px -34px rgba(58, 26, 60, 0.45);
   --shadow-sm: 0 10px 30px -20px rgba(58, 26, 60, 0.4);
   --radius: 16px;
@@ -427,6 +427,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
 .chat-prev-x { position: absolute; top: 0; inset-inline-end: 0; background: rgba(0,0,0,.6); color: #fff; width: 16px; height: 16px; display: grid; place-items: center; font-size: .7rem; cursor: pointer; border-bottom-inline-start-radius: 6px; }
 .chat-input { display: flex; align-items: center; gap: 6px; padding: 8px 10px; border-top: 1px solid var(--line); background: #fff; }
 .chat-attach { display: flex; gap: 2px; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 .chat-icon { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 8px; color: var(--purple); cursor: pointer; transition: background .15s; }
 .chat-icon:hover { background: var(--purple-050); }
 .chat-input input[type=text] { flex: 1; border: none; background: var(--bg-2); border-radius: 999px; padding: 10px 14px; font-family: inherit; font-size: .9rem; color: var(--ink); }
