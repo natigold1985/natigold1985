@@ -133,9 +133,11 @@ h1, h2, h3 { font-family: "Assistant", sans-serif; line-height: 1.18; font-weigh
 
 /* ---------- Product lines / series ---------- */
 .lines { background: var(--bg-2); border-block: 1px solid var(--line); }
-.lines-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1px; max-width: var(--wrap); margin: 0 auto; background: var(--line); border: 1px solid var(--line); }
-.line-card { background: var(--bg); padding: 34px 24px; text-align: center; transition: background .2s; }
-.line-card:hover { background: var(--purple-050); }
+.lines-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; max-width: var(--wrap); margin: 0 auto; }
+.line-card { background: var(--bg); padding: 22px 22px 28px; text-align: center; border-radius: var(--radius); border: 1px solid var(--line); box-shadow: 0 1px 3px rgba(33,26,38,.05); transition: box-shadow .25s ease, transform .25s ease, border-color .25s ease; }
+.line-card:hover { box-shadow: 0 20px 40px -22px rgba(58,26,60,.28); transform: translateY(-3px); border-color: var(--line-2); }
+.line-media { width: 104px; height: 104px; margin: 0 auto 16px; border-radius: 999px; background: linear-gradient(165deg, var(--bg-2), var(--bg-3)); display: grid; place-items: center; overflow: hidden; }
+.line-media img { width: 78%; height: 78%; object-fit: contain; mix-blend-mode: multiply; }
 .line-kicker { display: block; font-family: "Assistant"; font-weight: 800; font-size: 1rem; color: var(--gold); letter-spacing: 2px; margin-bottom: 12px; }
 .line-card h3 { color: var(--purple); font-size: 1.16rem; margin-bottom: 8px; letter-spacing: .3px; }
 .line-card p { font-size: .88rem; color: var(--muted); line-height: 1.6; }
