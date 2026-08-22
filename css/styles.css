@@ -482,6 +482,15 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
 .pd-section ul { padding-inline-start: 20px; margin: 0; color: var(--ink); font-size: .92rem; line-height: 1.7; }
 .pd-section p { color: var(--ink); font-size: .92rem; line-height: 1.7; margin: 0; }
 .pd-actions { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+.pd-qty-row { display: flex; align-items: center; gap: 12px; }
+.pd-qty { display: flex; align-items: center; gap: 2px; border: 1px solid var(--line-2); border-radius: 9px; padding: 2px; flex: none; }
+.pd-qty .qty-btn { border: none; background: transparent; }
+.pd-qty .qty-btn:hover { background: var(--purple-050); border-radius: 7px; }
+.pd-qty .qty-val { min-width: 30px; text-align: center; font-weight: 700; color: var(--ink); }
+.pd-qty-row .btn-primary { flex: 1; }
+.pd-trust { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 10px; }
+.pd-trust-item { display: flex; align-items: center; gap: 10px; color: var(--ink-soft); font-size: .86rem; line-height: 1.5; }
+.pd-trust-item svg { flex: none; color: var(--purple); }
 
 /* ---------- Fullscreen zoom lightbox ---------- */
 .lb-overlay { position: fixed; inset: 0; background: rgba(8,6,10,.94); z-index: 300; opacity: 0; visibility: hidden; transition: .22s; display: flex; flex-direction: column; align-items: center; justify-content: center; }
