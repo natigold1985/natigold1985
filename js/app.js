@@ -636,6 +636,17 @@
     a.addEventListener("click", closeMobileNav);
   });
 
+  /* ---------- promo ribbon dismiss ---------- */
+  var promoRibbon = $("#promoRibbon");
+  var promoClose = $("#promoClose");
+  if (promoRibbon && promoClose) {
+    if (sessionStorage.getItem("promoDismissed") === "1") promoRibbon.classList.add("hidden");
+    promoClose.addEventListener("click", function () {
+      promoRibbon.classList.add("hidden");
+      sessionStorage.setItem("promoDismissed", "1");
+    });
+  }
+
   /* ---------- init ---------- */
   renderCart();
   updateWishCount();
