@@ -61,9 +61,10 @@ h1, h2, h3 { font-family: "Assistant", sans-serif; line-height: 1.18; font-weigh
   white-space: nowrap; letter-spacing: .2px;
 }
 .btn-primary { background: var(--purple); color: #fff; }
-.btn-primary:hover { background: var(--purple-800); transform: translateY(-1px); }
+.btn-primary:hover { background: var(--purple-800); transform: translateY(-2px); box-shadow: 0 12px 24px -10px rgba(74,31,72,.45); }
+.btn-primary:active { transform: translateY(0); box-shadow: 0 4px 10px -4px rgba(74,31,72,.4); }
 .btn-ghost { background: transparent; color: var(--purple); border: 1.5px solid var(--line-2); }
-.btn-ghost:hover { border-color: var(--purple); background: var(--purple-050); }
+.btn-ghost:hover { border-color: var(--purple); background: var(--purple-050); transform: translateY(-1px); }
 .btn-block { width: 100%; }
 
 /* ---------- Top bar ---------- */
