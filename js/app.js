@@ -226,9 +226,9 @@
     save(CART_KEY, cart);
   }
 
-  function addToCart(id) {
+  function addToCart(id, qty) {
     if (!byId[id]) return;
-    cart[id] = (cart[id] || 0) + 1;
+    cart[id] = (cart[id] || 0) + (qty || 1);
     renderCart();
     toast(byId[id].name.split("–")[0].trim() + " נוסף לעגלה ✓");
   }
@@ -358,10 +358,17 @@
     else if (e.key === "ArrowLeft") lbShow(lbIndex + 1);
     else if (e.key === "ArrowRight") lbShow(lbIndex - 1);
   });
+  var pdQty = 1;
+  var pdQtyVal = $("#pdQtyVal");
+  function setPdQty(n) {
+    pdQty = Math.max(1, n);
+    if (pdQtyVal) pdQtyVal.textContent = pdQty;
+  }
   function openProductModal(id) {
     var p = byId[id];
     if (!p) return;
     pdCurrentId = id;
+    setPdQty(1);
     renderPdGallery(p);
     $("#pdLine").textContent = p.line || "";
     $("#pdName").textContent = p.name;
@@ -381,7 +388,9 @@
   }
   $("#pdClose").addEventListener("click", closePdModal);
   pdOverlay.addEventListener("click", function (e) { if (e.target === pdOverlay) closePdModal(); });
-  $("#pdAddBtn").addEventListener("click", function () { if (pdCurrentId) addToCart(pdCurrentId); });
+  $("#pdAddBtn").addEventListener("click", function () { if (pdCurrentId) addToCart(pdCurrentId, pdQty); });
+  $("#pdQtyDec").addEventListener("click", function () { setPdQty(pdQty - 1); });
+  $("#pdQtyInc").addEventListener("click", function () { setPdQty(pdQty + 1); });
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape" && !lbOverlay.classList.contains("open")) closePdModal();
   });
