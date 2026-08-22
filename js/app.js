@@ -122,8 +122,16 @@
   }
 
   var grid = $("#productGrid");
+  function isAntiAging(p) {
+    var text = [p.name, p.line, p.desc, (p.forWhom || []).join(" ")].join(" ");
+    return /אנטי[\s-]?אייג|anti[\s-]?aging/i.test(text);
+  }
   function renderProducts(filter) {
-    var list = PRODUCTS.filter(function (p) { return !filter || filter === "all" || p.cat === filter; });
+    var list = PRODUCTS.filter(function (p) {
+      if (!filter || filter === "all") return true;
+      if (filter === "antiaging") return isAntiAging(p);
+      return p.cat === filter;
+    });
     grid.innerHTML = list.map(productCard).join("");
   }
   renderProducts("all");
@@ -161,13 +169,22 @@
   })();
 
   /* ---------- category filter ---------- */
+  function filterAndScrollToProducts(filter) {
+    document.querySelectorAll(".cat-card").forEach(function (b) {
+      b.classList.toggle("active", b.getAttribute("data-filter") === filter);
+    });
+    renderProducts(filter);
+    var top = $("#products").getBoundingClientRect().top + window.scrollY - 90;
+    window.scrollTo({ top: top, behavior: "smooth" });
+  }
   document.querySelectorAll(".cat-card").forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      document.querySelectorAll(".cat-card").forEach(function (b) { b.classList.remove("active"); });
-      btn.classList.add("active");
-      renderProducts(btn.getAttribute("data-filter"));
-      var top = $("#products").getBoundingClientRect().top + window.scrollY - 90;
-      window.scrollTo({ top: top, behavior: "smooth" });
+    btn.addEventListener("click", function () { filterAndScrollToProducts(btn.getAttribute("data-filter")); });
+  });
+  document.querySelectorAll("[data-nav-filter]").forEach(function (a) {
+    a.addEventListener("click", function (e) {
+      e.preventDefault();
+      filterAndScrollToProducts(a.getAttribute("data-nav-filter"));
+      closeMobileNav();
     });
   });
 
@@ -459,7 +476,7 @@
     if (phone && !isPhone(phone)) { note.textContent = "מספר הטלפון אינו תקין"; return; }
     savedLead = { email: email, phone: phone, at: Date.now() };
     save(LEAD_KEY, savedLead);
-    note.textContent = "תודה! קוד ההנחה יישלח אלייך במייל 💜";
+    note.textContent = "תודה שהצטרפת! נעדכן אותך בעדכונים ומבצעים רשמיים 💜";
     nlForm.reset();
   });
 
@@ -563,7 +580,6 @@
      (3) always available as a WhatsApp handoff so Judith gets them even
      with zero backend. Paste a free access key below to enable email. */
   var WEB3FORMS_KEY = ""; // ← put your Web3Forms access key here to auto-email leads
-  var COUPON = "JG10";
 
   function cartSummaryText() {
     var ids = Object.keys(cart);
@@ -586,13 +602,13 @@
           subject: "ליד עגלה נטושה – יהודית גולד",
           from_name: "אתר יהודית גולד",
           "שם": lead.name, "אימייל": lead.email, "טלפון": lead.phone,
-          "עגלה": cartSummaryText(), "הסכמה": "אושרה", "קופון": COUPON
+          "עגלה": cartSummaryText(), "הסכמה": "אושרה"
         })
       }).catch(function () {});
     } catch (e) {}
   }
   function leadWhatsappUrl(lead) {
-    var msg = "היי יהודית! מילאתי פרטים באתר לקבלת קופון " + COUPON + " (10% הנחה).\n" +
+    var msg = "היי יהודית! מילאתי פרטים באתר וארצה ייעוץ אישי.\n" +
               "שם: " + lead.name + "\nטלפון: " + lead.phone + "\nאימייל: " + lead.email +
               "\nעגלה: " + cartSummaryText();
     return "https://wa.me/972547444478?text=" + encodeURIComponent(msg);
@@ -619,7 +635,6 @@
 
     var waBtn = $("#exitWaBtn");
     if (waBtn) waBtn.href = leadWhatsappUrl(lead);
-    $("#couponCode").textContent = COUPON;
     $("#exitForm").style.display = "none";
     var prev = $("#exitCartPreview"); if (prev) prev.style.display = "none";
     var dismiss = $("#exitDismiss"); if (dismiss) dismiss.style.display = "none";
@@ -634,6 +649,7 @@
     mainNav.classList.remove("open");
     navOverlay.classList.remove("open");
     navToggle.setAttribute("aria-expanded", "false");
+    closeNavDropdowns();
   }
   navToggle.addEventListener("click", function () {
     var open = mainNav.classList.toggle("open");
@@ -645,18 +661,33 @@
     a.addEventListener("click", closeMobileNav);
   });
 
-  /* ---------- promo ribbon dismiss ---------- */
-  var promoRibbon = $("#promoRibbon");
-  var promoClose = $("#promoClose");
-  if (promoRibbon && promoClose) {
-    if (sessionStorage.getItem("promoDismissed") === "1") promoRibbon.classList.add("hidden");
-    promoClose.addEventListener("click", function () {
-      promoRibbon.classList.add("hidden");
-      sessionStorage.setItem("promoDismissed", "1");
+  /* ---------- nav dropdowns (תכשירים / טיפולים קוסמטיים) ---------- */
+  var navItems = document.querySelectorAll(".nav-item");
+  function closeNavDropdowns() {
+    navItems.forEach(function (item) {
+      item.classList.remove("open");
+      var top = item.querySelector(".nav-top");
+      if (top) top.setAttribute("aria-expanded", "false");
     });
   }
+  navItems.forEach(function (item) {
+    var top = item.querySelector(".nav-top");
+    top.addEventListener("click", function () {
+      var willOpen = !item.classList.contains("open");
+      closeNavDropdowns();
+      if (willOpen) { item.classList.add("open"); top.setAttribute("aria-expanded", "true"); }
+    });
+  });
+  document.addEventListener("click", function (e) {
+    if (!e.target.closest(".nav-item")) closeNavDropdowns();
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") closeNavDropdowns();
+  });
 
   /* ---------- init ---------- */
+  var bbMedia = $("#lineBodyBuddyMedia");
+  if (bbMedia) bbMedia.innerHTML = productSVG("pump");
   renderCart();
   updateWishCount();
 })();
