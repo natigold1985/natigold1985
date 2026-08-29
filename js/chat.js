@@ -84,7 +84,11 @@
   });
   previews.addEventListener("click", function (e) {
     var rm = e.target.getAttribute && e.target.getAttribute("data-rm");
-    if (rm !== null && rm !== undefined) { pending.splice(+rm, 1); renderPreviews(); }
+    if (rm !== null && rm !== undefined) {
+      var removed = pending.splice(+rm, 1)[0];
+      if (removed) URL.revokeObjectURL(removed.url);
+      renderPreviews();
+    }
   });
 
   /* ---------- send ---------- */

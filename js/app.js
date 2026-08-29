@@ -443,7 +443,7 @@
 
   /* ---------- drawer open/close ---------- */
   function openCart() { closeWish(); cartDrawer.classList.add("open"); drawerOverlay.classList.add("open"); cartDrawer.setAttribute("aria-hidden", "false"); }
-  function closeCart() { cartDrawer.classList.remove("open"); drawerOverlay.classList.remove("open"); cartDrawer.setAttribute("aria-hidden", "true"); }
+  function closeCart() { cartDrawer.classList.remove("open"); if (!wishDrawer.classList.contains("open")) drawerOverlay.classList.remove("open"); cartDrawer.setAttribute("aria-hidden", "true"); }
   function openWish() { closeCart(); wishDrawer.classList.add("open"); drawerOverlay.classList.add("open"); wishDrawer.setAttribute("aria-hidden", "false"); }
   function closeWish() { wishDrawer.classList.remove("open"); if (!cartDrawer.classList.contains("open")) drawerOverlay.classList.remove("open"); wishDrawer.setAttribute("aria-hidden", "true"); }
   $("#cartBtn").addEventListener("click", openCart);
@@ -468,7 +468,7 @@
     var note = $("#nlNote");
     if (!isEmail(email)) { note.textContent = "אנא הזיני כתובת אימייל תקינה"; return; }
     if (phone && !isPhone(phone)) { note.textContent = "מספר הטלפון אינו תקין"; return; }
-    savedLead = { email: email, phone: phone, at: Date.now() };
+    savedLead = Object.assign({}, savedLead, { email: email, phone: phone, at: Date.now() });
     save(LEAD_KEY, savedLead);
     note.textContent = "תודה שהצטרפת! נעדכן אותך בעדכונים ומבצעים רשמיים 💜";
     nlForm.reset();
@@ -484,14 +484,18 @@
   var discountOverlay = $("#discountOverlay");
 
   function showDiscountPopup() {
-    if (savedLead.email || load(DISCOUNT_KEY, null)) return; // already opted in
+    if (load(DISCOUNT_KEY, null)) return; // already holds a grant — nothing more to offer
+    save(DISCOUNT_POPUP_SHOWN_KEY, true); // mark as shown only once it actually is
+    closeCart();
+    closeWish();
+    var emailField = $("#discountEmail");
+    if (emailField && savedLead.email) emailField.value = savedLead.email; // known from elsewhere (e.g. the newsletter form) — don't make her retype it
     discountOverlay.classList.add("open");
     discountOverlay.setAttribute("aria-hidden", "false");
-    setTimeout(function () { var f = $("#discountEmail"); if (f) f.focus(); }, 350);
+    setTimeout(function () { if (emailField) emailField.focus(); }, 350);
   }
   function maybeShowDiscountPopup() {
     if (load(DISCOUNT_POPUP_SHOWN_KEY, false)) return; // ever, not just this session
-    save(DISCOUNT_POPUP_SHOWN_KEY, true);
     setTimeout(showDiscountPopup, 500); // let the "added to cart" toast land first
   }
   function hideDiscountPopup() {
@@ -564,6 +568,7 @@
     save(EXIT_KEY, true);
     buildExitPreview();
     closeCart();
+    closeWish();
     exitOverlay.classList.add("open");
     exitOverlay.setAttribute("aria-hidden", "false");
     setTimeout(function () { var n = $("#exitName"); if (n) n.focus(); }, 350);

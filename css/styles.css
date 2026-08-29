@@ -32,6 +32,11 @@
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
+/* The browser's own [hidden] rule lives in the lowest-priority UA
+   stylesheet, so any component's own `display` rule for that same
+   element silently cancels it. This one line guarantees `hidden`
+   (or `el.hidden = true`) always wins, site-wide. */
+[hidden] { display: none !important; }
 html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 16px); }
 
 body {
