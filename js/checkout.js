@@ -124,16 +124,6 @@
     } catch (e) {}
   }
 
-  function notifyAutomationWebhook(order) {
-    if (!CFG.WHATSAPP_AUTOMATION_WEBHOOK) return;
-    try {
-      fetch(CFG.WHATSAPP_AUTOMATION_WEBHOOK, {
-        method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ type: "order", order: order })
-      }).catch(function () {});
-    } catch (e) {}
-  }
-
   /* ---------- payment gateway hook ----------
      No provider is connected yet (see js/config.js → PAYMENT_PROVIDER).
      When one is, branch here: e.g. redirect to the gateway's hosted
@@ -191,7 +181,6 @@
 
       notifyOwner(order);
       emailCustomerConfirmation(order);
-      notifyAutomationWebhook(order);
 
       // clear the cart — the order has been captured
       save(CART_KEY, {});

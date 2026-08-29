@@ -48,37 +48,6 @@
     toastTimer = setTimeout(function () { toastEl.classList.remove("show"); }, 2600);
   }
 
-  /* ---------- product artwork (elegant bottle SVGs) ---------- */
-  var SHAPES = {
-    dropper:
-      '<rect x="42" y="8" width="16" height="12" rx="2" fill="#4f2350"/>' +
-      '<rect x="44" y="19" width="12" height="11" fill="#8a5a8c"/>' +
-      '<rect x="30" y="29" width="40" height="83" rx="15" fill="#7c3d80"/>' +
-      '<rect x="37" y="55" width="26" height="42" rx="4" fill="#fdfbfe" opacity="0.85"/>' +
-      '<line x1="37" y1="65" x2="63" y2="65" stroke="#c19a49" stroke-width="2"/>',
-    jar:
-      '<rect x="26" y="30" width="48" height="17" rx="7" fill="#4f2350"/>' +
-      '<rect x="28" y="45" width="44" height="63" rx="17" fill="#7c3d80"/>' +
-      '<rect x="36" y="62" width="28" height="32" rx="4" fill="#fdfbfe" opacity="0.85"/>' +
-      '<line x1="36" y1="72" x2="64" y2="72" stroke="#c19a49" stroke-width="2"/>',
-    tube:
-      '<rect x="40" y="9" width="20" height="13" rx="3" fill="#4f2350"/>' +
-      '<rect x="32" y="22" width="36" height="86" rx="11" fill="#7c3d80"/>' +
-      '<rect x="32" y="103" width="36" height="5" rx="2" fill="#4f2350"/>' +
-      '<rect x="38" y="46" width="24" height="36" rx="4" fill="#fdfbfe" opacity="0.85"/>' +
-      '<line x1="38" y1="56" x2="62" y2="56" stroke="#c19a49" stroke-width="2"/>',
-    pump:
-      '<rect x="46" y="6" width="8" height="15" fill="#4f2350"/>' +
-      '<path d="M40 21h20v6h-9v4h-11z" fill="#8a5a8c"/>' +
-      '<rect x="45" y="31" width="10" height="8" fill="#8a5a8c"/>' +
-      '<rect x="30" y="38" width="40" height="74" rx="11" fill="#7c3d80"/>' +
-      '<rect x="37" y="60" width="26" height="38" rx="4" fill="#fdfbfe" opacity="0.85"/>' +
-      '<line x1="37" y1="70" x2="63" y2="70" stroke="#c19a49" stroke-width="2"/>'
-  };
-  function productSVG(shape, cls) {
-    return '<svg class="' + (cls || 'prod-svg') + '" viewBox="0 0 100 120" role="img" aria-label="מוצר">' +
-           (SHAPES[shape] || SHAPES.dropper) + '</svg>';
-  }
   var WA_NUM = "972547444478";
   function waProductLink(p) {
     var msg = 'היי יהודית 😊 אני מעוניין/ת במוצר: "' + p.name + '" (' + money(p.price) + ')' +
@@ -88,9 +57,12 @@
 
   /* ---------- render products ---------- */
   function productMedia(p) {
-    return (p.images && p.images.length) ?
-      '<img src="' + p.images[0] + '" alt="' + p.name + '" loading="lazy" width="300" height="300" />' :
-      productSVG(p.shape);
+    if (p.images && p.images.length) {
+      return '<img src="' + p.images[0] + '" alt="' + p.name + '" loading="lazy" width="300" height="300" />';
+    }
+    // No product photo yet — show the brand logo instead of a generic
+    // placeholder shape, so it reads as "photo coming soon", not broken.
+    return '<img class="product-media-fallback" src="assets/img/logo.png" alt="יהודית גולד" loading="lazy" width="300" height="300" />';
   }
   function productCard(p) {
     var stars = "★★★★★";
@@ -308,7 +280,7 @@
     var main = $("#pdMain");
     var thumbs = $("#pdThumbs");
     if (!imgs) {
-      main.innerHTML = productSVG(p.shape, "pd-svg");
+      main.innerHTML = '<img class="product-media-fallback" src="assets/img/logo.png" alt="יהודית גולד" />';
       thumbs.innerHTML = "";
       thumbs.hidden = true;
       return;
@@ -583,12 +555,7 @@
        2) an email to Judith (Web3Forms) — if WEB3FORMS_KEY is set
        3) an automatic email to the CUSTOMER (EmailJS) — if EmailJS
           keys are set — "we saved your cart" with a link back
-       4) a POST to an automation webhook (Zapier/Make/n8n) — if set —
-          so a connected WhatsApp Business API can send her an
-          automatic WhatsApp too (true automatic WhatsApp send needs
-          that paid/approved business line; it cannot be done from
-          plain browser JS)
-       5) always: a one-click WhatsApp handoff link so Judith can
+       4) always: a one-click WhatsApp handoff link so Judith can
           follow up personally even with nothing else configured.
      All of these are optional and configured centrally in js/config.js. */
 
@@ -632,18 +599,6 @@
       }).catch(function () {});
     } catch (e) {}
   }
-  function notifyAutomationWebhook(lead) {
-    // Optional hand-off to Zapier/Make/n8n so a connected WhatsApp
-    // Business API can message the customer automatically. No-op
-    // until WHATSAPP_AUTOMATION_WEBHOOK is filled in js/config.js.
-    if (!CFG.WHATSAPP_AUTOMATION_WEBHOOK) return;
-    try {
-      fetch(CFG.WHATSAPP_AUTOMATION_WEBHOOK, {
-        method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(lead)
-      }).catch(function () {});
-    } catch (e) {}
-  }
   function leadWhatsappUrl(lead) {
     var msg = "היי יהודית! מילאתי פרטים באתר וארצה ייעוץ אישי.\n" +
               "שם: " + lead.name + "\nטלפון: " + lead.phone + "\nאימייל: " + lead.email +
@@ -670,7 +625,6 @@
     saveLeadLocal(lead);
     postLeadToBackend(lead);
     emailCustomerAutomatically(lead);
-    notifyAutomationWebhook(lead);
 
     var waBtn = $("#exitWaBtn");
     if (waBtn) waBtn.href = leadWhatsappUrl(lead);
@@ -726,7 +680,7 @@
 
   /* ---------- init ---------- */
   var bbMedia = $("#lineBodyBuddyMedia");
-  if (bbMedia) bbMedia.innerHTML = productSVG("pump");
+  if (bbMedia) bbMedia.innerHTML = '<img class="product-media-fallback" src="assets/img/logo.png" alt="יהודית גולד" loading="lazy" width="200" height="200" />';
   renderCart();
   updateWishCount();
 })();
