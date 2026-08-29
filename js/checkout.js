@@ -141,6 +141,20 @@
     } catch (e) {}
   }
 
+  function notifyCartAutomationPurchased(order) {
+    // Tells the same Make.com scenario (js/config.js →
+    // ABANDONED_CART_WEBHOOK) that this email already completed a
+    // purchase, so the delayed "did you forget something?" reminder
+    // it may have queued a few hours ago gets skipped for her.
+    if (!CFG.ABANDONED_CART_WEBHOOK) return;
+    try {
+      fetch(CFG.ABANDONED_CART_WEBHOOK, {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ type: "purchased", email: order.customer.email, orderId: order.id, at: Date.now() })
+      }).catch(function () {});
+    } catch (e) {}
+  }
+
   /* ---------- payment gateway hook ----------
      No provider is connected yet (see js/config.js → PAYMENT_PROVIDER).
      When one is, branch here: e.g. redirect to the gateway's hosted
@@ -199,6 +213,7 @@
 
       notifyOwner(order);
       emailCustomerConfirmation(order);
+      notifyCartAutomationPurchased(order);
 
       // clear the cart and redeem the one-time discount grant, if used
       save(CART_KEY, {});

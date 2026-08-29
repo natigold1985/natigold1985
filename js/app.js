@@ -522,6 +522,7 @@
     saveLeadLocal(lead);
     postLeadToBackend(lead, "ליד חדש – הרשמה ל-10% הנחה – יהודית גולד");
     emailWelcomeDiscount(lead);
+    notifyCartAutomation(lead, "lead_captured");
 
     save(DISCOUNT_KEY, { code: DISCOUNT_CODE, percent: DISCOUNT_PERCENT, email: email, at: Date.now() });
     renderCart();
@@ -691,6 +692,22 @@
       }).catch(function () {});
     } catch (e) {}
   }
+  function notifyCartAutomation(lead, type) {
+    // Kicks off the delayed "still interested?" reminder email (see
+    // ABANDONED_CART_WEBHOOK in js/config.js — runs 4-5h later on an
+    // external automation, since a closed browser tab can't). Only
+    // fires with her marketing consent, same gate as the emails above.
+    if (!lead.consentGiven || !CFG.ABANDONED_CART_WEBHOOK) return;
+    try {
+      fetch(CFG.ABANDONED_CART_WEBHOOK, {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: type, email: lead.email, name: lead.name || "",
+          cartText: lead.cartText || cartSummaryText(), at: Date.now()
+        })
+      }).catch(function () {});
+    } catch (e) {}
+  }
   function leadWhatsappUrl(lead) {
     var msg = "היי יהודית! מילאתי פרטים באתר וארצה ייעוץ אישי.\n" +
               "שם: " + lead.name + "\nטלפון: " + lead.phone + "\nאימייל: " + lead.email +
@@ -717,6 +734,7 @@
     saveLeadLocal(lead);
     postLeadToBackend(lead);
     emailCustomerAutomatically(lead);
+    notifyCartAutomation(lead, "lead_captured");
 
     var waBtn = $("#exitWaBtn");
     if (waBtn) waBtn.href = leadWhatsappUrl(lead);
