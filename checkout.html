@@ -98,7 +98,7 @@
           <h2>תשלום</h2>
           <div class="payment-pending" id="paymentPending">
             <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10" rx="2"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg>
-            <p>תשלום בכרטיס אשראי אונליין יופעל כאן בקרוב. עד אז — שליחת ההזמנה שולחת אותה ישירות ליהודית, שתחזור אלייך תוך זמן קצר להשלמת התשלום בבטחה (כרטיס אשראי בטלפון / Bit / מזומן באיסוף עצמי).</p>
+            <p>תשלום בכרטיס אשראי אונליין יופעל כאן בקרוב. עד אז, לחיצה על "שליחת ההזמנה" תפתח אוטומטית וואטסאפ עם כל פרטי ההזמנה כתובים ליהודית, כדי שתוכלי להשלים איתה את התשלום בבטחה (כרטיס אשראי בטלפון / Bit / מזומן באיסוף עצמי).</p>
           </div>
           <!-- Payment gateway mounts here once a provider is connected (see js/config.js) -->
           <div id="paymentGatewayMount"></div>
@@ -110,7 +110,7 @@
         </label>
 
         <button type="submit" class="btn btn-primary btn-block" id="coSubmit">
-          שליחת ההזמנה <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          שליחת ההזמנה ליהודית בוואטסאפ <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </button>
         <p class="co-note" id="coNote" role="status" aria-live="polite"></p>
       </form>
@@ -140,10 +140,10 @@
       <div class="exit-emoji">🎉</div>
       <h2>ההזמנה נקלטה!</h2>
       <p id="coSuccessOrderNo"></p>
-      <p>יהודית קיבלה את פרטי ההזמנה ותחזור אלייך בהקדם להשלמת התשלום.</p>
+      <p>וואטסאפ עם כל פרטי ההזמנה נפתח עבורך בכרטיסייה חדשה — פשוט לחצי "שליחה" שם כדי שיהודית תקבל את זה ותחזור אלייך להשלמת התשלום.</p>
       <a class="btn btn-chat btn-block" id="coSuccessWa" href="#" target="_blank" rel="noopener">
         <svg viewBox="0 0 32 32" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M16 .5C7.4.5.5 7.4.5 16c0 2.8.7 5.4 2 7.7L.4 31.6l8.1-2.1c2.2 1.2 4.7 1.9 7.5 1.9 8.6 0 15.5-6.9 15.5-15.5S24.6.5 16 .5zm0 28.3c-2.5 0-4.8-.7-6.8-1.8l-.5-.3-4.8 1.3 1.3-4.7-.3-.5a12.7 12.7 0 0 1-2-6.8C3.1 8.9 8.9 3.1 16 3.1S28.9 8.9 28.9 16 23.1 28.8 16 28.8z"/></svg>
-        לשליחת פרטי ההזמנה ליהודית בוואטסאפ
+        לא נפתח אצלך? לחצי כאן לפתיחת וואטסאפ
       </a>
       <a class="btn btn-ghost btn-block" href="index.html">חזרה לחנות</a>
     </div>

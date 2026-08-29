@@ -206,8 +206,15 @@
 
       $("#checkoutGrid").style.display = "none";
       $("#coSuccessOrderNo").textContent = "מספר הזמנה: " + order.id;
-      $("#coSuccessWa").href = orderWhatsappUrl(order);
+      var waUrl = orderWhatsappUrl(order);
+      $("#coSuccessWa").href = waUrl;
       $("#checkoutSuccess").classList.add("show");
+      // Open WhatsApp with the full order pre-filled right away — this is
+      // still inside the click handler for the "שליחת ההזמנה" button, so
+      // it's a direct result of her tap and isn't blocked as a popup.
+      // The button below stays as a fallback in case a browser blocks it
+      // anyway (e.g. Safari's stricter popup rules).
+      window.open(waUrl, "_blank", "noopener");
     });
   }
 })();
