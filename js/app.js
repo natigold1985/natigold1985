@@ -11,7 +11,8 @@
 (function () {
   "use strict";
 
-  var FREE_SHIP = 199;
+  var CFG = window.JG_CONFIG || {};
+  var FREE_SHIP = CFG.FREE_SHIPPING_FROM || 199;
   var PRODUCTS = window.JG_PRODUCTS || [];
   var byId = {};
   PRODUCTS.forEach(function (p) { byId[p.id] = p; });
@@ -461,7 +462,7 @@
 
   $("#checkoutBtn").addEventListener("click", function () {
     if (cartCount() === 0) return;
-    toast("מעבר לתשלום מאובטח… (הדגמה)");
+    location.href = "checkout.html";
   });
 
   /* ---------- newsletter / contact capture ---------- */
@@ -575,11 +576,21 @@
   });
 
   /* ---------- lead delivery (static-site friendly) ----------
-     Leads are (1) saved locally, (2) POSTed to a form backend if a key
-     is configured (Web3Forms → emails judithgold10@gmail.com), and
-     (3) always available as a WhatsApp handoff so Judith gets them even
-     with zero backend. Paste a free access key below to enable email. */
-  var WEB3FORMS_KEY = ""; // ← put your Web3Forms access key here to auto-email leads
+     A visitor who leaves items in the cart and submits the exit form
+     (after agreeing to the two required consent checkboxes) triggers,
+     with zero backend needed:
+       1) local save, always
+       2) an email to Judith (Web3Forms) — if WEB3FORMS_KEY is set
+       3) an automatic email to the CUSTOMER (EmailJS) — if EmailJS
+          keys are set — "we saved your cart" with a link back
+       4) a POST to an automation webhook (Zapier/Make/n8n) — if set —
+          so a connected WhatsApp Business API can send her an
+          automatic WhatsApp too (true automatic WhatsApp send needs
+          that paid/approved business line; it cannot be done from
+          plain browser JS)
+       5) always: a one-click WhatsApp handoff link so Judith can
+          follow up personally even with nothing else configured.
+     All of these are optional and configured centrally in js/config.js. */
 
   function cartSummaryText() {
     var ids = Object.keys(cart);
@@ -593,17 +604,43 @@
     savedLead = lead; save(LEAD_KEY, lead);
   }
   function postLeadToBackend(lead) {
-    if (!WEB3FORMS_KEY) return; // not configured — WhatsApp handoff covers delivery
+    if (!CFG.WEB3FORMS_KEY) return; // not configured — WhatsApp handoff still covers delivery
     try {
       fetch("https://api.web3forms.com/submit", {
         method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" },
         body: JSON.stringify({
-          access_key: WEB3FORMS_KEY,
+          access_key: CFG.WEB3FORMS_KEY,
           subject: "ליד עגלה נטושה – יהודית גולד",
           from_name: "אתר יהודית גולד",
           "שם": lead.name, "אימייל": lead.email, "טלפון": lead.phone,
           "עגלה": cartSummaryText(), "הסכמה": "אושרה"
         })
+      }).catch(function () {});
+    } catch (e) {}
+  }
+  function emailCustomerAutomatically(lead) {
+    // Requires EmailJS keys in js/config.js + the EmailJS SDK script tag.
+    // Only fires when the customer gave marketing consent (checkbox 2).
+    if (!lead.consentGiven) return;
+    if (!CFG.EMAILJS_PUBLIC_KEY || !CFG.EMAILJS_SERVICE_ID || !CFG.EMAILJS_TEMPLATE_ID_ABANDONED_CART) return;
+    if (typeof emailjs === "undefined") return;
+    try {
+      emailjs.init(CFG.EMAILJS_PUBLIC_KEY);
+      emailjs.send(CFG.EMAILJS_SERVICE_ID, CFG.EMAILJS_TEMPLATE_ID_ABANDONED_CART, {
+        to_name: lead.name, to_email: lead.email,
+        cart_summary: lead.cartText, shop_url: location.origin + "/index.html#products"
+      }).catch(function () {});
+    } catch (e) {}
+  }
+  function notifyAutomationWebhook(lead) {
+    // Optional hand-off to Zapier/Make/n8n so a connected WhatsApp
+    // Business API can message the customer automatically. No-op
+    // until WHATSAPP_AUTOMATION_WEBHOOK is filled in js/config.js.
+    if (!CFG.WHATSAPP_AUTOMATION_WEBHOOK) return;
+    try {
+      fetch(CFG.WHATSAPP_AUTOMATION_WEBHOOK, {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(lead)
       }).catch(function () {});
     } catch (e) {}
   }
@@ -632,6 +669,8 @@
                  cart: Object.assign({}, cart), cartText: cartSummaryText(), at: Date.now() };
     saveLeadLocal(lead);
     postLeadToBackend(lead);
+    emailCustomerAutomatically(lead);
+    notifyAutomationWebhook(lead);
 
     var waBtn = $("#exitWaBtn");
     if (waBtn) waBtn.href = leadWhatsappUrl(lead);
