@@ -19,6 +19,7 @@
 
   var CART_KEY = "jg_cart_v1";
   var ORDERS_KEY = "jg_orders_v1";
+  var DISCOUNT_KEY = "jg_discount_v1";
   var FREE_SHIP = CFG.FREE_SHIPPING_FROM || 199;
   var SHIP_FEE = CFG.SHIPPING_FEE != null ? CFG.SHIPPING_FEE : 25;
 
@@ -45,12 +46,21 @@
   function subtotal() {
     return cartLines().reduce(function (s, l) { return s + l.line; }, 0);
   }
+  // Free-shipping threshold and the discount % both read the same
+  // pre-discount subtotal, so the site never looks inconsistent
+  // between the cart drawer (js/app.js) and this page.
+  function discountAmount() {
+    var d = load(DISCOUNT_KEY, null);
+    var s = subtotal();
+    if (!d || !d.percent || s <= 0) return 0;
+    return Math.round(s * d.percent / 100);
+  }
   function shippingCost() {
     var s = subtotal();
     return s === 0 || s >= FREE_SHIP ? 0 : SHIP_FEE;
   }
   function orderTotal() {
-    return subtotal() + shippingCost();
+    return subtotal() - discountAmount() + shippingCost();
   }
 
   /* ---------- render order summary ---------- */
@@ -68,6 +78,12 @@
              '<span class="oi-price">' + money(l.line) + '</span></div>';
     }).join("");
     $("#orderSubtotal").textContent = money(subtotal());
+    var disc = discountAmount();
+    var discLine = $("#orderDiscountLine");
+    if (discLine) {
+      discLine.classList.toggle("show", disc > 0);
+      if (disc > 0) $("#orderDiscountAmt").textContent = "-" + money(disc);
+    }
     var ship = shippingCost();
     $("#orderShipping").textContent = ship === 0 ? "חינם" : money(ship);
     $("#orderTotal").textContent = money(orderTotal());
@@ -81,6 +97,7 @@
 
   function orderSummaryText(order) {
     return order.items.map(function (l) { return l.name + " ×" + l.qty; }).join(" | ") +
+           (order.discount > 0 ? " · הנחת דיוור: -" + money(order.discount) : "") +
            " · משלוח: " + (order.shipping === 0 ? "חינם" : money(order.shipping)) +
            " · סה\"כ " + money(order.total);
   }
@@ -164,6 +181,7 @@
         id: newOrderId(),
         items: cartLines(),
         subtotal: subtotal(),
+        discount: discountAmount(),
         shipping: shippingCost(),
         total: orderTotal(),
         customer: { name: name, phone: phone, email: email, city: city, street: street, apt: apt, zip: zip, notes: notes },
@@ -182,8 +200,9 @@
       notifyOwner(order);
       emailCustomerConfirmation(order);
 
-      // clear the cart — the order has been captured
+      // clear the cart and redeem the one-time discount grant, if used
       save(CART_KEY, {});
+      if (order.discount > 0) localStorage.removeItem(DISCOUNT_KEY);
 
       $("#checkoutGrid").style.display = "none";
       $("#coSuccessOrderNo").textContent = "מספר הזמנה: " + order.id;

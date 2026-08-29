@@ -501,6 +501,7 @@
       <button class="btn btn-primary" id="cartEmptyShop">לחנות</button>
     </div>
     <div class="cart-foot" id="cartFoot">
+      <div class="cart-discount-line" id="cartDiscountLine"><span>הנחת דיוור (<span id="cartDiscountPct">10</span>%)</span><strong id="cartDiscountAmt">-₪0</strong></div>
       <div class="cart-total"><span>סה"כ לתשלום</span><strong id="cartTotal">₪0</strong></div>
       <p class="cart-shipfree" id="cartShipFree"></p>
       <button class="btn btn-primary btn-block" id="checkoutBtn">מעבר לתשלום מאובטח <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10" rx="2"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></button>
@@ -531,6 +532,47 @@
     </div>
   </aside>
 
+  <!-- ============ FIRST ADD-TO-CART · 10% DISCOUNT SIGNUP POPUP ============ -->
+  <div class="exit-overlay" id="discountOverlay" aria-hidden="true">
+    <div class="exit-modal" role="dialog" aria-modal="true" aria-labelledby="discountTitle">
+      <button class="exit-close" id="discountClose" aria-label="סגור">✕</button>
+      <div class="exit-split">
+        <div class="exit-visual" aria-hidden="true">
+          <img src="assets/img/judith-square.jpg" alt="" width="220" height="260" />
+        </div>
+        <div class="exit-content">
+          <div class="exit-emoji">🎁</div>
+          <h2 id="discountTitle">10% הנחה על ההזמנה הראשונה</h2>
+          <p class="exit-sub">הצטרפי לדיוור של יהודית גולד וקבלי קוד הנחה של 10% – מופעל מיד על העגלה שלך.</p>
+
+          <form class="exit-form" id="discountForm" novalidate>
+            <input type="email" id="discountEmail" name="email" placeholder="כתובת אימייל" autocomplete="email" required />
+
+            <label class="exit-check">
+              <input type="checkbox" id="discountConsent1" required />
+              <span>קראתי ואני מאשר/ת את <a href="terms.html" target="_blank" rel="noopener">התקנון</a> ואת <a href="privacy.html" target="_blank" rel="noopener">מדיניות הפרטיות</a>.</span>
+            </label>
+            <label class="exit-check">
+              <input type="checkbox" id="discountConsent2" required />
+              <span>אני מאשר/ת קבלת דיוור ותוכן שיווקי בדוא"ל מיהודית גולד, בהתאם לתיקון 40 לחוק התקשורת (בזק ושידורים) ותיקון 13 לחוק הגנת הפרטיות. ניתן להסיר בכל עת.</span>
+            </label>
+
+            <button type="submit" class="btn btn-dark btn-block" id="discountSubmit">קבלי את קוד ההנחה</button>
+          </form>
+
+          <div class="exit-success" id="discountSuccess" hidden>
+            <div class="exit-emoji">🎉</div>
+            <p>מעולה! ההנחה כבר הופעלה בעגלה שלך.</p>
+            <p class="exit-success-sub">קוד: <strong id="discountCodeText">WELCOME10</strong> · 10% הנחה</p>
+          </div>
+
+          <button class="exit-dismiss" id="discountDismiss">לא תודה, אמשיך לגלוש</button>
+          <p class="exit-note" id="discountNote" role="status" aria-live="polite"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- ============ EXIT-INTENT / ABANDONED CART POPUP ============ -->
   <div class="exit-overlay" id="exitOverlay" aria-hidden="true">
     <div class="exit-modal" role="dialog" aria-modal="true" aria-labelledby="exitTitle">
@@ -557,7 +599,7 @@
             </label>
             <label class="exit-check">
               <input type="checkbox" id="exitConsent2" required />
-              <span>אני מסכים/ה לקבל עדכונים, מבצעים רשמיים ותזכורות עגלה מיהודית גולד ב-SMS, וואטסאפ ובדוא"ל.</span>
+              <span>אני מאשר/ת קבלת עדכונים, מבצעים ותזכורות עגלה מיהודית גולד בדוא"ל (ולפי הצורך גם בפנייה אישית בוואטסאפ/טלפון), בהתאם לתיקון 40 לחוק התקשורת (בזק ושידורים) ותיקון 13 לחוק הגנת הפרטיות. ניתן להסיר בכל עת.</span>
             </label>
 
             <button type="submit" class="btn btn-dark btn-block" id="exitSubmit">שמרו לי את העגלה</button>

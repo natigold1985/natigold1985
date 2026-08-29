@@ -20,6 +20,10 @@
   var CART_KEY = "jg_cart_v1";
   var LEAD_KEY = "jg_lead_v1";        // saved email/phone
   var EXIT_KEY = "jg_exit_shown_v1";  // popup shown this session
+  var DISCOUNT_KEY = "jg_discount_v1";             // active 10%-off grant, once earned
+  var DISCOUNT_POPUP_SHOWN_KEY = "jg_discount_popup_shown_v1"; // shown at most once, ever
+  var DISCOUNT_PERCENT = CFG.DISCOUNT_PERCENT || 10;
+  var DISCOUNT_CODE = CFG.DISCOUNT_CODE || "WELCOME10";
 
   /* ---------- helpers ---------- */
   function $(sel, root) { return (root || document).querySelector(sel); }
@@ -177,6 +181,14 @@
       var p = byId[id]; return p ? s + p.price * cart[id] : s;
     }, 0);
   }
+  // Discount grant earned via the 10%-off newsletter popup — applied to
+  // the pre-shipping subtotal, one grant redeemed per completed order
+  // (cleared at checkout submit; see js/checkout.js).
+  function discountAmount(subtotal) {
+    var d = load(DISCOUNT_KEY, null);
+    if (!d || !d.percent || subtotal <= 0) return 0;
+    return Math.round(subtotal * d.percent / 100);
+  }
 
   function renderCart() {
     var ids = Object.keys(cart);
@@ -202,12 +214,19 @@
         '</div>';
     }).join("");
 
-    var total = cartTotal();
-    cartTotalEl.textContent = money(total);
+    var subtotal = cartTotal();
+    var disc = discountAmount(subtotal);
+    cartTotalEl.textContent = money(subtotal - disc);
 
-    if (total > 0 && total < FREE_SHIP) {
-      shipFreeEl.textContent = "עוד " + money(FREE_SHIP - total) + " למשלוח חינם! 🚚";
-    } else if (total >= FREE_SHIP) {
+    var discLine = $("#cartDiscountLine");
+    if (discLine) {
+      discLine.classList.toggle("show", disc > 0);
+      if (disc > 0) $("#cartDiscountAmt").textContent = "-" + money(disc);
+    }
+
+    if (subtotal > 0 && subtotal < FREE_SHIP) {
+      shipFreeEl.textContent = "עוד " + money(FREE_SHIP - subtotal) + " למשלוח חינם! 🚚";
+    } else if (subtotal >= FREE_SHIP) {
       shipFreeEl.textContent = "מזל טוב! יש לך משלוח חינם 🎉";
     } else {
       shipFreeEl.textContent = "";
@@ -218,9 +237,11 @@
 
   function addToCart(id, qty) {
     if (!byId[id]) return;
+    var wasEmpty = Object.keys(cart).length === 0;
     cart[id] = (cart[id] || 0) + (qty || 1);
     renderCart();
     toast(byId[id].name.split("–")[0].trim() + " נוסף לעגלה ✓");
+    if (wasEmpty) maybeShowDiscountPopup();
   }
 
   document.addEventListener("click", function (e) {
@@ -454,6 +475,60 @@
   });
 
   /* ============================================================
+     10%-OFF NEWSLETTER POPUP
+     Shown once ever, the moment a visitor adds her very first item
+     to the cart (see addToCart() above). Captures her email behind
+     the two required consent checkboxes and grants an instant 10%
+     discount, auto-applied to the cart — no code to type at checkout.
+     ============================================================ */
+  var discountOverlay = $("#discountOverlay");
+
+  function showDiscountPopup() {
+    if (savedLead.email || load(DISCOUNT_KEY, null)) return; // already opted in
+    discountOverlay.classList.add("open");
+    discountOverlay.setAttribute("aria-hidden", "false");
+    setTimeout(function () { var f = $("#discountEmail"); if (f) f.focus(); }, 350);
+  }
+  function maybeShowDiscountPopup() {
+    if (load(DISCOUNT_POPUP_SHOWN_KEY, false)) return; // ever, not just this session
+    save(DISCOUNT_POPUP_SHOWN_KEY, true);
+    setTimeout(showDiscountPopup, 500); // let the "added to cart" toast land first
+  }
+  function hideDiscountPopup() {
+    discountOverlay.classList.remove("open");
+    discountOverlay.setAttribute("aria-hidden", "true");
+  }
+  $("#discountClose").addEventListener("click", hideDiscountPopup);
+  $("#discountDismiss").addEventListener("click", hideDiscountPopup);
+  discountOverlay.addEventListener("click", function (e) { if (e.target === discountOverlay) hideDiscountPopup(); });
+
+  $("#discountForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var email = $("#discountEmail").value.trim();
+    var c1 = $("#discountConsent1").checked;
+    var c2 = $("#discountConsent2").checked;
+    var note = $("#discountNote");
+    note.textContent = "";
+    if (!isEmail(email)) { note.textContent = "אנא הזיני כתובת אימייל תקינה"; return; }
+    if (!c1 || !c2) { note.textContent = "יש לאשר את שתי התיבות כדי לקבל את קוד ההנחה"; return; }
+
+    var lead = Object.assign({}, savedLead, {
+      email: email, consentGiven: true, cartText: cartSummaryText(), at: Date.now()
+    });
+    saveLeadLocal(lead);
+    postLeadToBackend(lead, "ליד חדש – הרשמה ל-10% הנחה – יהודית גולד");
+    emailWelcomeDiscount(lead);
+
+    save(DISCOUNT_KEY, { code: DISCOUNT_CODE, percent: DISCOUNT_PERCENT, email: email, at: Date.now() });
+    renderCart();
+
+    $("#discountCodeText").textContent = DISCOUNT_CODE;
+    $("#discountForm").style.display = "none";
+    var dismiss = $("#discountDismiss"); if (dismiss) dismiss.style.display = "none";
+    $("#discountSuccess").hidden = false;
+  });
+
+  /* ============================================================
      EXIT-INTENT ABANDONED-CART POPUP  (the core "hack")
      Triggers when a visitor with items in the cart tries to
      leave — reminds them, captures email/phone, offers a bonus.
@@ -544,7 +619,7 @@
   $("#exitDismiss").addEventListener("click", hideExitPopup);
   exitOverlay.addEventListener("click", function (e) { if (e.target === exitOverlay) hideExitPopup(); });
   document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape") { hideExitPopup(); closeCart(); closeWish(); closeMobileNav(); }
+    if (e.key === "Escape") { hideExitPopup(); hideDiscountPopup(); closeCart(); closeWish(); closeMobileNav(); }
   });
 
   /* ---------- lead delivery (static-site friendly) ----------
@@ -568,16 +643,16 @@
   function saveLeadLocal(lead) {
     var arr = load("jg_leads_v1", []);
     arr.push(lead); save("jg_leads_v1", arr);
-    savedLead = lead; save(LEAD_KEY, lead);
+    savedLead = Object.assign({}, savedLead, lead); save(LEAD_KEY, savedLead);
   }
-  function postLeadToBackend(lead) {
+  function postLeadToBackend(lead, subject) {
     if (!CFG.WEB3FORMS_KEY) return; // not configured — WhatsApp handoff still covers delivery
     try {
       fetch("https://api.web3forms.com/submit", {
         method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" },
         body: JSON.stringify({
           access_key: CFG.WEB3FORMS_KEY,
-          subject: "ליד עגלה נטושה – יהודית גולד",
+          subject: subject || "ליד עגלה נטושה – יהודית גולד",
           from_name: "אתר יהודית גולד",
           "שם": lead.name, "אימייל": lead.email, "טלפון": lead.phone,
           "עגלה": cartSummaryText(), "הסכמה": "אושרה"
@@ -596,6 +671,18 @@
       emailjs.send(CFG.EMAILJS_SERVICE_ID, CFG.EMAILJS_TEMPLATE_ID_ABANDONED_CART, {
         to_name: lead.name, to_email: lead.email,
         cart_summary: lead.cartText, shop_url: location.origin + "/index.html#products"
+      }).catch(function () {});
+    } catch (e) {}
+  }
+  function emailWelcomeDiscount(lead) {
+    if (!lead.consentGiven) return;
+    if (!CFG.EMAILJS_PUBLIC_KEY || !CFG.EMAILJS_SERVICE_ID || !CFG.EMAILJS_TEMPLATE_ID_WELCOME_DISCOUNT) return;
+    if (typeof emailjs === "undefined") return;
+    try {
+      emailjs.init(CFG.EMAILJS_PUBLIC_KEY);
+      emailjs.send(CFG.EMAILJS_SERVICE_ID, CFG.EMAILJS_TEMPLATE_ID_WELCOME_DISCOUNT, {
+        to_email: lead.email, discount_code: DISCOUNT_CODE, discount_percent: DISCOUNT_PERCENT,
+        shop_url: location.origin + "/index.html#products"
       }).catch(function () {});
     } catch (e) {}
   }
