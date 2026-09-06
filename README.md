@@ -1,20 +1,23 @@
-- 👋 Hi, I’m @natigold1985
-- 👀 I’m interested in ...
+# נתי גולד — Nati Gold 📸
 
-PPC Marketing
-Content Marketing
-Crypto-Currency
-Capital Market
+**צלם מסחרי, מרצה ומנטור עסקי לצלמים | 13 שנות ניסיון | ⭐ 5.0 מ-300+ ביקורות**
 
-- 🌱 I’m currently learning ...
-Crypto-Currency
-Capital Market
+בעלים של סטודיו גולד שירותי צילום — סטודיו צילום ברמת גן המתמחה בצילום אירועים, צילום תדמית לעסקים, צילום מוצרים וצילום סטילס.
 
-- 💞️ I’m looking to collaborate on ...
-- 📫 How to reach me ...
-Via Telegram
+## השירותים והפרויקטים שלי 🎯
 
-<!---
-natigold1985/natigold1985 is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
-You can click the Preview link to take a look at your changes.
---->
+- 📚 [קורס צילום למתחילים](https://natigold.com/photography-course/) — קורס צילום אונליין: 7 ימים מאפס ועד הכנסה מצילום, בליווי אישי
+- 📸 [צילום אירועים](https://natigold.com/event-photography/) — כנסים, אירועי חברה ואירועים פרטיים
+- 💼 [ליווי עסקי לצלמים](https://natigold.com/livuy-isaki-letzlamim/) — מנטור לצלמים שרוצים להפוך את התשוקה לעסק מרוויח
+- 🎬 [צילום סטילס וסרטוני תדמית לעסקים](https://natigold.com/stills/)
+- 📱 [צילום סושיאל — רילז וטיקטוק לעסקים](https://natigold.com/social/)
+
+## הרצאות והדרכות 🎤
+
+מרצה לצילום מסחרי ותמחור, מלווה מאות צלמים בדרך לעצמאות עסקית.
+
+---
+
+📍 שדרות התמרים 5, רמת גן | 📞 050-977-3600 | [natigold.com](https://natigold.com/)
+
+👉 מתחילים מאפס? ה[קורס צילום](https://natigold.com/photography-course/) שלי נבנה בדיוק בשבילכם.
