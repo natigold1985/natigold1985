@@ -1,0 +1,159 @@
+{%- comment -%} Judith Gold – consultation CTA, clinic treatments, about, contact and FAQ (with FAQPage schema). Editable in the theme editor. {%- endcomment -%}
+{%- assign wa = section.settings.whatsapp | default: '972547444478' -%}
+{%- capture wa_icon -%}<svg viewBox="0 0 32 32" width="17" height="17" fill="currentColor" aria-hidden="true"><path d="M16 .5C7.4.5.5 7.4.5 16c0 2.8.7 5.4 2 7.7L.4 31.6l8.1-2.1c2.2 1.2 4.7 1.9 7.5 1.9 8.6 0 15.5-6.9 15.5-15.5S24.6.5 16 .5zm0 28.3c-2.5 0-4.8-.7-6.8-1.8l-.5-.3-4.8 1.3 1.3-4.7-.3-.5a12.7 12.7 0 0 1-2-6.8C3.1 8.9 8.9 3.1 16 3.1S28.9 8.9 28.9 16 23.1 28.8 16 28.8z"/></svg>{%- endcapture -%}
+
+<div dir="rtl">
+  <section class="jg-section">
+    <div class="jg-chat">
+      <span class="jg-eyebrow">{{ section.settings.chat_eyebrow }}</span>
+      <h2>{{ section.settings.chat_title }}</h2>
+      <div>{{ section.settings.chat_text }}</div>
+      <a class="jg-btn jg-btn--wa" href="https://wa.me/{{ wa }}?text={{ section.settings.chat_message | url_encode }}" target="_blank" rel="noopener">{{ wa_icon }} {{ section.settings.chat_button }}</a>
+    </div>
+  </section>
+
+  <section class="jg-section jg-split" id="treatments">
+    <div class="jg-split__media">
+      {%- if section.settings.treat_image -%}{{ section.settings.treat_image | image_url: width: 1100 | image_tag: loading: 'lazy', alt: section.settings.treat_image.alt }}{%- endif -%}
+    </div>
+    <div class="jg-split__text">
+      <span class="jg-eyebrow">{{ section.settings.treat_eyebrow }}</span>
+      <h2>{{ section.settings.treat_title }}</h2>
+      <div>{{ section.settings.treat_text }}</div>
+      <div class="jg-split__cta">
+        <a class="jg-btn jg-btn--primary" href="https://wa.me/{{ wa }}?text={{ section.settings.treat_message | url_encode }}" target="_blank" rel="noopener">{{ section.settings.treat_button }}</a>
+        {%- if section.settings.treat_page_link != blank -%}<a class="jg-btn jg-btn--ghost" href="{{ section.settings.treat_page_link }}">לכל הטיפולים</a>{%- endif -%}
+      </div>
+    </div>
+  </section>
+
+  <section class="jg-section jg-split jg-split--rev" id="about">
+    <div class="jg-split__media jg-split__media--round">
+      {%- if section.settings.about_image -%}{{ section.settings.about_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: section.settings.about_image.alt }}{%- endif -%}
+    </div>
+    <div class="jg-split__text">
+      <span class="jg-eyebrow">{{ section.settings.about_eyebrow }}</span>
+      <h2>{{ section.settings.about_title }}</h2>
+      <div>{{ section.settings.about_text }}</div>
+      {%- if section.settings.about_link != blank -%}<a class="jg-btn jg-btn--primary" href="{{ section.settings.about_link }}">עוד עליי</a>{%- endif -%}
+    </div>
+  </section>
+
+  {%- assign faqs = section.blocks | where: 'type', 'faq' -%}
+  {%- if faqs.size > 0 -%}
+  <section class="jg-section" id="faq">
+    <div class="jg-head">
+      <span class="jg-eyebrow">שאלות ותשובות</span>
+      <h2>{{ section.settings.faq_title }}</h2>
+    </div>
+    <div class="jg-faq">
+      {%- for block in faqs -%}
+        <details {{ block.shopify_attributes }}><summary>{{ block.settings.question }}</summary><div>{{ block.settings.answer }}</div></details>
+      {%- endfor -%}
+    </div>
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+      {%- for block in faqs -%}
+      {"@type":"Question","name":{{ block.settings.question | strip_html | json }},"acceptedAnswer":{"@type":"Answer","text":{{ block.settings.answer | strip_html | json }}}}{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    ]}
+    </script>
+  </section>
+  {%- endif -%}
+
+  <section class="jg-section" id="contact">
+    <div class="jg-contact">
+      <h2>{{ section.settings.contact_title }}</h2>
+      <p>{{ section.settings.contact_text }}</p>
+      <div class="jg-contact__list">
+        <a href="tel:{{ section.settings.phone | remove: '-' }}">📞 {{ section.settings.phone }}</a>
+        <a href="https://wa.me/{{ wa }}" target="_blank" rel="noopener">{{ wa_icon }} וואטסאפ</a>
+        <a href="mailto:{{ section.settings.email }}">✉️ {{ section.settings.email }}</a>
+        {%- if section.settings.instagram != blank -%}<a href="https://www.instagram.com/{{ section.settings.instagram | remove: '@' }}" target="_blank" rel="noopener">📷 {{ section.settings.instagram }}</a>{%- endif -%}
+        <span>📍 {{ section.settings.address }}</span>
+        <span>🕘 חנות אונליין 24/7</span>
+      </div>
+    </div>
+  </section>
+</div>
+
+{% stylesheet %}
+  .jg-chat{max-width:860px;margin:0 auto;text-align:center;background:linear-gradient(135deg,#f7eff4,#fbf6f2);border:1px solid #eadbe5;border-radius:28px;padding:44px 28px}
+  .jg-chat h2,.jg-split h2,.jg-contact h2{font-family:'Frank Ruhl Libre',serif;color:var(--jg-plum,#6e2f6b);font-size:clamp(1.7rem,3.2vw,2.4rem);margin:0 0 12px}
+  .jg-chat p,.jg-split p{line-height:1.8;color:#4a3a48}
+  .jg-chat .jg-btn{margin-top:14px}
+  .jg-split{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+  .jg-split--rev .jg-split__media{order:2}
+  .jg-split__media img{width:100%;height:auto;border-radius:26px;object-fit:cover;box-shadow:0 18px 40px rgba(79,31,77,.14)}
+  .jg-split__media--round img{max-width:420px;aspect-ratio:1;border-radius:50%;display:block;margin-inline:auto}
+  .jg-split__text ul{padding-inline-start:0;list-style:none;margin:14px 0 22px}
+  .jg-split__text li{padding:6px 0}
+  .jg-split__text li::before{content:'✦';color:var(--jg-gold,#8c6825);margin-inline-end:8px}
+  .jg-split__cta{display:flex;flex-wrap:wrap;gap:12px}
+  .jg-faq{max-width:820px;margin:0 auto;display:grid;gap:12px}
+  .jg-faq details{background:#fff;border:1px solid #eadbe5;border-radius:16px;padding:4px 20px}
+  .jg-faq summary{cursor:pointer;font-weight:700;padding:14px 0;color:var(--jg-ink,#2d1a2c);list-style:none;display:flex;justify-content:space-between;gap:12px}
+  .jg-faq summary::-webkit-details-marker{display:none}
+  .jg-faq summary::after{content:'+';color:var(--jg-plum,#6e2f6b);font-size:1.3rem;line-height:1}
+  .jg-faq details[open] summary::after{content:'–'}
+  .jg-faq details div{padding:0 0 16px;line-height:1.75;color:#4a3a48}
+  .jg-contact{max-width:860px;margin:0 auto;text-align:center;background:var(--jg-plum,#6e2f6b);color:#fff;border-radius:28px;padding:44px 24px}
+  .jg-contact h2{color:#fff}
+  .jg-contact__list{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 22px;margin-top:18px}
+  .jg-contact__list a,.jg-contact__list span{color:#fff!important;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+  @media (max-width:900px){
+    .jg-split{grid-template-columns:1fr;gap:24px}
+    .jg-split--rev .jg-split__media{order:0}
+    .jg-split__media--round img{max-width:260px}
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "יהודית גולד – תוכן",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "whatsapp", "label": "מספר וואטסאפ (בפורמט 972...)", "default": "972547444478" },
+    { "type": "header", "content": "ייעוץ אישי" },
+    { "type": "text", "id": "chat_eyebrow", "label": "כותרת קטנה", "default": "לא בטוחות מה מתאים לכן?" },
+    { "type": "text", "id": "chat_title", "label": "כותרת", "default": "כאן קונים ממי שבאמת מבינה בעור" },
+    { "type": "richtext", "id": "chat_text", "label": "טקסט", "default": "<p>יהודית, קוסמטיקאית עם מעל 20 שנות ניסיון, תתאים לכן בדיוק את המוצרים הנכונים לסוג העור ולצרכים שלכן – בלי לנחש. שלחו הודעה וקבלו ייעוץ אישי, ללא התחייבות.</p>" },
+    { "type": "text", "id": "chat_button", "label": "טקסט כפתור", "default": "ייעוץ אישי בוואטסאפ" },
+    { "type": "text", "id": "chat_message", "label": "הודעה מוכנה", "default": "היי יהודית, אשמח לקבל ייעוץ אישי" },
+    { "type": "header", "content": "טיפולים במכון" },
+    { "type": "image_picker", "id": "treat_image", "label": "תמונה" },
+    { "type": "text", "id": "treat_eyebrow", "label": "כותרת קטנה", "default": "המכון בחיפה" },
+    { "type": "text", "id": "treat_title", "label": "כותרת", "default": "טיפולי פנים ואסתטיקה במכון בחיפה" },
+    { "type": "richtext", "id": "treat_text", "label": "טקסט", "default": "<p>מעבר לחנות האונליין, יהודית מקבלת במכון בוורדיה סנטר לטיפולי פנים מקצועיים.</p><ul><li>ניקוי עור עמוק וטיפולי פנים</li><li>פילינגים וטיפולי חידוש</li><li>אנטי-אייג'ינג ומיצוק</li><li>טיפולי הבהרה ואקנה</li></ul>" },
+    { "type": "text", "id": "treat_button", "label": "טקסט כפתור", "default": "לתיאום טיפול במכון" },
+    { "type": "text", "id": "treat_message", "label": "הודעה מוכנה", "default": "היי יהודית, אשמח לתאם טיפול במכון" },
+    { "type": "url", "id": "treat_page_link", "label": "קישור לעמוד הטיפולים" },
+    { "type": "header", "content": "אודות" },
+    { "type": "image_picker", "id": "about_image", "label": "תמונה" },
+    { "type": "text", "id": "about_eyebrow", "label": "כותרת קטנה", "default": "אודות" },
+    { "type": "text", "id": "about_title", "label": "כותרת", "default": "טיפוח בסטנדרט של זהב" },
+    { "type": "richtext", "id": "about_text", "label": "טקסט", "default": "<p><strong>יהודית גולד</strong> היא קוסמטיקאית מקצועית ובעלת מכון לטיפולי אסתטיקה בחיפה.</p>" },
+    { "type": "url", "id": "about_link", "label": "קישור לעמוד אודות" },
+    { "type": "header", "content": "שאלות נפוצות" },
+    { "type": "text", "id": "faq_title", "label": "כותרת", "default": "שאלות נפוצות" },
+    { "type": "header", "content": "יצירת קשר" },
+    { "type": "text", "id": "contact_title", "label": "כותרת", "default": "דברו איתנו" },
+    { "type": "text", "id": "contact_text", "label": "טקסט", "default": "שאלות על מוצר, הזמנה או תיאום טיפול – יהודית זמינה בשבילכן." },
+    { "type": "text", "id": "phone", "label": "טלפון", "default": "054-7444478" },
+    { "type": "text", "id": "email", "label": "אימייל", "default": "judithgold10@gmail.com" },
+    { "type": "text", "id": "instagram", "label": "אינסטגרם", "default": "@judithgold04" },
+    { "type": "text", "id": "address", "label": "כתובת", "default": "ורדיה סנטר, חיפה" }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "שאלה ותשובה",
+      "settings": [
+        { "type": "text", "id": "question", "label": "שאלה" },
+        { "type": "richtext", "id": "answer", "label": "תשובה" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "יהודית גולד – תוכן" }]
+}
+{% endschema %}

@@ -1,0 +1,165 @@
+{%- comment -%} Judith Gold – homepage hero, trust strip and Dr. Klein series. All texts/images editable in the theme editor. {%- endcomment -%}
+{%- assign wa = section.settings.whatsapp | default: '972547444478' -%}
+<section class="jg-hero" dir="rtl">
+  <div class="jg-hero__text">
+    {%- if section.settings.eyebrow != blank -%}<p class="jg-eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+    <h1 class="jg-hero__title">{{ section.settings.title }}</h1>
+    <div class="jg-hero__lead">{{ section.settings.lead }}</div>
+    <div class="jg-hero__cta">
+      {%- if section.settings.btn1_label != blank -%}
+        <a class="jg-btn jg-btn--primary" href="{{ section.settings.btn1_link | default: routes.all_products_collection_url }}">{{ section.settings.btn1_label }}</a>
+      {%- endif -%}
+      {%- if section.settings.btn2_label != blank -%}
+        <a class="jg-btn jg-btn--ghost" href="https://wa.me/{{ wa }}?text={{ section.settings.btn2_message | url_encode }}" target="_blank" rel="noopener">{{ section.settings.btn2_label }}</a>
+      {%- endif -%}
+    </div>
+    <ul class="jg-hero__badges">
+      {%- if section.settings.badge1 != blank -%}<li>{{ section.settings.badge1 }}</li>{%- endif -%}
+      {%- if section.settings.badge2 != blank -%}<li>{{ section.settings.badge2 }}</li>{%- endif -%}
+      {%- if section.settings.badge3 != blank -%}<li>{{ section.settings.badge3 }}</li>{%- endif -%}
+    </ul>
+  </div>
+  <div class="jg-hero__visual">
+    <div class="jg-hero__frame">
+      {%- if section.settings.image -%}
+        {{ section.settings.image | image_url: width: 900 | image_tag: loading: 'eager', fetchpriority: 'high', class: 'jg-hero__photo', alt: section.settings.image.alt, sizes: '(min-width: 990px) 440px, 90vw' }}
+      {%- else -%}
+        {{ 'image' | placeholder_svg_tag: 'jg-hero__photo' }}
+      {%- endif -%}
+      {%- if section.settings.chip_title != blank -%}
+        <div class="jg-hero__chip"><strong>{{ section.settings.chip_title }}</strong><span>{{ section.settings.chip_text }}</span></div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<section class="jg-trust" aria-label="יתרונות" dir="rtl">
+  {%- for i in (1..4) -%}
+    {%- capture k -%}trust{{ i }}_value{%- endcapture -%}
+    {%- capture l -%}trust{{ i }}_label{%- endcapture -%}
+    {%- if section.settings[k] != blank -%}<div><strong>{{ section.settings[k] }}</strong><span>{{ section.settings[l] }}</span></div>{%- endif -%}
+  {%- endfor -%}
+</section>
+
+{%- if section.blocks.size > 0 -%}
+<section class="jg-section" id="series" dir="rtl">
+  <div class="jg-head">
+    {%- if section.settings.series_eyebrow != blank -%}<span class="jg-eyebrow">{{ section.settings.series_eyebrow }}</span>{%- endif -%}
+    <h2>{{ section.settings.series_title }}</h2>
+    {%- if section.settings.series_text != blank -%}<p>{{ section.settings.series_text }}</p>{%- endif -%}
+  </div>
+  <div class="jg-series">
+    {%- for block in section.blocks -%}
+      {%- assign sp = block.settings.product -%}
+      {%- assign simg = block.settings.image | default: sp.featured_image -%}
+      <a class="jg-series__card" href="{{ block.settings.link | default: sp.url | default: routes.all_products_collection_url }}" {{ block.shopify_attributes }}>
+        <div class="jg-series__media">
+          {%- if simg -%}{{ simg | image_url: width: 400 | image_tag: loading: 'lazy', alt: block.settings.title }}{%- elsif settings.logo -%}{{ settings.logo | image_url: width: 300 | image_tag: loading: 'lazy', alt: block.settings.title, class: 'jg-series__logo' }}{%- endif -%}
+        </div>
+        <span class="jg-series__num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+        <h3>{{ block.settings.title }}</h3>
+        <p>{{ block.settings.text }}</p>
+      </a>
+    {%- endfor -%}
+  </div>
+</section>
+{%- endif -%}
+
+{% stylesheet %}
+  .jg-hero{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center;max-width:1200px;margin:0 auto;padding:56px 20px 40px}
+  .jg-eyebrow{display:inline-block;color:var(--jg-gold,#8c6825);font-weight:700;letter-spacing:.04em;font-size:.95rem;margin:0 0 10px}
+  .jg-hero__title{font-family:'Frank Ruhl Libre',serif;font-size:clamp(2.3rem,5vw,3.8rem);line-height:1.1;color:var(--jg-plum,#6e2f6b);margin:0 0 18px}
+  .jg-hero__lead{font-size:1.15rem;line-height:1.75;color:#4a3a48;max-width:560px}
+  .jg-hero__cta{display:flex;flex-wrap:wrap;gap:12px;margin:26px 0 20px}
+  .jg-btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:999px;font-weight:700;text-decoration:none;transition:transform .15s,box-shadow .15s}
+  .jg-btn:hover{transform:translateY(-2px)}
+  .jg-btn--primary{background:var(--jg-plum,#6e2f6b);color:#fff!important;box-shadow:0 8px 20px rgba(110,47,107,.25)}
+  .jg-btn--ghost{border:1.5px solid var(--jg-plum,#6e2f6b);color:var(--jg-plum,#6e2f6b)!important;background:transparent}
+  .jg-btn--wa{background:#1f8f4e;color:#fff!important}
+  .jg-hero__badges{display:flex;flex-wrap:wrap;gap:8px 18px;list-style:none;padding:0;margin:0;color:#5b4a59;font-size:.95rem}
+  .jg-hero__badges li::before{content:'✓';color:var(--jg-gold,#8c6825);font-weight:700;margin-inline-end:6px}
+  .jg-hero__frame{position:relative;max-width:440px;margin-inline:auto}
+  .jg-hero__photo{width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;border-radius:220px 220px 24px 24px;box-shadow:0 24px 50px rgba(79,31,77,.18)}
+  .jg-hero__chip{position:absolute;bottom:22px;inset-inline-start:-18px;background:#fff;border-radius:16px;padding:12px 18px;box-shadow:0 10px 26px rgba(0,0,0,.12);display:flex;flex-direction:column}
+  .jg-hero__chip strong{color:var(--jg-plum,#6e2f6b)}
+  .jg-hero__chip span{font-size:.85rem;color:#6b5a69}
+  .jg-trust{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:1100px;margin:0 auto 24px;padding:18px 20px;background:var(--jg-plum,#6e2f6b);color:#fff;border-radius:22px;text-align:center}
+  .jg-trust strong{display:block;font-size:1.35rem;color:#f3dca8}
+  .jg-trust span{font-size:.9rem;opacity:.9}
+  .jg-section{max-width:1200px;margin:0 auto;padding:56px 20px}
+  .jg-head{text-align:center;max-width:680px;margin:0 auto 32px}
+  .jg-head h2{font-family:'Frank Ruhl Libre',serif;color:var(--jg-plum,#6e2f6b);font-size:clamp(1.8rem,3.5vw,2.6rem);margin:0 0 8px}
+  .jg-head p{color:#6b5a69;margin:0}
+  .jg-series{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .jg-series__card{position:relative;display:block;background:#fff;border:1px solid #eadbe5;border-radius:22px;padding:20px;text-decoration:none;color:inherit;transition:box-shadow .2s,transform .2s}
+  .jg-series__card:hover{transform:translateY(-3px);box-shadow:0 16px 34px rgba(110,47,107,.12)}
+  .jg-series__media{aspect-ratio:1;display:grid;place-items:center;background:#f7eff4;border-radius:16px;overflow:hidden;margin-bottom:14px}
+  .jg-series__media img{width:78%;height:78%;object-fit:contain}
+  .jg-series__media img.jg-series__logo{width:60%;opacity:.85}
+  .jg-series__num{position:absolute;top:28px;inset-inline-end:30px;font-family:'Frank Ruhl Libre',serif;color:var(--jg-gold,#8c6825);font-size:1.1rem}
+  .jg-series__card h3{font-family:'Frank Ruhl Libre',serif;color:var(--jg-plum,#6e2f6b);font-size:1.25rem;margin:0 0 6px}
+  .jg-series__card p{margin:0;color:#6b5a69;line-height:1.6}
+  @media (max-width:900px){
+    .jg-hero{grid-template-columns:1fr;gap:28px;padding-top:28px;text-align:center}
+    .jg-hero__lead{margin-inline:auto}
+    .jg-hero__cta,.jg-hero__badges{justify-content:center}
+    .jg-hero__visual{order:-1}
+    .jg-hero__frame{max-width:300px}
+    .jg-hero__chip{inset-inline-start:50%;transform:translateX(50%)}
+    .jg-trust{grid-template-columns:repeat(2,1fr);margin-inline:16px}
+    .jg-series{grid-template-columns:repeat(2,1fr);gap:12px}
+    .jg-series__card{padding:12px}
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "יהודית גולד – פתיחה",
+  "tag": "div",
+  "class": "jg-hero-section",
+  "settings": [
+    { "type": "header", "content": "באנר פתיחה" },
+    { "type": "text", "id": "eyebrow", "label": "כותרת קטנה", "default": "קוסמטיקה מתקדמת · ד״ר קליין" },
+    { "type": "text", "id": "title", "label": "כותרת ראשית", "default": "יהודית גולד – קוסמטיקה מתקדמת בחיפה" },
+    { "type": "richtext", "id": "lead", "label": "טקסט פתיחה", "default": "<p>קוסמטיקאית עם מעל 20 שנות ניסיון ומשווקת מורשית של <strong>ד״ר קליין</strong> – דרמו-קוסמטיקה מבוססת מחקר קליני לתוצאות אמיתיות. טיפולים במכון בוורדיה סנטר וחנות אונליין עם משלוח לכל הארץ.</p>" },
+    { "type": "image_picker", "id": "image", "label": "תמונה" },
+    { "type": "text", "id": "chip_title", "label": "תגית על התמונה – שם", "default": "יהודית גולד" },
+    { "type": "text", "id": "chip_text", "label": "תגית על התמונה – טקסט", "default": "קוסמטיקאית · 20+ שנות ניסיון" },
+    { "type": "text", "id": "btn1_label", "label": "כפתור ראשי – טקסט", "default": "לתכשירים שלנו" },
+    { "type": "url", "id": "btn1_link", "label": "כפתור ראשי – קישור" },
+    { "type": "text", "id": "btn2_label", "label": "כפתור וואטסאפ – טקסט", "default": "לדבר עם יהודית" },
+    { "type": "text", "id": "btn2_message", "label": "כפתור וואטסאפ – הודעה מוכנה", "default": "היי יהודית, אשמח לייעוץ לפני רכישה" },
+    { "type": "text", "id": "whatsapp", "label": "מספר וואטסאפ (בפורמט 972...)", "default": "972547444478" },
+    { "type": "text", "id": "badge1", "label": "יתרון 1", "default": "משלוח מהיר לכל הארץ" },
+    { "type": "text", "id": "badge2", "label": "יתרון 2", "default": "מוצרים מקוריים 100%" },
+    { "type": "text", "id": "badge3", "label": "יתרון 3", "default": "ייעוץ אישי בוואטסאפ" },
+    { "type": "header", "content": "פס אמון" },
+    { "type": "text", "id": "trust1_value", "label": "1 – ערך", "default": "+35 שנות" },
+    { "type": "text", "id": "trust1_label", "label": "1 – תיאור", "default": "מחקר ד״ר קליין" },
+    { "type": "text", "id": "trust2_value", "label": "2 – ערך", "default": "100%" },
+    { "type": "text", "id": "trust2_label", "label": "2 – תיאור", "default": "מקורי ומאושר" },
+    { "type": "text", "id": "trust3_value", "label": "3 – ערך", "default": "20+ שנה" },
+    { "type": "text", "id": "trust3_label", "label": "3 – תיאור", "default": "ניסיון בטיפוח העור" },
+    { "type": "text", "id": "trust4_value", "label": "4 – ערך", "default": "14 יום" },
+    { "type": "text", "id": "trust4_label", "label": "4 – תיאור", "default": "החזרה לפי חוק" },
+    { "type": "header", "content": "סדרות" },
+    { "type": "text", "id": "series_eyebrow", "label": "כותרת קטנה", "default": "הסדרות הטיפוליות" },
+    { "type": "text", "id": "series_title", "label": "כותרת", "default": "סדרות ד״ר קליין" },
+    { "type": "text", "id": "series_text", "label": "תיאור", "default": "קווי טיפוח מקצועיים, כל אחד עם התמחות ורכיבים פעילים משלו" }
+  ],
+  "blocks": [
+    {
+      "type": "series",
+      "name": "סדרה",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "תמונה" },
+        { "type": "text", "id": "title", "label": "שם הסדרה" },
+        { "type": "textarea", "id": "text", "label": "תיאור" },
+        { "type": "product", "id": "product", "label": "מוצר מייצג (תמונה וקישור)" },
+        { "type": "url", "id": "link", "label": "קישור אחר (לא חובה)" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "יהודית גולד – פתיחה" }]
+}
+{% endschema %}

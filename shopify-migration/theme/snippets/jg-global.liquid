@@ -1,0 +1,133 @@
+{%- comment -%}
+  Judith Gold – global brand layer (rendered once from layout/theme.liquid).
+  - Brand fonts/colours, RTL tweaks
+  - WhatsApp ordering instead of cart (no payment provider yet)
+  - Floating WhatsApp button
+  - LocalBusiness + FAQPage structured data (GEO/AEO)
+  To edit the WhatsApp number: change jg_wa below (international format, digits only).
+{%- endcomment -%}
+{%- liquid
+  assign jg_wa = '972547444478'
+  assign jg_phone_display = '054-7444478'
+-%}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&family=Frank+Ruhl+Libre:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{--jg-plum:#6e2f6b;--jg-plum-dark:#4f1f4d;--jg-gold:#8c6825;--jg-cream:#fbf6f2;--jg-ink:#2d1a2c;--jg-wa:#1f8f4e}
+  body,button,input,select,textarea{font-family:'Assistant',var(--font-body--family),sans-serif}
+  h1,h2,h3,.jg-serif{font-family:'Frank Ruhl Libre',serif}
+  html[dir="rtl"] .text-left,html[dir="rtl"] [style*="text-align: left"]{text-align:right}
+
+  /* --- No online payment yet: hide cart / buy buttons, order via WhatsApp --- */
+  add-to-cart-component,.add-to-cart-button,.product-form-buttons,.shopify-payment-button,
+  sticky-add-to-cart,quick-add-component,.quick-add,.quick-add__button,
+  cart-icon,.header-actions__cart-icon,.header__icon--cart,a[href$="/cart"]{display:none!important}
+
+  .jg-wa-order{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;
+    padding:15px 22px;border-radius:14px;background:var(--jg-wa);color:#fff!important;
+    font-weight:700;font-size:1.05rem;text-decoration:none;margin-block:14px;box-shadow:0 6px 18px rgba(31,143,78,.25)}
+  .jg-wa-order:hover{filter:brightness(1.07)}
+  .jg-wa-order svg{flex:none}
+  .jg-wa-note{font-size:.88rem;opacity:.75;margin:-4px 0 12px}
+  .jg-wa-order.is-floating{position:fixed;inset-inline:12px;bottom:12px;width:auto;z-index:60;margin:0}
+
+  .jg-wa-fab{position:fixed;bottom:18px;inset-inline-start:18px;z-index:55;width:58px;height:58px;border-radius:50%;
+    display:grid;place-items:center;background:var(--jg-wa);color:#fff;box-shadow:0 8px 22px rgba(0,0,0,.22)}
+  .jg-wa-fab:hover{transform:scale(1.06)}
+  .template-product .jg-wa-fab{display:none}
+</style>
+
+{%- capture jg_wa_icon -%}<svg viewBox="0 0 32 32" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M16 .5C7.4.5.5 7.4.5 16c0 2.8.7 5.4 2 7.7L.4 31.6l8.1-2.1c2.2 1.2 4.7 1.9 7.5 1.9 8.6 0 15.5-6.9 15.5-15.5S24.6.5 16 .5zm0 28.3c-2.5 0-4.8-.7-6.8-1.8l-.5-.3-4.8 1.3 1.3-4.7-.3-.5a12.7 12.7 0 0 1-2-6.8C3.1 8.9 8.9 3.1 16 3.1S28.9 8.9 28.9 16 23.1 28.8 16 28.8z"/></svg>{%- endcapture -%}
+
+{%- if request.page_type == 'product' -%}
+  {%- capture jg_msg -%}היי יהודית, אשמח להזמין: {{ product.title }} ({{ product.price | money_without_currency }} ₪). קישור: {{ shop.url }}{{ product.url }}{%- endcapture -%}
+  <div id="jg-wa-order-wrap" hidden>
+    <a class="jg-wa-order" href="https://wa.me/{{ jg_wa }}?text={{ jg_msg | url_encode }}" target="_blank" rel="noopener">
+      {{ jg_wa_icon }} להזמנה מהירה בוואטסאפ
+    </a>
+    <p class="jg-wa-note">יהודית תחזור אליך לאישור ההזמנה, תיאום תשלום ומשלוח. משלוח חינם מעל 199 ₪.</p>
+  </div>
+  <script>
+    (function () {
+      var wrap = document.getElementById('jg-wa-order-wrap');
+      if (!wrap) return;
+      // Place the WhatsApp button where the (hidden) buy buttons would be
+      var anchor = document.querySelector('product-form-component, form[action*="/cart/add"], .product-form-buttons');
+      if (anchor) {
+        anchor.insertAdjacentElement('beforebegin', wrap);
+        wrap.hidden = false;
+      } else {
+        wrap.hidden = false;
+        wrap.querySelector('.jg-wa-order').classList.add('is-floating');
+        document.body.appendChild(wrap);
+      }
+    })();
+  </script>
+{%- endif -%}
+
+<a class="jg-wa-fab" href="https://wa.me/{{ jg_wa }}?text={{ 'היי יהודית, אשמח לייעוץ' | url_encode }}" target="_blank" rel="noopener" aria-label="שליחת הודעה ליהודית בוואטסאפ">{{ jg_wa_icon }}</a>
+<script>document.body.classList.add('template-{{ request.page_type }}');</script>
+
+{%- if request.page_type == 'index' or page.handle == 'contact' or page.handle == 'צור-קשר' or page.handle == 'אודות' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": ["BeautySalon", "HealthAndBeautyBusiness"],
+  "@id": "{{ shop.url }}/#business",
+  "name": "יהודית גולד – מכון לטיפולי אסתטיקה וקוסמטיקה מתקדמת",
+  "alternateName": "Judith Gold",
+  "description": "קוסמטיקאית בחיפה עם מעל 20 שנות ניסיון: טיפולי פנים, ניקוי עור, פילינג, אנטי-אייג'ינג והבהרה, ומשווקת מורשית של מוצרי ד״ר קליין (Dr. Klein) עם משלוח לכל הארץ.",
+  "url": "{{ shop.url }}",
+  {%- if settings.logo %}"logo": "https:{{ settings.logo | image_url: width: 600 }}","image": "https:{{ settings.logo | image_url: width: 1200 }}",{% endif %}
+  "telephone": "+972-54-744-4478",
+  "email": "judithgold10@gmail.com",
+  "priceRange": "₪₪",
+  "currenciesAccepted": "ILS",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "ורדיה סנטר",
+    "addressLocality": "חיפה",
+    "addressRegion": "מחוז חיפה",
+    "addressCountry": "IL"
+  },
+  "areaServed": [{"@type": "City", "name": "חיפה"}, {"@type": "Country", "name": "ישראל"}],
+  "knowsAbout": ["טיפולי פנים", "ניקוי עור עמוק", "פילינג", "אנטי-אייג'ינג", "הבהרת פיגמנטציה", "טיפולי אקנה", "ד״ר קליין", "Dr. Klein", "דרמו-קוסמטיקה"],
+  "brand": {"@type": "Brand", "name": "Dr. Klein – ד״ר קליין"},
+  "sameAs": ["https://www.instagram.com/judithgold04", "https://wa.me/{{ jg_wa }}"],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "טיפולים במכון",
+    "itemListElement": [
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "ניקוי עור עמוק וטיפולי פנים"}},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "פילינגים וטיפולי חידוש"}},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "אנטי-אייג'ינג ומיצוק"}},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "טיפולי הבהרה ואקנה"}}
+    ]
+  }
+}
+</script>
+{%- endif -%}
+
+{%- comment -%} FAQPage schema built automatically from <details><summary> in any page or blog article,
+  so editing the Q&A in the Shopify editor keeps the structured data in sync. {%- endcomment -%}
+{%- liquid
+  assign jg_faq_src = ''
+  if request.page_type == 'page'
+    assign jg_faq_src = page.content
+  elsif request.page_type == 'article'
+    assign jg_faq_src = article.content
+  endif
+-%}
+{%- if jg_faq_src contains '<summary' -%}
+  {%- assign jg_chunks = jg_faq_src | split: '<summary' -%}
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+  {%- for c in jg_chunks offset: 1 -%}
+    {%- assign q = c | split: '</summary>' | first | split: '>' | slice: 1, 99 | join: '>' | strip_html | strip -%}
+    {%- assign a = c | split: '</summary>' | last | split: '</details>' | first | strip_html | strip_newlines | strip -%}
+    {"@type":"Question","name":{{ q | json }},"acceptedAnswer":{"@type":"Answer","text":{{ a | json }}}}{% unless forloop.last %},{% endunless %}
+  {%- endfor -%}
+  ]}
+  </script>
+{%- endif -%}
