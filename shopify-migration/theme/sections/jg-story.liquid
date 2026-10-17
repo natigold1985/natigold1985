@@ -1,52 +1,79 @@
 {%- comment -%} Judith Gold – consultation CTA, clinic treatments, about, contact and FAQ (with FAQPage schema). Editable in the theme editor. {%- endcomment -%}
+{{ 'jg-site.css' | asset_url | stylesheet_tag }}
 {%- assign wa = section.settings.whatsapp | default: '972547444478' -%}
 {%- capture wa_icon -%}<svg viewBox="0 0 32 32" width="17" height="17" fill="currentColor" aria-hidden="true"><path d="M16 .5C7.4.5.5 7.4.5 16c0 2.8.7 5.4 2 7.7L.4 31.6l8.1-2.1c2.2 1.2 4.7 1.9 7.5 1.9 8.6 0 15.5-6.9 15.5-15.5S24.6.5 16 .5zm0 28.3c-2.5 0-4.8-.7-6.8-1.8l-.5-.3-4.8 1.3 1.3-4.7-.3-.5a12.7 12.7 0 0 1-2-6.8C3.1 8.9 8.9 3.1 16 3.1S28.9 8.9 28.9 16 23.1 28.8 16 28.8z"/></svg>{%- endcapture -%}
 
-<div dir="rtl">
-  <section class="jg-section">
-    <div class="jg-chat">
-      <span class="jg-eyebrow">{{ section.settings.chat_eyebrow }}</span>
+<div class="jg">
+  <section class="section chat-cta" id="chat" aria-label="ייעוץ אישי">
+    <div class="chat-box">
+      <span class="eyebrow">{{ section.settings.chat_eyebrow }}</span>
       <h2>{{ section.settings.chat_title }}</h2>
-      <div>{{ section.settings.chat_text }}</div>
-      <a class="jg-btn jg-btn--wa" href="https://wa.me/{{ wa }}?text={{ section.settings.chat_message | url_encode }}" target="_blank" rel="noopener">{{ wa_icon }} {{ section.settings.chat_button }}</a>
+      {{ section.settings.chat_text }}
+      <a class="btn btn-chat" href="https://wa.me/{{ wa }}?text={{ section.settings.chat_message | url_encode }}" target="_blank" rel="noopener">{{ wa_icon }} {{ section.settings.chat_button }}</a>
     </div>
   </section>
 
-  <section class="jg-section jg-split" id="treatments">
-    <div class="jg-split__media">
+  <section class="section treatments" id="treatments">
+    <div class="treatments-media">
       {%- if section.settings.treat_image -%}{{ section.settings.treat_image | image_url: width: 1100 | image_tag: loading: 'lazy', alt: section.settings.treat_image.alt }}{%- endif -%}
     </div>
-    <div class="jg-split__text">
-      <span class="jg-eyebrow">{{ section.settings.treat_eyebrow }}</span>
+    <div class="treatments-text">
+      <span class="eyebrow">{{ section.settings.treat_eyebrow }}</span>
       <h2>{{ section.settings.treat_title }}</h2>
-      <div>{{ section.settings.treat_text }}</div>
-      <div class="jg-split__cta">
-        <a class="jg-btn jg-btn--primary" href="https://wa.me/{{ wa }}?text={{ section.settings.treat_message | url_encode }}" target="_blank" rel="noopener">{{ section.settings.treat_button }}</a>
-        {%- if section.settings.treat_page_link != blank -%}<a class="jg-btn jg-btn--ghost" href="{{ section.settings.treat_page_link }}">לכל הטיפולים</a>{%- endif -%}
+      <div class="jg-rte">{{ section.settings.treat_text }}</div>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="https://wa.me/{{ wa }}?text={{ section.settings.treat_message | url_encode }}" target="_blank" rel="noopener">{{ section.settings.treat_button }}</a>
+        {%- if section.settings.treat_page_link != blank -%}<a class="btn btn-ghost" href="{{ section.settings.treat_page_link }}">לכל הטיפולים</a>{%- endif -%}
       </div>
     </div>
   </section>
 
-  <section class="jg-section jg-split jg-split--rev" id="about">
-    <div class="jg-split__media jg-split__media--round">
-      {%- if section.settings.about_image -%}{{ section.settings.about_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: section.settings.about_image.alt }}{%- endif -%}
+  <section class="section about" id="about">
+    <div class="about-visual">
+      {%- if section.settings.about_image -%}{{ section.settings.about_image | image_url: width: 800 | image_tag: loading: 'lazy', class: 'about-photo', alt: section.settings.about_image.alt }}{%- endif -%}
     </div>
-    <div class="jg-split__text">
-      <span class="jg-eyebrow">{{ section.settings.about_eyebrow }}</span>
+    <div class="about-text">
+      <span class="eyebrow">{{ section.settings.about_eyebrow }}</span>
       <h2>{{ section.settings.about_title }}</h2>
-      <div>{{ section.settings.about_text }}</div>
-      {%- if section.settings.about_link != blank -%}<a class="jg-btn jg-btn--primary" href="{{ section.settings.about_link }}">עוד עליי</a>{%- endif -%}
+      {{ section.settings.about_text }}
+      {%- if section.settings.about_link != blank -%}<a class="btn btn-primary" href="{{ section.settings.about_link }}">עוד על יהודית</a>{%- endif -%}
+    </div>
+  </section>
+
+  <section class="section newsletter" id="contact">
+    <div class="newsletter-box">
+      <h2>{{ section.settings.contact_title }}</h2>
+      <p>{{ section.settings.contact_text }}</p>
+      {%- form 'customer', class: 'newsletter-form' -%}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <input type="email" name="contact[email]" placeholder="כתובת אימייל" autocomplete="email" required aria-label="כתובת אימייל">
+        <button type="submit" class="btn btn-primary">הצטרפו עכשיו</button>
+        <div class="jg-consent">
+          <label><input type="checkbox" required> קראתי ואני מסכימה ל<a href="/pages/תקנון-ותנאי-שימוש">תקנון</a> ול<a href="/pages/מדיניות-פרטיות">מדיניות הפרטיות</a></label>
+          <label><input type="checkbox" name="contact[accepts_marketing]" value="true" required> אני מאשרת קבלת דיוור ועדכונים במייל; ניתן להסיר בכל עת</label>
+        </div>
+        {%- if form.posted_successfully? -%}<p class="newsletter-note" role="status">תודה! נרשמת למועדון.</p>{%- endif -%}
+      {%- endform -%}
+      <div class="contact-details">
+        <a href="tel:{{ section.settings.phone | remove: '-' }}">📞 {{ section.settings.phone }}</a>
+        <a href="https://wa.me/{{ wa }}" target="_blank" rel="noopener">{{ wa_icon }} וואטסאפ</a>
+        <a href="mailto:{{ section.settings.email }}">✉️ {{ section.settings.email }}</a>
+        {%- if section.settings.instagram != blank -%}<a href="https://www.instagram.com/{{ section.settings.instagram | remove: '@' }}" target="_blank" rel="noopener">📷 {{ section.settings.instagram }}</a>{%- endif -%}
+        <span>📍 {{ section.settings.address }}</span>
+        <span>🕘 חנות אונליין 24/7</span>
+      </div>
     </div>
   </section>
 
   {%- assign faqs = section.blocks | where: 'type', 'faq' -%}
   {%- if faqs.size > 0 -%}
-  <section class="jg-section" id="faq">
-    <div class="jg-head">
-      <span class="jg-eyebrow">שאלות ותשובות</span>
+  <section class="section" id="faq">
+    <div class="section-head">
+      <span class="eyebrow">שאלות ותשובות</span>
       <h2>{{ section.settings.faq_title }}</h2>
+      <p>תשובות קצרות וברורות</p>
     </div>
-    <div class="jg-faq">
+    <div class="faq">
       {%- for block in faqs -%}
         <details {{ block.shopify_attributes }}><summary>{{ block.settings.question }}</summary><div>{{ block.settings.answer }}</div></details>
       {%- endfor -%}
@@ -60,52 +87,19 @@
     </script>
   </section>
   {%- endif -%}
-
-  <section class="jg-section" id="contact">
-    <div class="jg-contact">
-      <h2>{{ section.settings.contact_title }}</h2>
-      <p>{{ section.settings.contact_text }}</p>
-      <div class="jg-contact__list">
-        <a href="tel:{{ section.settings.phone | remove: '-' }}">📞 {{ section.settings.phone }}</a>
-        <a href="https://wa.me/{{ wa }}" target="_blank" rel="noopener">{{ wa_icon }} וואטסאפ</a>
-        <a href="mailto:{{ section.settings.email }}">✉️ {{ section.settings.email }}</a>
-        {%- if section.settings.instagram != blank -%}<a href="https://www.instagram.com/{{ section.settings.instagram | remove: '@' }}" target="_blank" rel="noopener">📷 {{ section.settings.instagram }}</a>{%- endif -%}
-        <span>📍 {{ section.settings.address }}</span>
-        <span>🕘 חנות אונליין 24/7</span>
-      </div>
-    </div>
-  </section>
 </div>
 
 {% stylesheet %}
-  .jg-chat{max-width:860px;margin:0 auto;text-align:center;background:linear-gradient(135deg,#f7eff4,#fbf6f2);border:1px solid #eadbe5;border-radius:28px;padding:44px 28px}
-  .jg-chat h2,.jg-split h2,.jg-contact h2{color:var(--jg-plum,#6e2f6b);font-size:clamp(1.7rem,3.2vw,2.4rem);margin:0 0 12px}
-  .jg-chat p,.jg-split p{line-height:1.8;color:#4a3a48}
-  .jg-chat .jg-btn{margin-top:14px}
-  .jg-split{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
-  .jg-split--rev .jg-split__media{order:2}
-  .jg-split__media img{width:100%;height:auto;border-radius:26px;object-fit:cover;box-shadow:0 18px 40px rgba(79,31,77,.14)}
-  .jg-split__media--round img{max-width:420px;aspect-ratio:1;border-radius:50%;display:block;margin-inline:auto}
-  .jg-split__text ul{padding-inline-start:0;list-style:none;margin:14px 0 22px}
-  .jg-split__text li{padding:6px 0}
-  .jg-split__text li::before{content:'✦';color:var(--jg-gold,#8c6825);margin-inline-end:8px}
-  .jg-split__cta{display:flex;flex-wrap:wrap;gap:12px}
-  .jg-faq{max-width:820px;margin:0 auto;display:grid;gap:12px}
-  .jg-faq details{background:#fff;border:1px solid #eadbe5;border-radius:16px;padding:4px 20px}
-  .jg-faq summary{cursor:pointer;font-weight:700;padding:14px 0;color:var(--jg-ink,#2d1a2c);list-style:none;display:flex;justify-content:space-between;gap:12px}
-  .jg-faq summary::-webkit-details-marker{display:none}
-  .jg-faq summary::after{content:'+';color:var(--jg-plum,#6e2f6b);font-size:1.3rem;line-height:1}
-  .jg-faq details[open] summary::after{content:'–'}
-  .jg-faq details div{padding:0 0 16px;line-height:1.75;color:#4a3a48}
-  .jg-contact{max-width:860px;margin:0 auto;text-align:center;background:var(--jg-plum,#6e2f6b);color:#fff;border-radius:28px;padding:44px 24px}
-  .jg-contact h2{color:#fff}
-  .jg-contact__list{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 22px;margin-top:18px}
-  .jg-contact__list a,.jg-contact__list span{color:#fff!important;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
-  @media (max-width:900px){
-    .jg-split{grid-template-columns:1fr;gap:24px}
-    .jg-split--rev .jg-split__media{order:0}
-    .jg-split__media--round img{max-width:260px}
-  }
+  .jg .chat-box p,.jg .about-text p{margin-bottom:16px}
+  .jg .jg-rte ul{list-style:none;display:grid;gap:8px;margin:0 0 24px}
+  .jg .jg-rte li{padding-inline-start:26px;position:relative;color:var(--ink-soft);font-weight:500}
+  .jg .jg-rte li::before{content:"✓";position:absolute;inset-inline-start:0;color:var(--gold);font-weight:800}
+  .jg .jg-rte p{color:var(--muted);margin-bottom:16px}
+  .jg .chat-box .btn{margin-top:4px}
+  .jg .newsletter-form .btn{border-radius:9px}
+  .jg .jg-consent{flex-basis:100%;display:grid;gap:6px;justify-items:center;font-size:.84rem;color:#cabfce;margin-top:6px}
+  .jg .jg-consent label{display:inline-flex;gap:8px;align-items:center}
+  .jg .jg-consent a{text-decoration:underline}
 {% endstylesheet %}
 
 {% schema %}
@@ -137,8 +131,8 @@
     { "type": "header", "content": "שאלות נפוצות" },
     { "type": "text", "id": "faq_title", "label": "כותרת", "default": "שאלות נפוצות" },
     { "type": "header", "content": "יצירת קשר" },
-    { "type": "text", "id": "contact_title", "label": "כותרת", "default": "דברו איתנו" },
-    { "type": "text", "id": "contact_text", "label": "טקסט", "default": "שאלות על מוצר, הזמנה או תיאום טיפול – יהודית זמינה בשבילכן." },
+    { "type": "text", "id": "contact_title", "label": "כותרת", "default": "הצטרפו למועדון יהודית גולד" },
+    { "type": "text", "id": "contact_text", "label": "טקסט", "default": "טיפים לטיפוח, עדכונים על מבצעים רשמיים וסדרות חדשות של ד״ר קליין." },
     { "type": "text", "id": "phone", "label": "טלפון", "default": "054-7444478" },
     { "type": "text", "id": "email", "label": "אימייל", "default": "judithgold10@gmail.com" },
     { "type": "text", "id": "instagram", "label": "אינסטגרם", "default": "@judithgold04" },

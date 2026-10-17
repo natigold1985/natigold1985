@@ -1,0 +1,85 @@
+{%- comment -%} Judith Gold – category pills + product grid, mirroring the GitHub site's cards. Ordering via WhatsApp (catalog only). {%- endcomment -%}
+{{ 'jg-site.css' | asset_url | stylesheet_tag }}
+{%- assign wa = section.settings.whatsapp | default: '972547444478' -%}
+{%- assign coll = section.settings.collection | default: collections.all -%}
+<div class="jg">
+  {%- if section.settings.show_categories -%}
+  <section class="section" id="categories">
+    <div class="section-head">
+      <span class="eyebrow">{{ section.settings.cat_eyebrow }}</span>
+      <h2>{{ section.settings.cat_title }}</h2>
+      <p>{{ section.settings.cat_text }}</p>
+    </div>
+    <div class="cat-grid">
+      <a class="cat-card active" href="{{ routes.all_products_collection_url }}"><span>הכל</span></a>
+      {%- for c in section.settings.categories -%}<a class="cat-card" href="{{ c.url }}"><span>{{ c.title }}</span></a>{%- endfor -%}
+    </div>
+  </section>
+  {%- endif -%}
+
+  <section class="section" id="products">
+    <div class="section-head">
+      <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+      <h2>{{ section.settings.title }}</h2>
+      <p>{{ section.settings.text }}</p>
+    </div>
+    <div class="product-grid">
+      {%- for product in coll.products limit: section.settings.limit -%}
+        {%- liquid
+          assign kicker = ''
+          for t in product.tags
+            assign first = t | slice: 0
+            if 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789' contains first
+              assign kicker = t
+              break
+            endif
+          endfor
+        -%}
+        {%- capture msg -%}היי יהודית, אשמח להזמין: {{ product.title }} ({{ product.price | divided_by: 100 }} ₪){%- endcapture -%}
+        <article class="product-card">
+          <a class="product-media" href="{{ product.url }}">
+            {%- if product.featured_image -%}
+              {{ product.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: product.featured_image.alt | default: product.title, sizes: '(min-width: 990px) 280px, 50vw' }}
+            {%- elsif settings.logo -%}
+              {{ settings.logo | image_url: width: 400 | image_tag: loading: 'lazy', alt: product.title, style: 'width:60%;height:auto;opacity:.85' }}
+            {%- endif -%}
+          </a>
+          <div class="product-body">
+            {%- if kicker != blank -%}<span class="product-line-kicker">{{ kicker }}</span>{%- endif -%}
+            <h3 class="product-name"><a href="{{ product.url }}">{{ product.title }}</a></h3>
+            <p class="product-desc">{{ product.description | split: '<h3' | first | strip_html | truncatewords: 22 }}</p>
+            <div class="product-foot">
+              <span class="product-price">₪{{ product.price | divided_by: 100 }}</span>
+              <a class="add-btn" href="https://wa.me/{{ wa }}?text={{ msg | url_encode }}" target="_blank" rel="noopener">להזמנה בוואטסאפ</a>
+            </div>
+            <a class="wa-product" href="{{ product.url }}">לפרטים ואופן שימוש ←</a>
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+    {%- if coll.products_count > section.settings.limit -%}
+      <p style="text-align:center;margin-top:34px"><a class="btn btn-ghost" href="{{ coll.url }}">לכל המוצרים</a></p>
+    {%- endif -%}
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "יהודית גולד – מוצרים",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "whatsapp", "label": "מספר וואטסאפ (בפורמט 972...)", "default": "972547444478" },
+    { "type": "checkbox", "id": "show_categories", "label": "הצגת קטגוריות", "default": true },
+    { "type": "text", "id": "cat_eyebrow", "label": "קטגוריות – כותרת קטנה", "default": "לפי צורך" },
+    { "type": "text", "id": "cat_title", "label": "קטגוריות – כותרת", "default": "הקטגוריות שלנו" },
+    { "type": "text", "id": "cat_text", "label": "קטגוריות – תיאור", "default": "מצאו את הטיפוח המתאים בדיוק לעור שלכם" },
+    { "type": "collection_list", "id": "categories", "label": "קטגוריות להצגה", "limit": 12 },
+    { "type": "text", "id": "eyebrow", "label": "מוצרים – כותרת קטנה", "default": "החנות" },
+    { "type": "text", "id": "title", "label": "מוצרים – כותרת", "default": "המוצרים שלנו" },
+    { "type": "text", "id": "text", "label": "מוצרים – תיאור", "default": "מבחר תכשירי ד״ר קליין המקצועיים, ישירות אליכם" },
+    { "type": "collection", "id": "collection", "label": "קטגוריה להצגה (ריק = כל המוצרים)" },
+    { "type": "range", "id": "limit", "label": "מספר מוצרים", "min": 4, "max": 24, "step": 1, "default": 18 }
+  ],
+  "presets": [{ "name": "יהודית גולד – מוצרים" }]
+}
+{% endschema %}
