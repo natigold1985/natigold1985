@@ -12,11 +12,12 @@
 -%}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&family=Frank+Ruhl+Libre:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{--jg-plum:#6e2f6b;--jg-plum-dark:#4f1f4d;--jg-gold:#8c6825;--jg-cream:#fbf6f2;--jg-ink:#2d1a2c;--jg-wa:#1f8f4e}
-  body,button,input,select,textarea{font-family:'Assistant',var(--font-body--family),sans-serif}
-  h1,h2,h3,.jg-serif{font-family:'Frank Ruhl Libre',serif}
+  :root{--font-body--family:'Assistant',sans-serif;--font-heading--family:'Assistant',sans-serif;--font-subheading--family:'Assistant',sans-serif;--font-accent--family:'Assistant',sans-serif}
+  body,button,input,select,textarea{font-family:'Assistant',sans-serif}
+  h1,h2,h3,h4,h5,h6,.jg-serif{font-family:'Assistant',sans-serif!important;font-weight:700;letter-spacing:0}
   html[dir="rtl"] .text-left,html[dir="rtl"] [style*="text-align: left"]{text-align:right}
 
   /* --- No online payment yet: hide cart / buy buttons, order via WhatsApp --- */
