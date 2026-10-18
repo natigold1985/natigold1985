@@ -4,7 +4,7 @@
 {%- assign coll = section.settings.collection | default: collections.all -%}
 <div class="jg">
   {%- if section.settings.show_categories -%}
-  <section class="section" id="categories">
+  <section class="jg-sec" id="categories">
     <div class="section-head">
       <span class="eyebrow">{{ section.settings.cat_eyebrow }}</span>
       <h2>{{ section.settings.cat_title }}</h2>
@@ -17,7 +17,7 @@
   </section>
   {%- endif -%}
 
-  <section class="section" id="products">
+  <section class="jg-sec" id="products">
     <div class="section-head">
       <span class="eyebrow">{{ section.settings.eyebrow }}</span>
       <h2>{{ section.settings.title }}</h2>

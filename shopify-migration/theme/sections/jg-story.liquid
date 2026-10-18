@@ -4,7 +4,7 @@
 {%- capture wa_icon -%}<svg viewBox="0 0 32 32" width="17" height="17" fill="currentColor" aria-hidden="true"><path d="M16 .5C7.4.5.5 7.4.5 16c0 2.8.7 5.4 2 7.7L.4 31.6l8.1-2.1c2.2 1.2 4.7 1.9 7.5 1.9 8.6 0 15.5-6.9 15.5-15.5S24.6.5 16 .5zm0 28.3c-2.5 0-4.8-.7-6.8-1.8l-.5-.3-4.8 1.3 1.3-4.7-.3-.5a12.7 12.7 0 0 1-2-6.8C3.1 8.9 8.9 3.1 16 3.1S28.9 8.9 28.9 16 23.1 28.8 16 28.8z"/></svg>{%- endcapture -%}
 
 <div class="jg">
-  <section class="section chat-cta" id="chat" aria-label="ייעוץ אישי">
+  <section class="jg-sec chat-cta" id="chat" aria-label="ייעוץ אישי">
     <div class="chat-box">
       <span class="eyebrow">{{ section.settings.chat_eyebrow }}</span>
       <h2>{{ section.settings.chat_title }}</h2>
@@ -13,7 +13,7 @@
     </div>
   </section>
 
-  <section class="section treatments" id="treatments">
+  <section class="jg-sec treatments" id="treatments">
     <div class="treatments-media">
       {%- if section.settings.treat_image -%}{{ section.settings.treat_image | image_url: width: 1100 | image_tag: loading: 'lazy', alt: section.settings.treat_image.alt }}{%- endif -%}
     </div>
@@ -28,7 +28,7 @@
     </div>
   </section>
 
-  <section class="section about" id="about">
+  <section class="jg-sec about" id="about">
     <div class="about-visual">
       {%- if section.settings.about_image -%}{{ section.settings.about_image | image_url: width: 800 | image_tag: loading: 'lazy', class: 'about-photo', alt: section.settings.about_image.alt }}{%- endif -%}
     </div>
@@ -40,7 +40,7 @@
     </div>
   </section>
 
-  <section class="section newsletter" id="contact">
+  <section class="jg-sec newsletter" id="contact">
     <div class="newsletter-box">
       <h2>{{ section.settings.contact_title }}</h2>
       <p>{{ section.settings.contact_text }}</p>
@@ -67,7 +67,7 @@
 
   {%- assign faqs = section.blocks | where: 'type', 'faq' -%}
   {%- if faqs.size > 0 -%}
-  <section class="section" id="faq">
+  <section class="jg-sec" id="faq">
     <div class="section-head">
       <span class="eyebrow">שאלות ותשובות</span>
       <h2>{{ section.settings.faq_title }}</h2>
