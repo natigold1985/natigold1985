@@ -37,7 +37,20 @@
         -%}
         {%- capture msg -%}היי יהודית, אשמח להזמין: {{ product.title }} ({{ product.price | divided_by: 100 }} ₪){%- endcapture -%}
         <article class="product-card">
+          {%- liquid
+            assign badge = ''
+            if product.tags contains 'רב מכר'
+              assign badge = 'רב מכר'
+            elsif product.tags contains 'חדש'
+              assign badge = 'חדש'
+            elsif product.tags contains 'מומלץ'
+              assign badge = 'מומלץ'
+            elsif product.tags contains 'פרימיום'
+              assign badge = 'פרימיום'
+            endif
+          -%}
           <a class="product-media" href="{{ product.url }}">
+            {%- if badge != blank -%}<span class="product-tag">{{ badge }}</span>{%- endif -%}
             {%- if product.featured_image -%}
               {{ product.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: product.featured_image.alt | default: product.title, sizes: '(min-width: 990px) 280px, 50vw' }}
             {%- elsif settings.logo -%}
