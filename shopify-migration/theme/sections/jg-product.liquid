@@ -72,23 +72,32 @@
     </div>
   </section>
 
-  {%- if main_coll and main_coll.products_count > 1 -%}
   <section class="jg-sec">
     <div class="section-head">
       <span class="eyebrow">משלימים את השגרה</span>
-      <h2>עוד מ{{ main_coll.title }}</h2>
+      <h2>{% if main_coll %}עוד מ{{ main_coll.title }} ומוצרים משלימים{% else %}מוצרים משלימים{% endif %}</h2>
     </div>
     <div class="product-grid">
       {%- assign shown = 0 -%}
-      {%- for p in main_coll.products -%}
-        {%- if p.id != product.id and shown < 4 -%}
+      {%- assign seen = product.id | append: ',' | prepend: ',' -%}
+      {%- if main_coll -%}
+        {%- for p in main_coll.products -%}
+          {%- assign key = p.id | append: ',' | prepend: ',' -%}
+          {%- if shown < 4 -%}{%- unless seen contains key -%}
+            {%- render 'jg-product-card', product: p, wa: wa -%}
+            {%- assign shown = shown | plus: 1 -%}{%- assign seen = seen | append: key -%}
+          {%- endunless -%}{%- endif -%}
+        {%- endfor -%}
+      {%- endif -%}
+      {%- for p in collections.all.products -%}
+        {%- assign key = p.id | append: ',' | prepend: ',' -%}
+        {%- if shown < 4 -%}{%- unless seen contains key -%}
           {%- render 'jg-product-card', product: p, wa: wa -%}
-          {%- assign shown = shown | plus: 1 -%}
-        {%- endif -%}
+          {%- assign shown = shown | plus: 1 -%}{%- assign seen = seen | append: key -%}
+        {%- endunless -%}{%- endif -%}
       {%- endfor -%}
     </div>
   </section>
-  {%- endif -%}
 
   <div class="jg-wa-sticky">
     <strong>₪{{ product.price | divided_by: 100 }}</strong>
