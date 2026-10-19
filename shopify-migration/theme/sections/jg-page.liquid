@@ -1,0 +1,35 @@
+{%- comment -%} Judith Gold – content page in the GitHub-site style (dark header band + readable content + WhatsApp CTA). Page text is edited in Shopify Admin → Pages. {%- endcomment -%}
+{{ 'jg-site.css' | asset_url | stylesheet_tag }}
+{%- assign wa = section.settings.whatsapp | default: '972547444478' -%}
+<div class="jg">
+  <div class="legal-hero">
+    <h1>{{ page.title }}</h1>
+    {%- if section.settings.subtitle != blank -%}<p>{{ section.settings.subtitle }}</p>{%- endif -%}
+  </div>
+  <main class="legal-page jg-rich">
+    {{ page.content }}
+    {%- if section.settings.show_cta -%}
+      <div class="jg-cta-box">
+        <h2>{{ section.settings.cta_title }}</h2>
+        <p>{{ section.settings.cta_text }}</p>
+        <a class="btn btn-chat" href="https://wa.me/{{ wa }}?text={{ section.settings.cta_message | url_encode }}" target="_blank" rel="noopener">{{ section.settings.cta_button }}</a>
+      </div>
+    {%- endif -%}
+  </main>
+</div>
+
+{% schema %}
+{
+  "name": "יהודית גולד – עמוד תוכן",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "whatsapp", "label": "מספר וואטסאפ (בפורמט 972...)", "default": "972547444478" },
+    { "type": "text", "id": "subtitle", "label": "שורת משנה", "default": "יהודית גולד · מכון לטיפולי אסתטיקה בחיפה · ד״ר קליין" },
+    { "type": "checkbox", "id": "show_cta", "label": "הצגת קופסת וואטסאפ בסוף העמוד", "default": true },
+    { "type": "text", "id": "cta_title", "label": "קופסה – כותרת", "default": "יש שאלה? יהודית כאן בשבילך" },
+    { "type": "text", "id": "cta_text", "label": "קופסה – טקסט", "default": "ייעוץ אישי, הזמנת מוצרים ותיאום טיפולים במכון – הכי מהר בוואטסאפ." },
+    { "type": "text", "id": "cta_button", "label": "קופסה – כפתור", "default": "שליחת הודעה ליהודית" },
+    { "type": "text", "id": "cta_message", "label": "קופסה – הודעה מוכנה", "default": "היי יהודית, יש לי שאלה" }
+  ]
+}
+{% endschema %}

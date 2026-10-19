@@ -1,0 +1,72 @@
+{%- comment -%} Judith Gold – collection (category) page in the GitHub-site style: header band, category pills, sorting, product cards, pagination. {%- endcomment -%}
+{{ 'jg-site.css' | asset_url | stylesheet_tag }}
+{%- assign wa = section.settings.whatsapp | default: '972547444478' -%}
+<div class="jg">
+  <div class="jg-band">
+    <nav class="jg-crumbs" aria-label="פירורי לחם"><a href="{{ routes.root_url }}">דף הבית</a> / <a href="{{ routes.all_products_collection_url }}">החנות</a>{% if collection.handle != 'all' %} / <span>{{ collection.title }}</span>{% endif %}</nav>
+    <h1>{% if collection.handle == 'all' %}{{ section.settings.all_title }}{% else %}{{ collection.title }}{% endif %}</h1>
+    {%- if collection.description != blank -%}<div class="jg-band__text">{{ collection.description }}</div>{%- elsif collection.handle == 'all' -%}<p class="jg-band__text">{{ section.settings.all_text }}</p>{%- endif -%}
+  </div>
+
+  <section class="jg-sec jg-sec--tight">
+    <div class="cat-grid">
+      <a class="cat-card{% if collection.handle == 'all' %} active{% endif %}" href="{{ routes.all_products_collection_url }}"><span>הכל</span></a>
+      {%- for c in section.settings.categories -%}
+        <a class="cat-card{% if c.handle == collection.handle %} active{% endif %}" href="{{ c.url }}"><span>{{ c.title }}</span></a>
+      {%- endfor -%}
+    </div>
+
+    {%- paginate collection.products by section.settings.per_page -%}
+      <div class="jg-toolbar">
+        <span>{{ collection.products_count }} מוצרים</span>
+        <label>מיון:
+          <select onchange="var u=new URL(location.href);u.searchParams.set('sort_by',this.value);u.searchParams.delete('page');location.href=u">
+            {%- assign sort_labels = 'manual:מומלצים,best-selling:הנמכרים ביותר,price-ascending:מחיר: מהנמוך לגבוה,price-descending:מחיר: מהגבוה לנמוך,created-descending:החדשים ביותר' | split: ',' -%}
+            {%- assign cur_sort = collection.sort_by | default: collection.default_sort_by -%}
+            {%- for pair in sort_labels -%}
+              {%- assign kv = pair | split: ':' -%}
+              <option value="{{ kv[0] }}"{% if cur_sort == kv[0] %} selected{% endif %}>{{ kv[1] }}</option>
+            {%- endfor -%}
+          </select>
+        </label>
+      </div>
+      <div class="product-grid">
+        {%- for product in collection.products -%}
+          {%- render 'jg-product-card', product: product, wa: wa -%}
+        {%- else -%}
+          <p>אין עדיין מוצרים בקטגוריה הזו.</p>
+        {%- endfor -%}
+      </div>
+      {%- if paginate.pages > 1 -%}
+        <nav class="jg-pager" aria-label="עמודים">
+          {%- if paginate.previous -%}<a class="btn btn-ghost" href="{{ paginate.previous.url }}">→ הקודם</a>{%- endif -%}
+          <span>עמוד {{ paginate.current_page }} מתוך {{ paginate.pages }}</span>
+          {%- if paginate.next -%}<a class="btn btn-ghost" href="{{ paginate.next.url }}">הבא ←</a>{%- endif -%}
+        </nav>
+      {%- endif -%}
+    {%- endpaginate -%}
+  </section>
+
+  <section class="jg-sec chat-cta">
+    <div class="chat-box">
+      <span class="eyebrow">לא בטוחות מה מתאים לכן?</span>
+      <h2>ייעוץ אישי עם יהודית</h2>
+      <p>ספרו לנו על סוג העור והמטרה, ויהודית תמליץ על השילוב המדויק – בלי לנחש.</p>
+      <a class="btn btn-chat" href="https://wa.me/{{ wa }}?text={{ 'היי יהודית, אשמח לייעוץ לגבי ' | append: collection.title | url_encode }}" target="_blank" rel="noopener">ייעוץ בוואטסאפ</a>
+    </div>
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "יהודית גולד – קטגוריה",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "whatsapp", "label": "מספר וואטסאפ (בפורמט 972...)", "default": "972547444478" },
+    { "type": "text", "id": "all_title", "label": "כותרת לעמוד כל המוצרים", "default": "כל מוצרי ד״ר קליין" },
+    { "type": "text", "id": "all_text", "label": "תיאור לעמוד כל המוצרים", "default": "מבחר תכשירי ד״ר קליין המקצועיים, בהתאמה אישית של יהודית גולד" },
+    { "type": "collection_list", "id": "categories", "label": "קטגוריות בשורת הסינון", "limit": 12 },
+    { "type": "range", "id": "per_page", "label": "מוצרים בעמוד", "min": 8, "max": 48, "step": 4, "default": 24 }
+  ]
+}
+{% endschema %}

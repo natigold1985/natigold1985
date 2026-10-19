@@ -25,49 +25,7 @@
     </div>
     <div class="product-grid">
       {%- for product in coll.products limit: section.settings.limit -%}
-        {%- liquid
-          assign kicker = ''
-          for t in product.tags
-            assign first = t | slice: 0
-            if 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789' contains first
-              assign kicker = t
-              break
-            endif
-          endfor
-        -%}
-        {%- capture msg -%}היי יהודית, אשמח להזמין: {{ product.title }} ({{ product.price | divided_by: 100 }} ₪){%- endcapture -%}
-        <article class="product-card">
-          {%- liquid
-            assign badge = ''
-            if product.tags contains 'רב מכר'
-              assign badge = 'רב מכר'
-            elsif product.tags contains 'חדש'
-              assign badge = 'חדש'
-            elsif product.tags contains 'מומלץ'
-              assign badge = 'מומלץ'
-            elsif product.tags contains 'פרימיום'
-              assign badge = 'פרימיום'
-            endif
-          -%}
-          <a class="product-media" href="{{ product.url }}">
-            {%- if badge != blank -%}<span class="product-tag">{{ badge }}</span>{%- endif -%}
-            {%- if product.featured_image -%}
-              {{ product.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: product.featured_image.alt | default: product.title, sizes: '(min-width: 990px) 280px, 50vw' }}
-            {%- elsif settings.logo -%}
-              {{ settings.logo | image_url: width: 400 | image_tag: loading: 'lazy', alt: product.title, style: 'width:60%;height:auto;opacity:.85' }}
-            {%- endif -%}
-          </a>
-          <div class="product-body">
-            {%- if kicker != blank -%}<span class="product-line-kicker">{{ kicker }}</span>{%- endif -%}
-            <h3 class="product-name"><a href="{{ product.url }}">{{ product.title }}</a></h3>
-            <p class="product-desc">{{ product.description | split: '<h3' | first | strip_html | truncatewords: 22 }}</p>
-            <div class="product-foot">
-              <span class="product-price">₪{{ product.price | divided_by: 100 }}</span>
-              <a class="add-btn" href="https://wa.me/{{ wa }}?text={{ msg | url_encode }}" target="_blank" rel="noopener">להזמנה בוואטסאפ</a>
-            </div>
-            <a class="wa-product" href="{{ product.url }}">לפרטים ואופן שימוש ←</a>
-          </div>
-        </article>
+        {%- render 'jg-product-card', product: product, wa: wa -%}
       {%- endfor -%}
     </div>
     {%- if coll.products_count > section.settings.limit -%}

@@ -1,0 +1,38 @@
+{%- comment -%} Judith Gold – blog listing in the GitHub-site style. {%- endcomment -%}
+{{ 'jg-site.css' | asset_url | stylesheet_tag }}
+<div class="jg">
+  <div class="legal-hero">
+    <h1>{{ blog.title }}</h1>
+    <p>{{ section.settings.subtitle }}</p>
+  </div>
+  <section class="jg-sec">
+    {%- paginate blog.articles by 12 -%}
+      <div class="jg-posts">
+        {%- for a in blog.articles -%}
+          <a class="jg-post" href="{{ a.url }}">
+            {%- if a.image -%}{{ a.image | image_url: width: 700 | image_tag: loading: 'lazy', alt: a.image.alt | default: a.title }}{%- endif -%}
+            <div class="jg-post__body">
+              <span class="eyebrow">{{ a.tags | first | default: 'טיפוח' }}</span>
+              <h2>{{ a.title }}</h2>
+              <p>{{ a.excerpt_or_content | strip_html | truncatewords: 28 }}</p>
+              <span class="jg-post__more">לקריאת המאמר ←</span>
+            </div>
+          </a>
+        {%- else -%}
+          <p>בקרוב: מאמרים ומדריכי טיפוח.</p>
+        {%- endfor -%}
+      </div>
+      {%- if paginate.pages > 1 -%}{{ paginate | default_pagination }}{%- endif -%}
+    {%- endpaginate -%}
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "יהודית גולד – בלוג",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "subtitle", "label": "שורת משנה", "default": "מדריכי טיפוח מקצועיים של יהודית גולד – קוסמטיקאית בחיפה" }
+  ]
+}
+{% endschema %}

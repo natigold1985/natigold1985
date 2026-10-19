@@ -50,37 +50,7 @@
 
 {%- capture jg_wa_icon -%}<svg viewBox="0 0 32 32" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M16 .5C7.4.5.5 7.4.5 16c0 2.8.7 5.4 2 7.7L.4 31.6l8.1-2.1c2.2 1.2 4.7 1.9 7.5 1.9 8.6 0 15.5-6.9 15.5-15.5S24.6.5 16 .5zm0 28.3c-2.5 0-4.8-.7-6.8-1.8l-.5-.3-4.8 1.3 1.3-4.7-.3-.5a12.7 12.7 0 0 1-2-6.8C3.1 8.9 8.9 3.1 16 3.1S28.9 8.9 28.9 16 23.1 28.8 16 28.8z"/></svg>{%- endcapture -%}
 
-{%- if request.page_type == 'product' -%}
-  {%- capture jg_msg -%}היי יהודית, אשמח להזמין: {{ product.title }} ({{ product.price | divided_by: 100 }} ₪). קישור: {{ shop.url }}{{ product.url }}{%- endcapture -%}
-  <div id="jg-wa-order-wrap" hidden>
-    <a class="jg-wa-order" href="https://wa.me/{{ jg_wa }}?text={{ jg_msg | url_encode }}" target="_blank" rel="noopener">
-      {{ jg_wa_icon }} להזמנה מהירה בוואטסאפ
-    </a>
-    <p class="jg-wa-note">יהודית תחזור אליך לאישור ההזמנה, תיאום תשלום ומשלוח. משלוח חינם מעל 199 ₪.</p>
-    <ul class="jg-trust-mini"><li>✓ מוצר מקורי – משווקת מורשית ד״ר קליין</li><li>✓ משלוח 1–3 ימי עסקים</li><li>✓ החזרה תוך 14 יום (מוצר סגור)</li></ul>
-    <a class="jg-ask" href="https://wa.me/{{ jg_wa }}?text={{ 'היי יהודית, יש לי שאלה על ' | append: product.title | url_encode }}" target="_blank" rel="noopener">לא בטוחה שזה מתאים לך? שאלי את יהודית ←</a>
-  </div>
-  <div class="jg-wa-sticky" aria-hidden="true">
-    <strong>₪{{ product.price | divided_by: 100 }}</strong>
-    <a class="jg-wa-order" tabindex="-1" href="https://wa.me/{{ jg_wa }}?text={{ jg_msg | url_encode }}" target="_blank" rel="noopener">{{ jg_wa_icon }} הזמנה בוואטסאפ</a>
-  </div>
-  <script>
-    (function () {
-      var wrap = document.getElementById('jg-wa-order-wrap');
-      if (!wrap) return;
-      // Place the WhatsApp button where the (hidden) buy buttons would be
-      var anchor = document.querySelector('product-form-component, form[action*="/cart/add"], .product-form-buttons');
-      if (anchor) {
-        anchor.insertAdjacentElement('beforebegin', wrap);
-        wrap.hidden = false;
-      } else {
-        wrap.hidden = false;
-        wrap.querySelector('.jg-wa-order').classList.add('is-floating');
-        document.body.appendChild(wrap);
-      }
-    })();
-  </script>
-{%- endif -%}
+{%- comment -%} Product-page ordering UI lives in sections/jg-product.liquid {%- endcomment -%}
 
 <a class="jg-wa-fab" href="https://wa.me/{{ jg_wa }}?text={{ 'היי יהודית, אשמח לייעוץ' | url_encode }}" target="_blank" rel="noopener" aria-label="שליחת הודעה ליהודית בוואטסאפ">{{ jg_wa_icon }}</a>
 <script>document.body.classList.add('template-{{ request.page_type }}');</script>

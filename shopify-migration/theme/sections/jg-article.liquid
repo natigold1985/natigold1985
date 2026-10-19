@@ -1,0 +1,31 @@
+{%- comment -%} Judith Gold – blog article in the GitHub-site style. Articles are edited in Shopify Admin → Blog posts. {%- endcomment -%}
+{{ 'jg-site.css' | asset_url | stylesheet_tag }}
+{%- assign wa = section.settings.whatsapp | default: '972547444478' -%}
+<div class="jg">
+  <div class="legal-hero">
+    <nav class="jg-crumbs" aria-label="פירורי לחם"><a href="{{ routes.root_url }}">דף הבית</a> / <a href="{{ blog.url }}">{{ blog.title }}</a></nav>
+    <h1>{{ article.title }}</h1>
+    <p>{{ article.author }} · {{ article.published_at | date: '%d/%m/%Y' }}</p>
+  </div>
+  <article class="legal-page jg-rich">
+    {%- if article.image -%}{{ article.image | image_url: width: 1200 | image_tag: loading: 'eager', class: 'jg-article-img', alt: article.image.alt | default: article.title }}{%- endif -%}
+    {{ article.content }}
+    <div class="jg-cta-box">
+      <h2>רוצה שגרה מותאמת אישית?</h2>
+      <p>יהודית גולד, קוסמטיקאית עם מעל 20 שנות ניסיון, תתאים לך מוצרים וטיפולים לפי סוג העור.</p>
+      <a class="btn btn-chat" href="https://wa.me/{{ wa }}?text={{ 'היי יהודית, קראתי את המאמר "' | append: article.title | append: '" ואשמח לייעוץ' | url_encode }}" target="_blank" rel="noopener">ייעוץ אישי בוואטסאפ</a>
+      <a class="btn btn-ghost" href="{{ routes.all_products_collection_url }}">לכל המוצרים</a>
+    </div>
+    <p><a href="{{ blog.url }}">→ חזרה לבלוג</a></p>
+  </article>
+</div>
+
+{% schema %}
+{
+  "name": "יהודית גולד – מאמר",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "whatsapp", "label": "מספר וואטסאפ (בפורמט 972...)", "default": "972547444478" }
+  ]
+}
+{% endschema %}
