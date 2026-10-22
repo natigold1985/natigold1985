@@ -55,8 +55,10 @@ A scheduled task reads this file before every post. One post per run, Sunday to 
 - Tags: 2–4 relevant Hebrew tags (for example "אנטי אייג'ינג", "ד״ר קליין", "טיפוח בחורף").
 - Summary (`summary`): 1–2 sentences.
 
-## Cover image (recommended)
-Create a branded cover image in the Composio workbench:
-- Size 1600×900, background `#faf7fb`, title in Assistant 800 color `#211a26`, small label in gold `#8c6825`, Judith Gold logo from `https://raw.githubusercontent.com/natigold1985/natigold1985/claude/session-r3gcce/assets/img/logo.png`.
-- Render with Playwright, upload with `stagedUploadsCreate`, then `articleUpdate` with `image:{url, altText}`.
-- Don't create images that look like real product photos or a real person.
+## Cover image (required, same style for every article)
+- Build it in the Composio workbench, 1600×900:
+  - **Text side (right):** pinkish-purple gradient background (`#fbf7fb` → `#ead9e9`), a gold tag line (`#8c6825`, letter-spacing 6px) "<tag> · בלוג יהודית גולד", title in Assistant 800 66px `#211a26`, a short gold rule and the logo.
+  - **Image side (left):** 3 white rounded tiles with the featured images of the products linked from the article. For local Haifa/clinic articles, use instead Judith's photo (`judith-gold-cosmetician-haifa.jpg` in Shopify Files) inside an arch frame with a gold outline.
+- Render with Playwright, upload with `stagedUploadsCreate`, then `fileCreate`. Wait for the URL, then `articleUpdate` with `image:{url, altText:"<title> – בלוג יהודית גולד"}`.
+- Use only real images from the store (products and Judith). Don't generate images that look like a fake product photo or another person.
+- Check the image isn't blank: the standard deviation of the image half must be above 15. If it fails, try once more; if it still fails, publish without an image and note it in the log.
