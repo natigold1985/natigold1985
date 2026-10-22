@@ -20,6 +20,26 @@
   </article>
 </div>
 
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting",
+ "headline":{{ article.title | json }},
+ "description":{{ article.excerpt_or_content | strip_html | truncatewords: 40 | json }},
+ "datePublished":{{ article.published_at | date: '%Y-%m-%dT%H:%M:%S%z' | json }},
+ "dateModified":{{ article.updated_at | date: '%Y-%m-%dT%H:%M:%S%z' | json }},
+ "inLanguage":"he-IL",
+ "mainEntityOfPage":{{ shop.url | append: article.url | json }},
+ {%- if article.image %}"image":{{ article.image | image_url: width: 1200 | prepend: 'https:' | json }},{% endif %}
+ "author":{"@type":"Person","name":"יהודית גולד","jobTitle":"קוסמטיקאית","worksFor":{"@id":{{ shop.url | append: '/#business' | json }}}},
+ "publisher":{"@type":"Organization","name":"יהודית גולד","url":{{ shop.url | json }}{% if settings.logo %},"logo":{"@type":"ImageObject","url":{{ settings.logo | image_url: width: 600 | prepend: 'https:' | json }}}{% endif %}}
+}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
+ {"@type":"ListItem","position":1,"name":"דף הבית","item":{{ shop.url | append: '/' | json }}},
+ {"@type":"ListItem","position":2,"name":{{ blog.title | json }},"item":{{ shop.url | append: blog.url | json }}},
+ {"@type":"ListItem","position":3,"name":{{ article.title | json }},"item":{{ shop.url | append: article.url | json }}}]}
+</script>
+
 {% schema %}
 {
   "name": "יהודית גולד – מאמר",

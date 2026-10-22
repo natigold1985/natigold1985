@@ -1,0 +1,11 @@
+{%- comment -%}
+  Judith Gold – SEO meta helpers, rendered from snippets/meta-tags.liquid.
+  Google Search Console: paste the verification code into
+  Shopify Admin → Settings → Custom data → Shop → "jg.google_site_verification" (or ask Claude to set it).
+{%- endcomment -%}
+{%- if shop.metafields.jg.google_site_verification != blank -%}
+<meta name="google-site-verification" content="{{ shop.metafields.jg.google_site_verification }}">
+{%- endif -%}
+<meta property="og:locale" content="he_IL">
+<link rel="alternate" hreflang="he-IL" href="{{ canonical_url }}">
+<link rel="alternate" hreflang="x-default" href="{{ canonical_url }}">
