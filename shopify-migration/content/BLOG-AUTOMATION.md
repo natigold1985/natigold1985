@@ -33,7 +33,7 @@ A scheduled task reads this file before every post. One post per run, Sunday to 
    - Don't add topics that overlap existing ones.
 
 ## Writing rules (natural Hebrew, addressed to women readers, in Judith's voice)
-- Length: 900–1,400 words.
+- Length: at least 1,000 words (target 1,100–1,400). Shorter posts are not published.
 - Open with a paragraph that starts with `<p><strong>תשובה קצרה:</strong> …</p>`: 2–3 sentences that answer the question directly. This is the GEO/AEO answer.
 - Body:
   - 3–5 `<h2>` sections, `<h3>` where needed, short paragraphs, lists.
