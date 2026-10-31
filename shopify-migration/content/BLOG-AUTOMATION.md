@@ -55,10 +55,10 @@ A scheduled task reads this file before every post. One post per run, Sunday to 
 - Tags: 2–4 relevant Hebrew tags (for example "אנטי אייג'ינג", "ד״ר קליין", "טיפוח בחורף").
 - Summary (`summary`): 1–2 sentences.
 
-## Cover image (required, same style for every article)
-- Build it in the Composio workbench, 1600×900:
-  - **Text side (right):** pinkish-purple gradient background (`#fbf7fb` → `#ead9e9`), a gold tag line (`#8c6825`, letter-spacing 6px) "<tag> · בלוג יהודית גולד", title in Assistant 800 66px `#211a26`, a short gold rule and the logo.
-  - **Image side (left):** 3 white rounded tiles with the featured images of the products linked from the article. For local Haifa/clinic articles, use instead Judith's photo (`judith-gold-cosmetician-haifa.jpg` in Shopify Files) inside an arch frame with a gold outline.
-- Render with Playwright, upload with `stagedUploadsCreate`, then `fileCreate`. Wait for the URL, then `articleUpdate` with `image:{url, altText:"<title> – בלוג יהודית גולד"}`.
-- Use only real images from the store (products and Judith). Don't generate images that look like a fake product photo or another person.
-- Check the image isn't blank: the standard deviation of the image half must be above 15. If it fails, try once more; if it still fails, publish without an image and note it in the log.
+## Cover image (required for every article, no exceptions)
+- Render the cover locally with Playwright (`/usr/bin/python3`, Chromium at `/opt/pw-browsers/chromium-1243/chrome-linux64/chrome`), 1600×900, using the same layout as `shopify-migration/content/covers/*.jpg`:
+  - Gradient background `#fbf7fb` → `#ead9e9`, a thin gold frame, gold tag line, title in Assistant 800, and the logo from the repo.
+  - Never use fake product photos or fake people.
+- Save it as `shopify-migration/content/covers/<handle>.jpg`, commit and push.
+- Attach it with `articleUpdate` using the raw GitHub URL: `https://raw.githubusercontent.com/natigold1985/natigold1985/<commit>/shopify-migration/content/covers/<handle>.jpg`, with `altText` = title + " – בלוג יהודית גולד".
+- Verify the live page loads and the article has no default placeholder hero.
