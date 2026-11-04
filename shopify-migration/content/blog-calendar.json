@@ -156,7 +156,8 @@
       "סבון-טיפולי-אלפא-אזלאי-aac",
       "קרם-חומצה-לקטית-10-ללילה"
     ],
-    "status": "todo"
+    "status": "covered-no-new-article",
+    "note": "skipped: wording risk; covered by service page + calendar 13"
   },
   {
     "n": 14,
@@ -168,7 +169,8 @@
       "קרם-פרזרב-a-plus",
       "נוטרי-קרם-סופר-פוד"
     ],
-    "status": "todo"
+    "status": "covered-no-new-article",
+    "note": "not an article: service page"
   },
   {
     "n": 15,
@@ -179,7 +181,8 @@
       "סבון-מיוחד-לניקוי-הפנים",
       "קרם-פרזרב-a-plus"
     ],
-    "status": "todo"
+    "status": "covered-no-new-article",
+    "note": "skipped: service not confirmed by Judith"
   },
   {
     "n": 16,
@@ -191,7 +194,8 @@
       "קרם-בקוצ-יול-deep",
       "קרם-עיניים-אקטיבי"
     ],
-    "status": "todo"
+    "status": "covered-no-new-article",
+    "note": "not an article: about/service page + reviews needed"
   },
   {
     "n": 17,
@@ -203,7 +207,8 @@
       "נוטרי-קרם-סופר-פוד",
       "קרם-צוואר-ומחשוף-אולטימייט"
     ],
-    "status": "todo"
+    "status": "covered-no-new-article",
+    "note": "not an article: service page"
   },
   {
     "n": 18,
@@ -215,7 +220,8 @@
       "נוטרי-קרם-סופר-פוד",
       "קרם-פרזרב-a-plus"
     ],
-    "status": "todo"
+    "status": "covered-no-new-article",
+    "note": "not an article: service page"
   },
   {
     "n": 19,
@@ -226,7 +232,8 @@
       "קרם-הבהרה-אקטיבי-ללילה",
       "קרם-bb-הגנה-spf50"
     ],
-    "status": "todo"
+    "status": "covered-no-new-article",
+    "note": "skipped: calendar 13 covers acne in mature skin"
   },
   {
     "n": 20,
@@ -238,7 +245,8 @@
       "קרם-חומצה-לקטית-10-ללילה",
       "קרם-bb-הגנה-spf50"
     ],
-    "status": "todo"
+    "status": "covered-no-new-article",
+    "note": "covered: articles 4 and 5 – update, comparison section"
   },
   {
     "n": 21,
@@ -260,7 +268,8 @@
       "קרם-עיניים-אקטיבי",
       "היאלרוניק-ווין-סרום-חומצה-היאלורונית"
     ],
-    "status": "todo"
+    "status": "covered-no-new-article",
+    "note": "covered: calendar 17 (טיפוח עור בוגר) – merge"
   },
   {
     "n": 23,
@@ -270,7 +279,8 @@
     "products": [
       "קרם-עיניים-אקטיבי"
     ],
-    "status": "todo"
+    "status": "covered-no-new-article",
+    "note": "covered: store article פיגמנטציה-וכתמים – update"
   },
   {
     "n": 24,
@@ -280,7 +290,8 @@
     "products": [
       "בודי-באדי-קרם-לצלוליט"
     ],
-    "status": "todo"
+    "status": "covered-no-new-article",
+    "note": "covered: calendar 20 (כתמי שמש) – merge"
   },
   {
     "n": 25,
@@ -290,7 +301,8 @@
     "products": [
       "אמפולת-q10-אנטי-אייג-ינג"
     ],
-    "status": "todo"
+    "status": "covered-no-new-article",
+    "note": "covered: calendar 70 (ניקוי עמוק מול פילינג) – merge"
   },
   {
     "n": 26,
@@ -301,7 +313,8 @@
       "סרום-אנטיאוקסידנטים-אינטנסיבי",
       "סרום-רסברטרול-פרואקטיב"
     ],
-    "status": "todo"
+    "status": "covered-no-new-article",
+    "note": "covered: calendar 21 (נקבוביות פתוחות)"
   },
   {
     "n": 27,
@@ -311,7 +324,8 @@
     "products": [
       "סרום-רסברטרול-פרואקטיב"
     ],
-    "status": "todo"
+    "status": "covered-no-new-article",
+    "note": "covered: article 11 (חומצה לקטית) – update"
   },
   {
     "n": 28,
@@ -324,7 +338,8 @@
       "קרם-אפ-ליפטינג-היאלרוניק-ווין",
       "קרם-bb-הגנה-spf50"
     ],
-    "status": "todo"
+    "status": "covered-no-new-article",
+    "note": "covered: store article שגרת-אנטי-אייגינג-בוקר-וערב – update"
   },
   {
     "n": 29,
@@ -334,7 +349,8 @@
     "products": [
       "קרם-חומצה-לקטית-10-ללילה"
     ],
-    "status": "todo"
+    "status": "covered-no-new-article",
+    "note": "covered: calendar 13 (אקנה בגיל מבוגר)"
   },
   {
     "n": 30,
@@ -346,7 +362,8 @@
       "קרם-פרזרב-a-plus",
       "קרם-bb-הגנה-spf50"
     ],
-    "status": "todo"
+    "status": "covered-no-new-article",
+    "note": "covered: calendar 48 (שיקום אחרי שמש)"
   },
   {
     "n": 31,
@@ -894,5 +911,29 @@
       "קרם-bb-הגנה-spf50"
     ],
     "status": "todo"
+  },
+  {
+    "n": 81,
+    "title": "סבון פנים לעור אקנתי: מה לחפש בהרכב ומה להימנע ממנו",
+    "keyword": "סבון פנים לעור אקנתי",
+    "service": "טיפולי-הבהרה-ואקנה-בחיפה",
+    "products": [
+      "סבון-טיפולי-אלפא-אזלאי-aac",
+      "סבון-מיוחד-לניקוי-הפנים"
+    ],
+    "status": "todo",
+    "source": "30-keyword list #6"
+  },
+  {
+    "n": 82,
+    "title": "שילוב רטינול וויטמין C: מותר? מתי ואיך מכניסים לשגרה",
+    "keyword": "שילוב רטינול וויטמין C",
+    "service": "טיפולי-אנטי-אייגינג-בחיפה",
+    "products": [
+      "קרם-ויטמין-c-אלפא-ליפואית-acal",
+      "היאלרוניק-ווין-סרום-חומצה-היאלורונית"
+    ],
+    "status": "todo",
+    "source": "30-keyword list #21"
   }
 ]
