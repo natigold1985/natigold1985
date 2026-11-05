@@ -1,6 +1,6 @@
 # Judith Gold blog: writing and publishing guidelines
 
-A scheduled task reads this file before every post. One post per run, Sunday to Thursday, about 20 a month.
+A scheduled task reads this file before every post. Runs on Sunday, Tuesday and Thursday; at most 12 new items per calendar month, counting articles and new content pages together. Before writing, count this month's entries in blog-log.md and stop if there are already 12.
 
 ## Store and access
 - Shopify store: judithgold.myshopify.com. Use the Composio Shopify connector, account `judithgold-v2`, tool `SHOPIFY_GRAPH_QL_QUERY`.
@@ -34,6 +34,7 @@ A scheduled task reads this file before every post. One post per run, Sunday to 
 
 ## Writing rules (natural Hebrew, addressed to women readers, in Judith's voice)
 - Length: at least 1,000 words (target 1,100–1,400). Shorter posts are not published.
+- Headings: the article title is the H1 (the theme renders it). Use only H2 and H3 in the body. Make H2/H3 natural questions where it fits.
 - Open with a paragraph that starts with `<p><strong>תשובה קצרה:</strong> …</p>`: 2–3 sentences that answer the question directly. This is the GEO/AEO answer.
 - Body:
   - 3–5 `<h2>` sections, `<h3>` where needed, short paragraphs, lists.
@@ -46,7 +47,7 @@ A scheduled task reads this file before every post. One post per run, Sunday to 
 - Local touch: mention Judith Gold's clinic at Vardia Center in Haifa where it is relevant, without overdoing it.
 - Ending:
   - A WhatsApp call to action: `<p><a href="https://wa.me/972547444478?text=...">ייעוץ אישי עם יהודית בוואטסאפ ←</a></p>`.
-  - Then `<h2>שאלות ותשובות</h2>` with 4 `<details><summary>question</summary><p>short direct answer</p></details>` blocks. The theme generates the FAQPage schema from them automatically.
+  - Then `<h2>שאלות ותשובות</h2>` with 5 `<details><summary>question</summary><p>short direct answer</p></details>` blocks. The theme generates the FAQPage schema from them automatically.
 - Accuracy and safety:
   - No medical promises such as "cures" or "eliminates for good". Use "helps", "contributes to the appearance of".
   - No made-up statistics or studies, no prices, no fake reviews or ratings.
@@ -54,6 +55,9 @@ A scheduled task reads this file before every post. One post per run, Sunday to 
   - Describe products only by what is written on their product page in the store.
 - Tags: 2–4 relevant Hebrew tags (for example "אנטי אייג'ינג", "ד״ר קליין", "טיפוח בחורף").
 - Summary (`summary`): 1–2 sentences.
+- Do not add a separate JSON-LD FAQPage block to the body: the theme already generates it from the `<details>` items, and a second copy duplicates the schema.
+- Each article answers its keyword directly in 40–60 words at the start of each major section (GEO). Use a Markdown-style HTML table when comparing products or ingredients.
+- Keep Judith's professional opinion separate from facts (e.g. "לדעתי" for opinion).
 
 ## Cover image (required for every article, no exceptions)
 - Render the cover locally with Playwright (`/usr/bin/python3`, Chromium at `/opt/pw-browsers/chromium-1243/chrome-linux64/chrome`), 1600×900, using the same layout as `shopify-migration/content/covers/*.jpg`:
