@@ -278,3 +278,15 @@
   .jg .legal-page { padding: 34px 16px 56px; }
   .jg .legal-page table { display: block; overflow-x: auto; }
 }
+
+/* ---------- v3: RTL everywhere in the store, pagination and blog footer ---------- */
+html[dir="rtl"] .jg, .jg { direction: rtl; text-align: start; }
+.jg .pagination, .jg .pagination__list, .jg nav[aria-label*="עמודים"], .jg .jg-pager { direction: rtl; display: flex; flex-direction: row; justify-content: center; align-items: center; gap: 8px; flex-wrap: wrap; }
+.jg .pagination__item--prev, .jg .pagination__item--next { order: 0; }
+.jg .pagination a, .jg .pagination span { min-width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center; border-radius: 999px; border: 1px solid var(--line-2); color: var(--ink-soft); font-weight: 600; }
+.jg .pagination [aria-current="page"], .jg .pagination .current { background: var(--purple); color: #fff; border-color: var(--purple); }
+.jg .jg-post, .jg .product-card, .jg .jg-posts { direction: rtl; text-align: start; }
+.jg .jg-post__more { display: inline-block; }
+.jg .product-body, .jg .jg-post__body { text-align: start; }
+/* Product gallery: show the front image as the main one, thumbnails follow Shopify order */
+.jg .pd-main img { object-fit: contain; background: #fff; }
