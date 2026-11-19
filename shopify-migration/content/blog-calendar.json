@@ -461,8 +461,9 @@
       "היאלרוניק-ווין-סרום-חומצה-היאלורונית",
       "קרם-אפ-ליפטינג-היאלרוניק-ווין"
     ],
-    "status": "draft-ready",
-    "handle": "סדרת-hyaluronic-wine-למי-היא-מתאימה"
+    "status": "scheduled-draft",
+    "handle": "סדרת-hyaluronic-wine-למי-היא-מתאימה",
+    "date": "2026-12-06"
   },
   {
     "n": 38,
@@ -483,8 +484,9 @@
     "products": [
       "נוטרי-קרם-סופר-פוד"
     ],
-    "status": "draft-ready",
-    "handle": "super-food-לעור-מה-כדאי-לדעת-לפני-שקונים"
+    "status": "scheduled-draft",
+    "handle": "super-food-לעור-מה-כדאי-לדעת-לפני-שקונים",
+    "date": "2026-12-08"
   },
   {
     "n": 40,
